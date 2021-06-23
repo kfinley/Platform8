@@ -1,0 +1,59 @@
+<template>
+  <div classs="container p-5">
+    <div class="row no-gutters">
+      <div class="col-lg-6 col-md-12 m-auto">
+        <div
+          v-for="(notification, index) in state.notifications"
+          :key="index"
+          :class="[
+            'alert',
+            alertType(notification),
+            'alert-dismissible',
+            'fade',
+            'show',
+          ]"
+          role="alert"
+        >
+          <h4
+            class="alert-heading"
+            v-if="notification.header"
+            v-html="notification.header"
+          ></h4>
+          <p v-html="notification.message"></p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            @click.prevent="dismiss(index)"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State } from "vuex-class";
+import { Notification } from "../../types/notify";
+import { notificationModule, NotificationState } from "../../store";
+
+@Component
+export default class Notify extends Vue {
+  @State("Notification") state!: NotificationState;
+
+  mounted(): void {
+    notificationModule.setSuccess({
+      header: "Yeah",
+      message: "this is a test",
+    });
+  }
+
+  alertType(notification: Notification): string {
+    return `alert-${notification.type}`;
+  }
+
+  dismiss = (index: number): void => notificationModule.dismiss(index);
+}
+</script>
