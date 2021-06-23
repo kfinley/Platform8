@@ -1,0 +1,38 @@
+version: '3.4'
+services:
+
+  platform.dev:
+    container_name: platform8.dev
+    build:
+      context: ./
+      dockerfile: ./.devcontainer/Dockerfile
+    volumes:
+      - $HOME/.aws:/home/vscode/.aws      
+    command: ./.devcontainer/scripts/setup.sh && sleep infinity
+  
+  s3.local:
+    container_name: platform8.s3
+    image: seayou/s3rver
+    environment:
+      - PORT=4569
+    ports:
+      - "4569:4569"
+    volumes:
+      - ./.devcontainer/.s3:/buckets
+  
+  dynamodb.local:
+    container_name: platform8.dynamodb
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./.devcontainer/.db:/home/dynamodblocal/db
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal/db"]
+  
+  dynamodb.admin:
+    container_name: platform8.dynamodb.admin
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - 8001:8001
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb.local:8000 dynamodb-admin

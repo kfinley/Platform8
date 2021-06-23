@@ -1,0 +1,21 @@
+node_modules
+
+lerna-debug.log
+
+# Serverless directories
+.serverless
+.webpack
+
+# AWS Local Services
+.db
+.s3
+
+# dotnet
+bin
+obj
+
+# Mac
+.DS_Store
+
+# VS Code
+.vscode
