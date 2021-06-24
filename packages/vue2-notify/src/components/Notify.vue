@@ -3,7 +3,7 @@
     <div class="row no-gutters">
       <div class="col-lg-6 col-md-12 m-auto">
         <div
-          v-for="(notification, index) in notifications"
+          v-for="(notification, index) in state.notifications"
           role="alert"
           :key="index"
           :class="[
@@ -39,20 +39,15 @@ import { State } from "vuex-class";
 import { Notification } from "../types";
 import { notificationModule, NotificationState } from "../store";
 
-// const Store = namespace('Notification');
-
 @Component
 export default class Notify extends Vue {
   @State("Notification") state!: NotificationState;
 
-  // @Store.Action dismiss!: (index: number) => Promise<void>;
-  //@Store.Getter notifications!: Notification[];
-
   mounted(): void {
-    notificationModule.setSuccess({
-      header: "Yeah",
-      message: "this is a test",
-    });
+    // notificationModule.setSuccess({
+    //   header: "Yeah",
+    //   message: "this is a test",
+    // });
   }
 
   alertType(notification: Notification): string {
@@ -61,8 +56,5 @@ export default class Notify extends Vue {
 
   dismiss = (index: number): void => notificationModule.dismiss(index);
 
-  get notifications() {
-    return notificationModule.notifications;
-  }
 }
 </script>

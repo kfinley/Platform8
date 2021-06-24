@@ -5,6 +5,9 @@ import VuexPersist from "vuex-persist";
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
 // import { initializeModules } from "../store";
 
+import "bootstrap/dist/css/bootstrap.css";
+import "@platform8/web-ui/src/styles/styles.scss";
+
 export interface ClientPlugin extends PluginObject<ClientPluginOptions> {
   install: PluginFunction<ClientPluginOptions>;
 }

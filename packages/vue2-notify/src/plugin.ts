@@ -2,7 +2,6 @@ import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
 import { initializeModules } from "./store";
 import NotificationModule from "./store/notificationModule";
-// import * as components from "./components";
 
 export interface NotificationPlugin
   extends PluginObject<NotificationPluginOptions> {
@@ -24,12 +23,6 @@ const notificationPlugin = {
   install(vue: typeof Vue, options?: NotificationPluginOptions) {
     if (options !== undefined && options.store) {
       setupModules(options.store);
-
-      // Object.keys(components).forEach((name) => {
-      //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      //   console.log(`registering ${name}`);
-      //   vue.component(name, (components as any)[name]);
-      // });
     }
   },
 };

@@ -13,11 +13,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
       "jest",
-      "node",
-      "vue/types",
-      "vuex/types"
+      "node"
     ],
     "paths": {
       "@/*": [
