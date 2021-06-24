@@ -1,20 +1,19 @@
 <template>
   <div class="home">
     <p>This is home.</p>
-    <button class="btn-primary" @click.prevent="addError">Add Error</button>
+    <button @click.prevent="addError" class="primary-gradient">Add Error!!</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { notificationModule } from "../store";
-
+import { notificationModule } from "@platform8/vue2-notify/src/store";
 @Component
 export default class Home extends Vue {
-  addError(): void {
+  addError() {
     notificationModule.setError({
-      header: "Error!!",
-      message: "This is an error...",
+      header: "Error!",
+      message: "This is an error!"
     });
   }
 }

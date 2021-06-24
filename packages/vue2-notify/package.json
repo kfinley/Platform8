@@ -1,37 +1,33 @@
 {
-  "name": "@platform8/vue2-client",
-  "version": "0.1.0",
+  "name": "@platform8/vue2-notify",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
-  "dependencies": {
+  "devDependencies": {
     "core-js": "^3.6.5",
-    "bootstrap": "^5.0.2",
-    "@platform8/vue2-notify": "^0.0.1",
-    "@platform8/web-ui": "^0.0.1",
-    "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",
-    "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
     "vuex-class": "^0.3.2",
-    "vuex-module-decorators": "1.0.1",
-    "vuex-persist": "^3.1.3"
-  },
-  "devDependencies": {
+    "vuex-module-decorators": "^1.0.1",
+    "@babel/core": "^7.14.6",
+    "@storybook/addon-actions": "^6.3.0",
+    "@storybook/addon-essentials": "^6.3.0",
+    "@storybook/addon-links": "^6.3.0",
+    "@storybook/vue": "^6.3.0",
     "@types/jest": "^24.0.19",
-    "@types/node": "14.17.1",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-pwa": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
@@ -39,6 +35,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^1.0.3",
+    "babel-loader": "^8.2.2",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
@@ -46,6 +43,8 @@
     "prettier": "^2.2.1",
     "sass-loader": "^8.0.2",
     "typescript": "~4.1.5",
+    "vue-loader": "^15.9.7",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "dependencies": {}
 }

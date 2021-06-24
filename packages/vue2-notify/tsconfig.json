@@ -14,10 +14,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "jest",
-      "node",
-      "vue/types",
-      "vuex/types"
+      "jest"
     ],
     "paths": {
       "@/*": [

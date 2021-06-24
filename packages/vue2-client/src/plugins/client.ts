@@ -2,8 +2,8 @@ import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
 import router from "vue-router";
 import VuexPersist from "vuex-persist";
-import NotificationPlugin from "./notification";
-import { initializeModules } from "../store";
+import { NotificationPlugin } from "@platform8/vue2-notify/src";
+// import { initializeModules } from "../store";
 
 export interface ClientPlugin extends PluginObject<ClientPluginOptions> {
   install: PluginFunction<ClientPluginOptions>;
@@ -21,12 +21,12 @@ const plugin = {
     if (options !== undefined && options.router && options.store) {
       const appName = options.appName ?? "Client";
 
-      Vue.use(NotificationPlugin, {
+      vue.use(NotificationPlugin, {
         router: options.router,
         store: options.store,
       });
 
-      initializeModules(options.store);
+      // initializeModules(options.store);
 
       // option to add all components
       // Object.keys(components).forEach((name) => {

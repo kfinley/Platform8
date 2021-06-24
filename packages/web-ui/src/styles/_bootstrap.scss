@@ -1,0 +1,19 @@
+.card {
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+}
+
+.card-header {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  background-color: $light;
+  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+  border-radius: 1rem 1rem 0 0;
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 1rem 1rem;
+}

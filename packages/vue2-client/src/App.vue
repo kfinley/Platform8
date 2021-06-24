@@ -9,16 +9,19 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Notify } from "./components";
+import { Notify } from './components';
 
 @Component({
   components: {
-    Notify,
-  },
+    Notify
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+}
 </script>
 
 <style lang="scss">

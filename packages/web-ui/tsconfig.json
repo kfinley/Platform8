@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -14,10 +14,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "jest",
-      "node",
-      "vue/types",
-      "vuex/types"
+      "jest"
     ],
     "paths": {
       "@/*": [
@@ -26,6 +23,7 @@
     },
     "lib": [
       "esnext",
+      "es2018",
       "dom",
       "dom.iterable",
       "scripthost"

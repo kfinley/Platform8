@@ -1,4 +1,4 @@
-import { Notification } from "../types/notify";
+import { Notification } from "../types";
 
 export interface NotificationState {
   notifications: Notification[];
