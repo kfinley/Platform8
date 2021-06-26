@@ -1,0 +1,12 @@
+{
+  "name": "@platform8/config",
+  "version": "0.0.1",
+  "description": "Config module",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.38"
+  }
+}

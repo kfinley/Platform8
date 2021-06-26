@@ -1,3 +1,7 @@
+// Config should be imported as early as possible
+// in order to prevent any missing values.
+// TODO: remove when config is reworked.
+import "./config";
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
@@ -17,3 +21,4 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount("#app");
+

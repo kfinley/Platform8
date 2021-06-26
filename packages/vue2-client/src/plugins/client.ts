@@ -1,9 +1,16 @@
+// Loaded once per applicaiton. Required for dependency injection
+import 'reflect-metadata';
+
 import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
 import router from "vue-router";
 import VuexPersist from "vuex-persist";
+import { setupValidation } from '@platform8/vue2-common/src/validation';
+import { extend } from 'vee-validate';
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
+import { UserPlugin } from "@platform8/vue2-user/src";
 // import { initializeModules } from "../store";
+import userBootStrapper from "@platform8/vue2-user/src/boot-strapper";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@platform8/web-ui/src/styles/styles.scss";
@@ -28,6 +35,14 @@ const plugin = {
         router: options.router,
         store: options.store,
       });
+
+      vue.use(UserPlugin, {
+        router: options.router,
+        store: options.store,
+      })
+
+      userBootStrapper();
+      setupValidation(extend);
 
       // initializeModules(options.store);
 

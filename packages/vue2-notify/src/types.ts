@@ -14,3 +14,8 @@ export interface Notification {
   message: string;
   type: AlertType;
 }
+
+export interface HandleErrorParams {
+  error: any;
+  rethrow: boolean;
+}

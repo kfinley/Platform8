@@ -1,0 +1,16 @@
+{
+  "name": "@platform8/vue2-common",
+  "version": "0.0.1",
+  "description": "Shared Vue code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rkf",
+  "devDependencies": {
+    "vee-validate": "^3.4.10",
+    "vue": "^2.6.11",
+    "vuex": "^3.4.0",
+    "vue-property-decorator": "9.1.2"
+  }
+}

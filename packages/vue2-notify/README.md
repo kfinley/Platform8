@@ -1,29 +1,5 @@
-# vue2-notify
+# @platform8/vue2-notify
 
-## Project setup
-```
-npm install
-```
+## Overview
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+@platform8/vue2-notify is a vue2 plugin that provides user feedback features via Bootstrap 5 alerts.

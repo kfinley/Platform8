@@ -23,3 +23,5 @@ RUN rm awscliv2.zip
 
 RUN aws configure set aws_access_key_id S3RVER --profile s3local
 RUN aws configure set aws_access_key_id S3RVER --profile s3local
+
+RUN npm completion >> ~/.bashrc

@@ -1,0 +1,12 @@
+{
+  "name": "@platform8/core",
+  "version": "0.0.1",
+  "description": "Core module. Shared FE/BE code. Keep it slim!",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.38"
+  }
+}

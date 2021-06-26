@@ -1,6 +1,6 @@
 {
   "name": "@platform8/vue2-client",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -12,9 +12,19 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "bootstrap": "^5.0.2",
+
+    "@platform8/api-client": "^0.0.1",
+    "@platform8/commands": "^0.0.1",
+    "@platform8/config": "^0.0.1",
     "@platform8/vue2-notify": "^0.0.1",
+    "@platform8/vue2-common": "^0.0.1",
+    "@platform8/vue2-user": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",
+
+    "inversify-props": "^2.2.6",
+    "reflect-metadata": "^0.1.13",
     "register-service-worker": "^1.7.1",
+    "vee-validate": "^3.4.9",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",

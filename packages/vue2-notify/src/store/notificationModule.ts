@@ -1,4 +1,4 @@
-import { AlertType, Notification } from "../types";
+import { AlertType, Notification, HandleErrorParams } from "../types";
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { NotificationState } from "./state";
 
@@ -26,6 +26,19 @@ export default class NotificationModule
   }
 
   @Mutation
+  handleError (params: HandleErrorParams) {
+    this.notifications.push({
+      header: "Error",
+      message: params.error,
+      type: AlertType.danger,
+    });
+
+    if (params.rethrow) {
+      throw params.error;
+    }
+  }
+
+  @Mutation
   add(params: { header?: string; message: string; type: AlertType }) {
     this.notifications.push({
       header: params.header,
@@ -37,5 +50,10 @@ export default class NotificationModule
   @Mutation
   dismiss(index: number) {
     this.notifications.splice(index, 1);
+  }
+
+  @Mutation
+  dismissAll() {
+    this.notifications = [];
   }
 }

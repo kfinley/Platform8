@@ -29,7 +29,6 @@ module.exports = {
           'sass-loader'
         ]
     });
-
     // config.module.rules.push({
     //   test: /\.svg$/,
     //   use: [
