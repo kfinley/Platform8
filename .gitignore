@@ -8,8 +8,14 @@ package.json.lerna_backup
 .webpack
 
 # AWS Local Services
-.db
-.s3
+.devcontainer/.cognito/**
+.devcontainer/.db/**
+.devcontainer/.s3/**
+.devcontainer/.ses/**
+
+# AWS Local Projects
+.devcontainer/aws-ses-local/**
+.devcontainer/cognito-local/**
 
 # dotnet
 bin
@@ -17,6 +23,3 @@ obj
 
 # Mac
 .DS_Store
-
-# VS Code
-.vscode

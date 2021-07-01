@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.1.6" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.0.35" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\User.Models.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
+    <ProjectReference Include="..\Data\User.Data.csproj" />
+  </ItemGroup>
+
+</Project>

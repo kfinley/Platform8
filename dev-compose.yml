@@ -7,9 +7,43 @@ services:
       context: ./
       dockerfile: ./.devcontainer/Dockerfile
     volumes:
-      - $HOME/.aws:/home/vscode/.aws      
+      - $HOME/.aws:/home/vscode/.aws
     command: ./.devcontainer/scripts/setup.sh && sleep infinity
-  
+
+  platform8.cognito:
+    container_name: platform8.cognito
+    build:
+      context: ./.devcontainer/cognito-local
+      dockerfile: Dockerfile
+    ports:
+      - "9229:9229"
+    volumes:
+      - ./.devcontainer/.cognito:/cognito-local/.cognito
+      - ./.devcontainer/cognito-local/src:/cognito-local/src
+
+  platform8.ses:
+    container_name: platform8.ses
+    build:
+      context: ./.devcontainer/aws-ses-local
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./.devcontainer/.ses/output:/aws-ses-local/output
+      - ./.devcontainer/.ses/email-templates:/aws-ses-local/email-templates
+      - ./.devcontainer/aws-ses-local/src:/aws-ses-local/src
+      - ./.devcontainer/aws-ses-local/src/templates:/aws-ses-local/build/templates
+
+  platform8.mysql:
+    container_name: platform8.mysql
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.devcontainer/mysql/my.cnf:/etc/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd!
+
   s3.local:
     container_name: platform8.s3
     image: seayou/s3rver
@@ -19,7 +53,7 @@ services:
       - "4569:4569"
     volumes:
       - ./.devcontainer/.s3:/buckets
-  
+
   dynamodb.local:
     container_name: platform8.dynamodb
     image: amazon/dynamodb-local
@@ -28,7 +62,7 @@ services:
     volumes:
       - ./.devcontainer/.db:/home/dynamodblocal/db
     command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal/db"]
-  
+
   dynamodb.admin:
     container_name: platform8.dynamodb.admin
     image: aaronshaf/dynamodb-admin
