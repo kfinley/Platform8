@@ -1,0 +1,6 @@
+[submodule ".devcontainer/aws-ses-local"]
+	path = .devcontainer/aws-ses-local
+	url = https://github.com/kfinley/aws-ses-local.git
+[submodule ".devcontainer/cognito-local"]
+	path = .devcontainer/cognito-local
+	url = https://github.com/kfinley/cognito-local.git

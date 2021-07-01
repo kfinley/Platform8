@@ -29,7 +29,8 @@
 		"jcbuisson.vue",
 		"firsttris.vscode-jest-runner",
     "octref.vetur",
-    "hmnd.css-signature-help"
+    "hmnd.css-signature-help",
+    "tht13.html-preview-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

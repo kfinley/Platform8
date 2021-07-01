@@ -52,6 +52,14 @@ export default class RegistrationModule extends VuexModule implements Registrati
   }
 
   @Mutation
+  reset() {
+    this.error = undefined;
+    this.email = undefined;
+    this.status = RegistrationStatus.Unknown;
+    notificationModule.dismissAll();
+  }
+
+  @Mutation
   fail(error: any) {
     this.error = error;
     this.status = RegistrationStatus.Failed;
