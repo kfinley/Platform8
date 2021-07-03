@@ -4,11 +4,13 @@
   "private": true,
   "description": "",
   "scripts": {
+    "dev:setup": "echo \"TODO:// Write a script that sets up local Cognito settings and SES email templates.\" && exit 1",
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:vue2-user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
     "clean": "lerna clean --yes",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj"
   },
   "author": "rkf",
   "devDependencies": {

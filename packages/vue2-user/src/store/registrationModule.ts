@@ -2,14 +2,14 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { RegistrationState } from './state';
 import { Inject } from 'inversify-props';
 import { ApiClient } from '@platform8/api-client/src';
-import { RegistrationStatus } from './types';
-import { registerCommand } from '../commands/register';
+import { RegistrationStatus, RegistrationRequest } from './../types';
+import { RegisterCommand } from '../commands';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { AlertType } from "@platform8/vue2-notify/src/types";
 import { messages } from "../resources/messages";
 
 @Module({ namespaced: true, name: 'Registration' })
-export default class RegistrationModule extends VuexModule implements RegistrationState {
+export class RegistrationModule extends VuexModule implements RegistrationState {
   status = RegistrationStatus.Unknown;
   email: string | undefined;
   error: string | undefined;
@@ -18,13 +18,13 @@ export default class RegistrationModule extends VuexModule implements Registrati
   private apiClient!: ApiClient;
 
   @Action
-  async register(params: { firstName: string, lastName: string, email: string }) {
+  async register(params: RegistrationRequest) {
     notificationModule.dismissAll();
 
     this.context.commit('request', { email: params.email });
 
     try {
-      const register = new registerCommand(this.apiClient);
+      const register = new RegisterCommand(this.apiClient);
       const response = await register.runAsync(params);
 
       if (!response.success) {
@@ -40,7 +40,7 @@ export default class RegistrationModule extends VuexModule implements Registrati
 
     } catch (error) {
       this.context.commit('fail', error);
-      notificationModule.handleError({ error: error.message, rethrow: false });
+      notificationModule.handleError({ error, rethrow: false });
     }
   }
 

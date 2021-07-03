@@ -8,7 +8,8 @@ package.json.lerna_backup
 .webpack
 
 # AWS Local Services
-.devcontainer/.cognito/**
+.devcontainer/.cognito/db/*_local.json
+.devcontainer/.cognito/db/local.json
 .devcontainer/.db/**
 .devcontainer/.s3/**
 .devcontainer/.ses/**

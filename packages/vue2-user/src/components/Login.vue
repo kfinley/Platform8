@@ -8,59 +8,15 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <p>Register</p>
+              <p>Login</p>
             </div>
-            <div class="card-body text-center" v-if="registered">
-              <p>{{ messages.Registration.ThankYouText }}</p>
-            </div>
-            <div class="card-body" v-if="notRegistered">
+            <div class="card-body">
               <ValidationObserver ref="formObserver">
                 <form
                   @submit.prevent="onSubmit"
                   autocomplete="off"
                   role="form text-left"
                 >
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="firstName"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="text"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="First Name"
-                        aria-label="First Name"
-                        ref="firstNameElement"
-                        v-model="firstName"
-                        :disabled="registering"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="lastName"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="text"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Last Name"
-                        aria-label="Last Name"
-                        v-model="lastName"
-                        :disabled="registering"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
                   <div class="mb-3">
                     <ValidationProvider
                       name="email"
@@ -75,33 +31,55 @@
                         placeholder="Email"
                         aria-label="Email"
                         v-model="email"
-                        :disabled="registering"
+                        ref="emailElement"
+                        :disabled="loggingIn"
                       />
                       <div v-show="errors[0]" class="invalid-feedback">
                         {{ errors[0] }}
                       </div>
                     </ValidationProvider>
                   </div>
+                  <div class="mb-3">
+                    <ValidationProvider
+                      name="password"
+                      rules="required"
+                      mode="passive"
+                      v-slot="{ errors }"
+                    >
+                      <input
+                        type="password"
+                        :class="['form-control', { 'is-invalid': errors[0] }]"
+                        placeholder="Password"
+                        aria-label="Password"
+                        v-model="password"
+                        :disabled="loggingIn"
+                      />
+                      <div v-show="errors[0]" class="invalid-feedback">
+                        {{ errors[0] }}
+                      </div>
+                    </ValidationProvider>
+                  </div>
+
                   <div class="text-center">
                     <button
                       type="submit"
                       class="btn primary-gradient w-100 my-4 mb-2"
-                      :disabled="registering"
+                      :disabled="loggingIn"
                     >
                       <span
-                        v-if="registering"
+                        v-if="loggingIn"
                         class="spinner-border spinner-border-sm"
                         role="status"
                         aria-hidden="true"
                       ></span>
-                      Sign up
+                      Log in
                     </button>
                   </div>
                 </form>
               </ValidationObserver>
               <p class="text-sm mt-3 mb-0">
-                Already have an account?
-                <router-link class="text-dark font-weight-bolder" :to="{ name: loginRoute }">Login</router-link>
+                Need an account?
+                <router-link class="text-dark font-weight-bolder" :to="{ name: registerRoute }">Register</router-link>
               </p>
             </div>
           </div>
@@ -114,9 +92,9 @@
 <script lang="ts">
 import { Component, Vue, Ref } from "vue-property-decorator";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { registrationModule, RegistrationState } from "../store";
+import { userModule, UserState } from "../store";
 import { State } from "vuex-class";
-import { RegistrationStatus } from "./../types";
+import { AuthStatus } from "../types";
 import { messages } from "../resources/messages";
 import { RouteNames } from "../router";
 
@@ -126,43 +104,33 @@ import { RouteNames } from "../router";
     ValidationObserver,
   },
 })
-export default class Register extends Vue {
+export default class Login extends Vue {
   @Ref() readonly formObserver!: InstanceType<typeof ValidationObserver>;
-  @Ref() readonly firstNameElement!: HTMLInputElement;
+  @Ref() readonly emailElement!: HTMLInputElement;
 
-  firstName = "";
-  lastName = "";
   email = "";
-  loginRoute = RouteNames.Login;
-  
-  @State("Registration") state!: RegistrationState;
+  password = "";
+  registerRoute = RouteNames.Register;
+
+  @State("User") state!: UserState;
 
   mounted() {
-    this.firstNameElement?.focus();
+    this.emailElement?.focus();
   }
 
   async onSubmit() {
 
     const isValid = await this.formObserver.validate();
     if (isValid) {
-      registrationModule.register({
-        firstName: this.firstName,
-        lastName: this.lastName,
+      userModule.login({
         email: this.email,
+        password: this.password
       });
     }
   }
 
-  get registering() {
-    return this.state.status === RegistrationStatus.Registering;
-  }
-
-  get registered() {
-    return this.state.status === RegistrationStatus.Registered;
-  }
-
-  get notRegistered() {
-    return this.state.status !== RegistrationStatus.Registered;
+  get loggingIn() {
+    return this.state.authStatus === AuthStatus.LoggingIn
   }
 
   get messages() {

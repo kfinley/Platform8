@@ -28,7 +28,7 @@ namespace Platform8.User.Commands
     }
 
     private static string GenerateUrl(string baseUri, string userId, string password) =>
-            $"{baseUri}#/login?regCode={userId}{Uri.EscapeDataString("|" + password)}";
+            $"{baseUri}/set-password?regCode={userId}{Uri.EscapeDataString("|" + password)}";
 
     public async Task Handle(SendRegistrationConfirmationRequest request, CancellationToken cancellationToken)
     {
