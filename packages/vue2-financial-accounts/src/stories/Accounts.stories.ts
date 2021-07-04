@@ -23,3 +23,31 @@ const DefaultTemplate: Story = (args, { argTypes }) => ({
 });
 
 export const Default = DefaultTemplate.bind({});
+
+const WithDataTemplate: Story = (args, { argTypes }) => ({
+  components: { Accounts, Notify },
+  store: new Vuex.Store({
+    modules: {
+      Accounts: {
+        state: {
+          accounts: [ {
+            name: "Bank Checking",
+            balance: 6232.43
+          },
+          {
+            name: "Bank Savings",
+            balance: 23456.43
+          }]
+        }
+      },
+      Notification: {
+        state: {
+          notifications: []
+        }
+      }
+    }
+  }),
+  template: '<div><notify /><accounts /></div>'
+});
+
+export const WithData = WithDataTemplate.bind({});
