@@ -7,7 +7,6 @@ import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { Command } from '@platform8/commands/src';
 import { container, injectable } from 'inversify-props';
-
 import { LoginCommand } from "../commands";
 
 @injectable()

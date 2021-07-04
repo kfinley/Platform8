@@ -1,50 +1,31 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
-import { action } from '@storybook/addon-actions';
 import Register from "@/components/Register.vue";
-import { ApiClient, ApiResponse } from '@platform8/api-client/src';
 import { container, injectable } from 'inversify-props';
-import { RegistrationStatus } from '@/types';
+import { RegisterRequest, RegisterResponse, RegistrationStatus } from '@/types';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { AlertType } from '@/types';
+import { Command } from '@platform8/commands/src';
 import { messages } from '@/resources/messages';
+import { RegisterCommand } from "../commands";
 
 @injectable()
-class mockApiClient implements ApiClient {
-  async postAsync<T>(url: string, data: unknown, headers?: Record<string, unknown>): Promise<ApiResponse<T>> {
-    action('ApiClient.postAsync')({
-      'url': url,
-      'data': data,
-      'headers': headers
-    });
-
+class mockRegisterCommand implements Command<RegisterRequest, RegisterResponse> {
+  public async runAsync(login: RegisterRequest): Promise<RegisterResponse> {
     // Quick sleep to simulate api call
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    return new Promise<ApiResponse<T>>((resolve, reject) => {
-      if ((data as any).firstName === "Fail") {
-        reject({ message: 'Registration Failed!!' });
-      }
+    return new Promise(resolve => {
       resolve({
-        data: {
-          'Success': true
-        } as any as T,
-        status: 200,
-        statusText: 'Good',
-        headers: {},
-        request: null
-      });
+        success: true
+      } as RegisterResponse)
     });
-  }
-  getAsync<T>(url: string): Promise<ApiResponse<T>> {
-    throw new Error('Method not implemented.');
   }
 }
 
-// bootstrap DI container
-container.bind<ApiClient>('ApiClient').to(mockApiClient);
+container.addTransient<RegisterCommand>(mockRegisterCommand, "RegisterCommand");
 
 let store = new Vuex.Store({});
 setupNotificationModule(store);

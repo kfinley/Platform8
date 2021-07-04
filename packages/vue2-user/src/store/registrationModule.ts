@@ -1,8 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
+import { container } from 'inversify-props';
 import { RegistrationState } from './state';
-import { Inject } from 'inversify-props';
-import { ApiClient } from '@platform8/api-client/src';
-import { RegistrationStatus, RegistrationRequest } from './../types';
+import { RegistrationStatus, RegisterRequest } from './../types';
 import { RegisterCommand } from '../commands';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { AlertType } from "@platform8/vue2-notify/src/types";
@@ -14,18 +13,15 @@ export class RegistrationModule extends VuexModule implements RegistrationState 
   email: string | undefined;
   error: string | undefined;
 
-  @Inject('ApiClient')
-  private apiClient!: ApiClient;
-
   @Action
-  async register(params: RegistrationRequest) {
+  async register(params: RegisterRequest) {
     notificationModule.dismissAll();
 
     this.context.commit('request', { email: params.email });
 
     try {
-      const register = new RegisterCommand(this.apiClient);
-      const response = await register.runAsync(params);
+      const cmd = container.get<RegisterCommand>("RegisterCommand");
+      const response = await cmd.runAsync(params);
 
       if (!response.success) {
         this.context.commit('fail', response.error);
