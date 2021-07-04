@@ -9,6 +9,7 @@ import { setupValidation } from '@platform8/vue2-common/src/validation';
 import { extend } from 'vee-validate';
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
 import { UserPlugin } from "@platform8/vue2-user/src";
+import { RouteNames } from "../router";
 // import { initializeModules } from "../store";
 import userBootStrapper from "@platform8/vue2-user/src/boot-strapper";
 
@@ -39,6 +40,8 @@ const plugin = {
       vue.use(UserPlugin, {
         router: options.router,
         store: options.store,
+        LoginRedirectRouteName: RouteNames.Secured,
+        DefaultRoute: RouteNames.Home,
       })
 
       userBootStrapper();

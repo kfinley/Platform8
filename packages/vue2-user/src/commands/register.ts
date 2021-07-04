@@ -3,7 +3,7 @@ import { Command } from '@platform8/commands/src';
 import { ApiClient } from '@platform8/api-client/src';
 import registrationResources from '../resources/registration';
 
-export class registerCommand implements Command<RegistrationRequest, RegistrationResponse> {
+export class RegisterCommand implements Command<RegistrationRequest, RegistrationResponse> {
 
   private apiClient!: ApiClient;
 

@@ -27,9 +27,11 @@ export default class NotificationModule
 
   @Mutation
   handleError (params: HandleErrorParams) {
+    console.log(params.error);
+
     this.notifications.push({
       header: "Error",
-      message: params.error,
+      message: params.error.message !== undefined ? params.error.message : params.error,
       type: AlertType.danger,
     });
 

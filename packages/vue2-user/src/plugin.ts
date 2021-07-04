@@ -1,12 +1,13 @@
 import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
-import { initializeModules } from "./store";
-import RegistrationModule from "./store/registrationModule";
-
+import { initializeModules, UserState } from "./store";
+import { RegistrationModule, UserModule } from "./store/store-modules";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
-import { routes } from "./router";
+import { NotificationPlugin } from "@platform8/vue2-notify/src/";
+import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
+import { AuthStatus } from "./types";
 
 export interface UserPlugin
   extends PluginObject<UserPluginOptions> {
@@ -17,11 +18,14 @@ export interface UserPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  DefaultRoute: string;
+  LoginRedirectRouteName: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const setupModules = (store: Store<any>): void => {
   store.registerModule("Registration", RegistrationModule);
+  store.registerModule("User", UserModule)
   initializeModules(store);
 };
 
@@ -31,12 +35,96 @@ const UserPlugin = {
       setupModules(options.store);
 
       if (getModule(NotificationModule, options.store) === undefined) {
-        vue.use(UserPlugin, {
+        vue.use(NotificationPlugin, {
           router: options.router,
           store: options.store,
         });
       }
       options.router.addRoutes(routes);
+
+      options.router.beforeEach((to, from, next) => {
+
+        const authStatus = (<UserState>options.store.state.User).authStatus;
+
+        if (to.meta?.allowAnonymous) {
+          if (
+            authStatus === AuthStatus.LoggedIn
+            && to.name === RouteNames.Login
+          ) {
+            next('/');
+          } else {
+            next();
+          }
+          return;
+        }
+
+        switch (authStatus) {
+          case AuthStatus.LoggingIn:
+          case AuthStatus.LoginFailed:
+            next({ name: RouteNames.Login });
+            return;
+          case AuthStatus.Registering:
+            next({ name: RouteNames.Register });
+            return;
+          case AuthStatus.LoggedIn:
+            if (to.name === RouteNames.Login) {
+              next({ name: options.LoginRedirectRouteName });
+              return;
+            }
+            next();
+            return;
+          case AuthStatus.LoggedOut:
+            if (to.name === RouteNames.Login) {
+              next();
+              return;
+            }
+            next({ name: options.DefaultRoute });
+            return;
+          default:
+            next({ name: options.DefaultRoute });
+        }
+      });
+      
+      options.store.watch(
+        () => (<UserState>options.store.state.User).authStatus,
+        (newValue) => {
+          if (options.router.currentRoute.name === null) {
+            return;
+          }
+
+          switch (newValue) {
+            case AuthStatus.LoggedIn:
+              if (options.router.currentRoute.name !== options.LoginRedirectRouteName) {
+                options.router.push({ name: options.LoginRedirectRouteName});
+              }
+              break;
+            case AuthStatus.LoggingIn:
+            case AuthStatus.LoginFailed:
+              if (options.router.currentRoute.name === RouteNames.Login ||
+                  options.router.currentRoute.name === RouteNames.SetPassword) {
+                return;
+              }
+              options.router.push({ name: RouteNames.Login});
+              break;
+            case AuthStatus.NewPasswordRequired:
+            case AuthStatus.SettingPassword:
+              if (options.router.currentRoute.name === RouteNames.SetPassword) {
+                return;
+              }
+              options.router.push({ name: RouteNames.SetPassword});
+              break;
+            case AuthStatus.Registering:
+              if (options.router.currentRoute.name === RouteNames.Register) {
+                return;
+              }
+              options.router.push({ name: RouteNames.Register});
+              break;
+            default:
+              options.router.push({ name: RouteNames.Login});
+              break;
+          }
+        },
+      );
     }
   },
 };

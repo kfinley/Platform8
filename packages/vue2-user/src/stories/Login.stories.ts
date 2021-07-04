@@ -1,15 +1,13 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import { action } from '@storybook/addon-actions';
-import Register from "@/components/Register.vue";
+import Login from "@/components/Login.vue";
 import { ApiClient, ApiResponse } from '@platform8/api-client/src';
 import { container, injectable } from 'inversify-props';
-import { RegistrationStatus } from '@/types';
+import { AuthStatus } from '@/types';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
-import { AlertType } from '@/types';
-import { messages } from '@/resources/messages';
 
 @injectable()
 class mockApiClient implements ApiClient {
@@ -24,8 +22,8 @@ class mockApiClient implements ApiClient {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     return new Promise<ApiResponse<T>>((resolve, reject) => {
-      if ((data as any).firstName === "Fail") {
-        reject({ message: 'Registration Failed!!' });
+      if ((data as any).email === "fail@mail.com") {
+        reject({ message: 'Login Failed!!' });
       }
       resolve({
         data: {
@@ -51,58 +49,57 @@ setupNotificationModule(store);
 setupModules(store);
 
 export default {
-  title: 'Components/Register',
-  component: Register,
+  title: 'Components/Login',
+  component: Login,
 };
 
 const DefaultTemplate: Story = (args, { argTypes }) => ({
-  components: { Register, Notify },
-  store,
-  template: '<div><notify /><register /></div>'
-});
-
-export const Default = DefaultTemplate.bind({});
-
-const RegisteringTemplate: Story = (args, { argTypes }) => ({
-  components: { Register },
+  components: { Login, Notify },
   store: new Vuex.Store({
     modules: {
-      Registration: {
+      User: {
         state: {
-          status: RegistrationStatus.Registering
-        }
-      }
-    }
-  }),
-  template: '<register />'
-});
-
-export const Registering = RegisteringTemplate.bind({});
-
-const ThankYouTemplate: Story = (args, { argTypes }) => ({
-  components: { Register, Notify },
-  store: new Vuex.Store({
-    modules: {
-      Registration: {
-        state: {
-          status: RegistrationStatus.Registered
+          authStatus: AuthStatus.LoggedOut
         }
       },
       Notification: {
         state: {
-          notifications: [
-            {
-              header: messages.Registration.Registered.header,
-              message: messages.Registration.Registered.message,
-              type: AlertType.success,
-            },
-          ],
+          notifications: [],
+        }
+      },
+      Registration: {
+        state: {
         }
       }
     }
   }),
-  template: '<div><notify /><register /></div>'
+  template: '<div><notify /><login /></div>'
 });
 
-export const ThankYou = ThankYouTemplate.bind({});
+export const Default = DefaultTemplate.bind({});
+
+const LoggingInTemplate: Story = (args, { argTypes }) => ({
+  components: { Login, Notify },
+  store: new Vuex.Store({
+    modules: {
+      User: {
+        state: {
+          authStatus: AuthStatus.LoggingIn
+        }
+      },
+      Notification: {
+        state: {
+          notifications: [],
+        }
+      },
+      Registration: {
+        state: {
+        }
+      }
+    }
+  }),
+  template: '<div><notify /><login /></div>'
+});
+
+export const LoggingIn = LoggingInTemplate.bind({});
 
