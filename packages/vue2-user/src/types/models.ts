@@ -1,10 +1,10 @@
-export interface RegistrationRequest {
+export interface RegisterRequest {
   firstName: string;
   lastName: string;
   email: string;
 }
 
-export interface RegistrationResponse {
+export interface RegisterResponse {
   success: boolean;
   error: string | undefined;
 }

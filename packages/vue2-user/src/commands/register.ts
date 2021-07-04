@@ -1,18 +1,16 @@
-import { RegistrationRequest, RegistrationResponse } from '../types';
+import { Inject } from 'inversify-props';
+import { RegisterRequest, RegisterResponse } from '../types';
 import { Command } from '@platform8/commands/src';
 import { ApiClient } from '@platform8/api-client/src';
 import registrationResources from '../resources/registration';
 
-export class RegisterCommand implements Command<RegistrationRequest, RegistrationResponse> {
+export class RegisterCommand implements Command<RegisterRequest, RegisterResponse> {
 
+  @Inject('ApiClient')
   private apiClient!: ApiClient;
 
-  constructor(apiClient: ApiClient) {
-    this.apiClient = apiClient;
-  }
-
-  public async runAsync(registration: RegistrationRequest): Promise<RegistrationResponse> {
-    const response = await this.apiClient.postAsync<RegistrationResponse>(registrationResources.register, registration);
+  public async runAsync(registration: RegisterRequest): Promise<RegisterResponse> {
+    const response = await this.apiClient.postAsync<RegisterResponse>(registrationResources.register, registration);
 
     if (response.status === 200) {
       return response.data;
