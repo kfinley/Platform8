@@ -26,7 +26,15 @@ module.exports = {
               esModule: false,
             }
           },
-          'sass-loader'
+          {
+            // https://github.com/storybookjs/storybook/issues/6743
+            loader: 'sass-loader',
+            options: {
+              additionalData: `
+                @import "@platform8/web-ui/src/styles/styles.scss";
+              `
+            }
+          },
         ]
     });
 

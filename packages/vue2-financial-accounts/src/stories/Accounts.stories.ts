@@ -36,7 +36,11 @@ const WithDataTemplate: Story = (args, { argTypes }) => ({
           },
           {
             name: "Bank Savings",
-            balance: 23456.43
+            balance: 23456.86
+          },
+          {
+            name: "HSA",
+            balance: 8652.92
           }]
         }
       },
