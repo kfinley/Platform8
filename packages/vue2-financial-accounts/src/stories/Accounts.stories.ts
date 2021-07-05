@@ -6,6 +6,7 @@ import { container, injectable } from 'inversify-props';
 import { initializeModules } from '@/store';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
+import { testAccountsState as testState } from "./data";
 
 let store = new Vuex.Store({});
 setupNotificationModule(store);
@@ -29,20 +30,7 @@ const WithDataTemplate: Story = (args, { argTypes }) => ({
   store: new Vuex.Store({
     modules: {
       Accounts: {
-        state: {
-          accounts: [ {
-            name: "Bank Checking",
-            balance: 6232.43
-          },
-          {
-            name: "Bank Savings",
-            balance: 23456.86
-          },
-          {
-            name: "HSA",
-            balance: 8652.92
-          }]
-        }
+        state: testState
       },
       Notification: {
         state: {

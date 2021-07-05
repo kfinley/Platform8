@@ -25,7 +25,7 @@
                   :key="index"
                 >
                   <div class="col">{{ account.name }}</div>
-                  <div class="col text-end px-5">${{ account.balance }}</div>
+                  <div class="col text-end px-5">{{ formatMoney(account.balance) }}</div>
                 </li>
               </ul>
             </div>
@@ -44,6 +44,15 @@ import { AccountsState } from "../store";
 @Component({})
 export default class Accounts extends Vue {
   @State("Accounts") state!: AccountsState;
+
+  formatMoney(number: number, digits: number = 2) {
+
+    const formatOptions = { maximumFractionDigits: digits, minimumFractionDigits: digits }
+    const prefix = (number < 0 ? "-$" : "$");
+    const absValue = Math.abs(number).toLocaleString(undefined, formatOptions);
+
+    return `${prefix}${absValue}`;
+  }
 }
 </script>
 
