@@ -31,12 +31,10 @@ export class UserModule extends VuexModule implements UserState {
             state.authTokens = response.authenticationResult;
           });
         if (response.error) {
-          notificationModule.handleError({ error: response.error, rethrow: false });
+          throw new Error(response.error);
         }
       } else {
-        this.context.commit('mutate',
-          (state: UserState) => state.authStatus = AuthStatus.LoginFailed);
-        notificationModule.handleError({ error: 'No response', rethrow: false });
+        throw new Error('No response');
       }
     } catch (error) {
       this.context.commit('mutate',
@@ -72,10 +70,10 @@ export class UserModule extends VuexModule implements UserState {
         }
 
         if (response.error) {
-          notificationModule.handleError({ error: response.error, rethrow: false });
+          throw new Error(response.error);
         }
       } else {
-        notificationModule.handleError({ error: 'No response', rethrow: false });
+        throw new Error('No response');
       }
     } catch (error) {
       this.context.commit('mutate',
