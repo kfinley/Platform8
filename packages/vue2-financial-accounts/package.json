@@ -12,6 +12,9 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@platform8/api-client": "^0.0.1",
+    "@platform8/config": "^0.0.1",
+    "@platform8/commands": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",
     "@platform8/vue2-notify": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",

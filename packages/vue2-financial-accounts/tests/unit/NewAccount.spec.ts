@@ -5,18 +5,15 @@ import { initializeModules } from '@/store';
 import Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
 
-describe("Accounts.vue", () => {
+describe("AddAccount.vue", () => {
   it("mounts", () => {
 
     // Arrange & Act
-    const component = Factory.create(Components.Accounts, (store) => {
+    const component = Factory.create(Components.AddAccount, (store) => {
       initializeModules(store);
     });
 
     // Assert
     expect(component.isVueInstance).toBeTruthy();
   });
-
 });
-
-

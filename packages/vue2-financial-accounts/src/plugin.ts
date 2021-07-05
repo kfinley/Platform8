@@ -6,6 +6,7 @@ import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
+import bootstrapper from "./boot-strapper";
 
 export interface FinancialAccountsPlugin
   extends PluginObject<FinancialAccountsPluginOptions> {
@@ -21,6 +22,7 @@ export interface FinancialAccountsPluginOptions {
 const FinancialAccountsPlugin = {
   install(vue: typeof Vue, options?: FinancialAccountsPluginOptions) {
     if (options !== undefined && options.store && options.router) {
+      bootstrapper();
       initializeModules(options.store);
 
       if (getModule(NotificationModule, options.store) === undefined) {
