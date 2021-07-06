@@ -1,20 +1,12 @@
-﻿using System;
-
-using MediatR;
+using Platform8.Core.Data;
 
 namespace Platform8.FinancialAccounts.Models
 {
-  public class AddAccountRequest : IRequest<AddAccountResponse>
+  public class Account : BaseEntity
   {
     public string Name { get; set; }
     public string FinancialInstitution { get; set; }
     public string AccountType { get; set; }
     public decimal StartingBalance { get; set; }
-  }
-
-  public class AddAccountResponse
-  {
-    public Guid Id { get; set; }
-    public bool Success { get; set; }
   }
 }

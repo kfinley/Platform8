@@ -1,9 +1,5 @@
 using System;
-using System.Net;
 using System.Threading;
-
-using Amazon.CognitoIdentityProvider;
-using Amazon.CognitoIdentityProvider.Model;
 
 using Machine.Specifications;
 using Machine.Specifications.Model;
@@ -18,7 +14,9 @@ using Platform8.Tests.Common.Specs;
 using Platform8.Tests.Common;
 using Platform8.FinancialAccounts.Commands;
 using Platform8.FinancialAccounts.Models;
-using Microsoft.Extensions.Options;
+using Platform8.Core.Data;
+using Platform8.FinancialAccounts.Data;
+using Platform8.Core;
 
 namespace Platform8.FinancialAccounts.Tests
 {
@@ -45,6 +43,17 @@ namespace Platform8.FinancialAccounts.Tests
         AccountType = "Checking",
         StartingBalance = 234.54m
       };
+
+      Sut.SetupAsync<IAsyncRepository<FinancialAccountsDataContext, Models.Account>, Models.Account>(r => r.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()))
+        .ReturnsAsync(new Models.Account {
+          Id = Guid.NewGuid(),
+          Name = Request.Name,
+          AccountType = Request.AccountType,
+          FinancialInstitution = Request.FinancialInstitution,
+          StartingBalance = Request.StartingBalance,
+          DateCreated = SystemTime.UtcNow,
+          Status = EntityStatus.Active
+        });
     };
 
     Because of = async () => Result = await Sut.Target.Handle(Request, new CancellationTokenSource().Token);
@@ -59,5 +68,16 @@ namespace Platform8.FinancialAccounts.Tests
     public void It_should_return_a_successful_result() =>
         should_return_a_successful_result();
 
+    [Fact]
+    public void It_should_save_a_new_Account_to_the_Data_Repository() => should_save_a_new_User_to_the_Data_Repository();
+    It should_save_a_new_User_to_the_Data_Repository = () => {
+        Sut.Verify<IAsyncRepository<FinancialAccountsDataContext, Models.Account>>(p => p.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()), Times.Once());
+    };
+
+    [Fact]
+    public void It_should_return_the_id_of_the_added_account() => should_return_the_id_of_the_added_account();
+    It should_return_the_id_of_the_added_account = () => {
+      Result.Id.Should().NotBeEmpty();
+    };
   }
 }

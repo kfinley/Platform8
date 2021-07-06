@@ -11,6 +11,7 @@ using Platform8.FinancialAccounts.Models;
 namespace Platform8.FinancialAccounts.Api.Controllers
 {
 
+  [Authorize]
   [ApiController]
   public class AccountController : ControllerBase
   {
