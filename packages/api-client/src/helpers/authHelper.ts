@@ -9,7 +9,7 @@ export const authHelper = {
           return { Authorization: `Bearer ${token}` };
         }
       } catch (e) {
-        console.log(`Error generating request auth headers. ${JSON.stringify(e)}`);
+        console.log(`Error generating request auth headers.`, e);
       }
       return {};
     },

@@ -5,6 +5,7 @@ import { ApiResponse } from './types';
 
 export interface ApiClient {
   getAsync<T>(url: string): Promise<ApiResponse<T>>;
+  getWithAsync<T>(url: string, params: any): Promise<ApiResponse<T>>;
   postAsync<T>(url: string, data: unknown, headers?: Record<string, unknown>): Promise<ApiResponse<T>>;
 }
 
@@ -71,6 +72,17 @@ export class apiClient implements ApiClient {
   }
 
   public async getAsync<T>(url: string): Promise<ApiResponse<T>> {
+    return this.requestAsync<T>({
+      url: `${protocol}${url}`,
+      method: 'GET',
+    });
+  }
+
+  public async getWithAsync<T>(url: string, params: any): Promise<ApiResponse<T>> {
+    Object.entries(params).forEach(
+      ([key, value]) => url = addUrlParam(url, key, value)
+    );
+    console.log(url);
     return this.requestAsync<T>({
       url: `${protocol}${url}`,
       method: 'GET',

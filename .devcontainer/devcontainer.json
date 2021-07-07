@@ -30,7 +30,8 @@
 		"firsttris.vscode-jest-runner",
     "octref.vetur",
     "hmnd.css-signature-help",
-    "tht13.html-preview-vscode"
+    "tht13.html-preview-vscode",
+    "formulahendry.dotnet-test-explorer"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

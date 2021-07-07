@@ -53,7 +53,7 @@ export default class Notify extends Vue {
 }
 </script>
 
-<style scopped>
+<style scoped>
 .notify-overlay {
   position: absolute;
   top: 0;

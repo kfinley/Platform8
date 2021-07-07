@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # TODO: write a script to build out the .devcontainer setup.
 
 # Pull latest:
@@ -6,4 +8,6 @@
 #
 # git submodule init
 # git submodule update
+
+alias init-auth=/workspace/.devcontainer/scripts/init-auth.sh
 
