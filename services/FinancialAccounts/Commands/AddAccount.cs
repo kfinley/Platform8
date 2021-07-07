@@ -21,6 +21,7 @@ namespace Platform8.FinancialAccounts.Commands
     public async Task<AddAccountResponse> Handle(AddAccountRequest request, CancellationToken cancellationToken)
     {
       var account = await this.repository.SaveAsync(new Models.Account {
+        OwnerId = request.OwnerId.Value,
         Name = request.Name,
         FinancialInstitution = request.FinancialInstitution,
         AccountType = request.AccountType,

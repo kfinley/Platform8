@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Platform8.Core.Data
 {
   public class AsyncRepository<TContext, TEntity> : IAsyncRepository<TContext, TEntity>
-    where TEntity : IEntity
+    where TEntity : class, IEntity
     where TContext : DbContext
   {
 
@@ -20,9 +22,24 @@ namespace Platform8.Core.Data
     }
 
     public DbContext Context { get; set; }
+
+    public async Task<IReadOnlyList<TEntity>> ListAllAsync(CancellationToken cancellationToken = default)
+    {
+      return await this.Context.Set<TEntity>().ToListAsync(cancellationToken);
+    }
+
+    public Task<IReadOnlyList<TResult>> ListAsync<TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default) {
+      var result = spec.Apply(this.Context).Select(spec.Selector).ToList();
+      return Task.FromResult<IReadOnlyList<TResult>>(result);
+    }
+
+    public async Task<IReadOnlyList<TEntity>> ListAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
+    {
+      return await spec.Apply(this.Context).ToListAsync(cancellationToken);
+    }
+
     public async Task<TEntity> SaveAsync(TEntity entity, CancellationToken cancellationToken)
     {
-
       var savedEntity = this.Context.Add(entity);
       var result = await this.Context.SaveChangesAsync();
 
