@@ -1,6 +1,13 @@
 <template>
   <div>
-    <account-list v-if="showList" />
+    <div class="text-center" v-if="loading">
+      <span
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span> Loading accounts...
+    </div>
+    <account-list v-else-if="showList" />
     <add-account v-else />
   </div>
 </template>
@@ -27,6 +34,9 @@ export default class Accounts extends Vue {
       this.state.accounts.length > 0 &&
       this.state.accountsStatus === AccountsStatus.Loaded
     );
+  }
+  get loading() {
+    return this.state.accountsStatus === AccountsStatus.Loading;
   }
 }
 </script>

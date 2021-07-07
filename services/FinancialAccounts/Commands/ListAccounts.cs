@@ -24,8 +24,8 @@ namespace Platform8.FinancialAccounts.Commands
       {
         Where = (a => a.OwnerId == request.OwnerId),
         OrderBy = (a => a.Name),
-        Skip = request.Skip ?? 0,
-        Take = request.Take ?? 10,
+        Skip = request.Page.HasValue ? request.Page - 1 : 0,
+        Take = request.PageSize ?? 10,
         Selector = a => new AccountInList
         {
           Id = a.Id,

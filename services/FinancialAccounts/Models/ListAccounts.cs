@@ -7,8 +7,8 @@ namespace Platform8.FinancialAccounts.Models
 {
   public class ListAccountsRequest : IRequest<ListAccountsResponse>
   {
-    public int? Skip { get; set; }
-    public int? Take { get; set; }
+    public int? Page { get; set; }
+    public int? PageSize { get; set; }
     public Guid? OwnerId { get; set; }
   }
 

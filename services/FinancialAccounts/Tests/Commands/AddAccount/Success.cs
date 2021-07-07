@@ -38,6 +38,7 @@ namespace Platform8.FinancialAccounts.Tests
     {
       Request = new AddAccountRequest
       {
+        OwnerId = Guid.NewGuid(),
         Name = "Test",
         FinancialInstitution = "Chase",
         AccountType = "Checking",

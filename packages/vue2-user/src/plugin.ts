@@ -8,6 +8,7 @@ import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { AuthStatus } from "./types";
+import { authHelper } from "@platform8/api-client/src/helpers";
 
 export interface UserPlugin
   extends PluginObject<UserPluginOptions> {
@@ -24,14 +25,13 @@ export interface UserPluginOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const setupModules = (store: Store<any>): void => {
-  store.registerModule("Registration", RegistrationModule);
-  store.registerModule("User", UserModule)
   initializeModules(store);
 };
 
 const UserPlugin = {
   install(vue: typeof Vue, options?: UserPluginOptions) {
     if (options !== undefined && options.store && options.router) {
+
       setupModules(options.store);
 
       if (getModule(NotificationModule, options.store) === undefined) {
@@ -42,7 +42,22 @@ const UserPlugin = {
       }
       options.router.addRoutes(routes);
 
-      options.router.beforeEach((to, from, next) => {
+      options.router.beforeEach(async (to, from, next) => {
+
+        await (options.store as any).restored;
+        if ((options.store.state.User as UserState).authTokens) {
+          getModule(UserModule, options.store)
+            .mutate((s) => {
+              s.authStatus = AuthStatus.LoggedIn;
+            });
+
+          authHelper.authToken = () => {
+            return (options.store.state.User as UserState).authTokens?.accessToken as string;
+          };
+          authHelper.refreshToken = () => {
+            return (options.store.state as UserState).authTokens?.refreshToken as string;
+          };
+        }
 
         const authStatus = (<UserState>options.store.state.User).authStatus;
 
@@ -84,7 +99,7 @@ const UserPlugin = {
             next({ name: options.DefaultRoute });
         }
       });
-      
+
       options.store.watch(
         () => (<UserState>options.store.state.User).authStatus,
         (newValue) => {
@@ -95,32 +110,32 @@ const UserPlugin = {
           switch (newValue) {
             case AuthStatus.LoggedIn:
               if (options.router.currentRoute.name !== options.LoginRedirectRouteName) {
-                options.router.push({ name: options.LoginRedirectRouteName});
+                options.router.push({ name: options.LoginRedirectRouteName });
               }
               break;
             case AuthStatus.LoggingIn:
             case AuthStatus.LoginFailed:
               if (options.router.currentRoute.name === RouteNames.Login ||
-                  options.router.currentRoute.name === RouteNames.SetPassword) {
+                options.router.currentRoute.name === RouteNames.SetPassword) {
                 return;
               }
-              options.router.push({ name: RouteNames.Login});
+              options.router.push({ name: RouteNames.Login });
               break;
             case AuthStatus.NewPasswordRequired:
             case AuthStatus.SettingPassword:
               if (options.router.currentRoute.name === RouteNames.SetPassword) {
                 return;
               }
-              options.router.push({ name: RouteNames.SetPassword});
+              options.router.push({ name: RouteNames.SetPassword });
               break;
             case AuthStatus.Registering:
               if (options.router.currentRoute.name === RouteNames.Register) {
                 return;
               }
-              options.router.push({ name: RouteNames.Register});
+              options.router.push({ name: RouteNames.Register });
               break;
             default:
-              options.router.push({ name: RouteNames.Login});
+              options.router.push({ name: RouteNames.Login });
               break;
           }
         },

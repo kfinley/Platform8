@@ -28,9 +28,9 @@ namespace Platform8.Core.Data
       return await this.Context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
-    public Task<IReadOnlyList<TResult>> ListAsync<TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default) {
-      var result = spec.Apply(this.Context).Select(spec.Selector).ToList();
-      return Task.FromResult<IReadOnlyList<TResult>>(result);
+    public Task<IReadOnlyList<TResult>> ListAsync<TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default)
+    {
+      return Task.FromResult<IReadOnlyList<TResult>>(spec.Apply(this.Context).Select(spec.Selector).ToList());
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)

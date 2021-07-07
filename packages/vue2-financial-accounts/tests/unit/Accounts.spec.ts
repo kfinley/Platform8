@@ -2,7 +2,7 @@ import 'reflect-metadata'; // <-- deal with this...
 
 import { initializeModules } from '@/store';
 
-import Components from "@/components";
+import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
 
 describe("Accounts.vue", () => {

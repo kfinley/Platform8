@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import Accounts from "@/components/Accounts.vue";
-import { initializeModules } from '@/store';
+import { AccountsStatus, initializeModules } from '@/store';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { AddAccountRequest, AddAccountResponse } from '@/models';
@@ -41,4 +41,22 @@ const DefaultTemplate: Story = (args, { argTypes }) => ({
 });
 
 export const Default = DefaultTemplate.bind({});
+
+const LoadingTemplate: Story = (args, { argTypes }) => ({
+  components: { Accounts },
+  store: new Vuex.Store({
+    modules: {
+      Accounts: {
+        state: {
+          accountsStatus: AccountsStatus.Loading,
+          accounts: [],
+        }
+      }
+    }
+  }),
+  template: '<accounts />'
+});
+
+export const Loading = LoadingTemplate.bind({});
+
 

@@ -4,7 +4,7 @@ import { User, AuthStatus, SetPasswordRequest, LoginRequest, AuthenticationResul
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { LoginCommand, SetPasswordCommand } from "../commands";
 import { container } from 'inversify-props';
-
+import { authHelper } from '@platform8/api-client/src/helpers'
 @Module({ namespaced: true, name: 'User' })
 export class UserModule extends VuexModule implements UserState {
   authStatus = AuthStatus.LoggedOut;
@@ -26,10 +26,19 @@ export class UserModule extends VuexModule implements UserState {
       if (response) {
         this.context.commit('mutate',
           (state: UserState) => {
+            state.authTokens = response.authenticationResult;
             state.authStatus = response.status;
             state.authSession = response.session;
-            state.authTokens = response.authenticationResult;
           });
+
+        //TODO: Fix this...
+        authHelper.authToken = () => {
+          return (this.context.state as UserState).authTokens?.accessToken as string;
+        };
+        authHelper.refreshToken = () => {
+          return (this.context.state as UserState).authTokens?.refreshToken as string;
+        };
+
         if (response.error) {
           throw new Error(response.error);
         }

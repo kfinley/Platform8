@@ -1,6 +1,12 @@
 import { config } from '@platform8/config/src';
 
-const accountsServiceUri = config.Api;
+let accountsServiceUri = config.Api;
+
+if (config.ApiPorts && config.ApiPorts.includes('accounts')) {
+  const port = config.ApiPorts.split(',').find(x => x.startsWith('accounts:'))?.split(':')[1];
+  accountsServiceUri = `${accountsServiceUri}:${port}`;
+  console.log(`Financial Accounts Service: ${accountsServiceUri}`);
+}
 
 export default {
   get serviceBasePath() {
@@ -9,7 +15,11 @@ export default {
 
   get account() {
     return `${this.serviceBasePath}/account`;
-  }
+  },
+
+  get accounts() {
+    return `${this.serviceBasePath}/accounts`;
+  },
 
 }
 

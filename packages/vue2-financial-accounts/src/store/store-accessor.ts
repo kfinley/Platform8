@@ -6,7 +6,7 @@ let accountsModule: AccountsModule;
 
 function initializeModules(store: Store<any>): void {
   store.registerModule("Accounts", AccountsModule);
-  accountsModule = getModule(AccountsModule, store)
+  accountsModule = getModule(AccountsModule, store);
 }
 
 export { initializeModules, accountsModule };

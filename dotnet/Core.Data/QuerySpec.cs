@@ -29,7 +29,7 @@ namespace Platform8.Core.Data
 
       query = this.Where.HasValue() ? query.Where(Where) : query;
       query = this.OrderBy.HasValue() ? query.OrderBy(OrderBy) : query;
-      query = this.Skip.HasValue ? query.Skip(this.Skip.Value) : query;
+      query = this.Skip.HasValue ? query.Skip(this.Skip.Value * this.Take.Value) : query;
       query = this.Take.HasValue ? query.Take(this.Take.Value) : query;
 
       return query;

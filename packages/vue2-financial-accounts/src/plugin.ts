@@ -7,6 +7,7 @@ import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import bootstrapper from "./boot-strapper";
+import { AccountsModule } from "./store/store-modules";
 
 export interface FinancialAccountsPlugin
   extends PluginObject<FinancialAccountsPluginOptions> {
@@ -17,11 +18,14 @@ export interface FinancialAccountsPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  loadOnChangedValue: any;
+  loadOnChangedGetter: () => any;
 }
 
 const FinancialAccountsPlugin = {
   install(vue: typeof Vue, options?: FinancialAccountsPluginOptions) {
     if (options !== undefined && options.store && options.router) {
+
       bootstrapper();
       initializeModules(options.store);
 
@@ -33,6 +37,15 @@ const FinancialAccountsPlugin = {
       }
       options.router.addRoutes(routes);
 
+      options.store.watch(
+        options.loadOnChangedGetter,
+        (newValue) => {
+
+          if (newValue === options.loadOnChangedValue) {
+            getModule(AccountsModule, options.store).loadAccounts({});
+          }
+        },
+      );
     }
   },
 };

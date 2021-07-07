@@ -29,7 +29,8 @@ const SavingTemplate: Story = (args, { argTypes }) => ({
     modules: {
       Accounts: {
         state: {
-          accountsStatus: AccountsStatus.Saving
+          accountsStatus: AccountsStatus.Saving,
+          accounts: [],
         }
       },
       Notification: {

@@ -1,3 +1,5 @@
+import { Account } from "@/models";
+
 export enum AccountsStatus {
   Adding = "Adding",
   Empty = "Empty",
@@ -7,6 +9,6 @@ export enum AccountsStatus {
   Saving = "Saving"
 }
 export interface AccountsState {
-  accounts: any[]
+  accounts: Account[]
   accountsStatus: AccountsStatus
 }

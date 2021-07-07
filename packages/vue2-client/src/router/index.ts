@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
-import Secured from "../views/Secured.vue";
+import Dashboard from "../views/Dashboard.vue";
 
 Vue.use(VueRouter);
 
 export enum RouteNames {
   Home = "Home",
   About = "About",
-  Secured = "Secured",
+  Dashboard = "Dashboard",
 };
 
 const routes: Array<RouteConfig> = [
@@ -19,9 +19,9 @@ const routes: Array<RouteConfig> = [
     meta: { allowAnonymous: true },
   },
   {
-    path: "/secured",
-    name: RouteNames.Secured,
-    component: Secured,
+    path: "/dashboard",
+    name: RouteNames.Dashboard,
+    component: Dashboard,
   },
   {
     path: "/about",
