@@ -8,13 +8,14 @@
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:vue2-user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-financial-accounts",
+    "storybook:transactions": "lerna run storybook --stream --scope=@platform8/vue2-transactions",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
     "clean": "lerna clean --yes",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "lerna run --stream test:unit --scope=@platform8/vue2-user --scope=@platform8/vue2-financial-accounts --scope=@platform8/vue2-transactions && npm run test:dotnet",
     "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/FinancialAccounts/Tests/FinancialAccounts.Tests.csproj",
     "test:accounts": "lerna run --stream test:unit --scope=@platform8/vue2-financial-accounts",
-    "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",
-    "test:all": "lerna run --stream test:unit --scope=@platform8/vue2-user --scope=@platform8/vue2-financial-accounts && npm run test:dotnet"
+    "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions",
+    "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user"
   },
   "author": "rkf",
   "devDependencies": {
