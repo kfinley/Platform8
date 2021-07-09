@@ -1,6 +1,6 @@
 import 'reflect-metadata'; // <-- deal with this...
 
-import { initializeModules } from '@/store';
+import { setupModules } from '@/plugin';
 
 import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
@@ -10,12 +10,10 @@ describe("UploadTransactions.vue", () => {
 
     // Arrange Act
     const component = Factory.create(Components.UploadTransactions, (store) => {
-      initializeModules(store);
+      setupModules(store);
     });
 
     // Assert
     expect(component.isVueInstance).toBeTruthy();
   });
 });
-
-

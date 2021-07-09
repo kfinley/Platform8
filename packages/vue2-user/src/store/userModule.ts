@@ -31,14 +31,8 @@ export class UserModule extends VuexModule implements UserState {
             state.authSession = response.session;
           });
 
-        //TODO: Fix this...
-        authHelper.authToken = () => {
-          return (this.context.state as UserState).authTokens?.accessToken as string;
-        };
-        authHelper.refreshToken = () => {
-          return (this.context.state as UserState).authTokens?.refreshToken as string;
-        };
-
+        authHelper.setTokens(response.authenticationResult as AuthenticationResult);
+        
         if (response.error) {
           throw new Error(response.error);
         }

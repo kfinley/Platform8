@@ -6,6 +6,7 @@ import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
+import { TransactionsModule } from "./store/transactionsModule";
 
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
@@ -18,11 +19,17 @@ export interface TransactionsPluginOptions {
   router: router;
 }
 
+export const setupModules = (store: Store<any>): void => {
+  store.registerModule("Transactions", TransactionsModule);
+  initializeModules(store);
+};
+
 const TransactionsPlugin = {
   install(vue: typeof Vue, options?: TransactionsPluginOptions) {
     if (options !== undefined && options.store && options.router) {
-      initializeModules(options.store);
-
+      
+      setupModules(options.store);
+      
       if (getModule(NotificationModule, options.store) === undefined) {
         vue.use(NotificationPlugin, {
           router: options.router,

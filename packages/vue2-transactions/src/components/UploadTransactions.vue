@@ -10,12 +10,31 @@
                 class="btn-close float-end"
                 data-bs-dismiss="alert"
                 aria-label="Close"
-                v-if="state.transactions.length > 0"
+                v-if="success"
                 @click.prevent="cancel"
               ></button>
               <p class="text-xl m-0">Upload Transactions</p>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <div
+                class="text-center"
+                v-if="uploading"
+              >
+                <p>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Uploaded...
+                </p>
+              </div>
+              <input
+                type="file"
+                v-else
+                @change.prevent="uploadTransactions($event.target.files)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -26,13 +45,30 @@
 <script lang="ts">
 import { Component, Vue, Ref } from "vue-property-decorator";
 import { State } from "vuex-class";
-import { TransactionsState } from "../store";
-  
+import { transactionsModule, TransactionsState, UploadStatus } from "../store";
+
 @Component({})
 export default class UploadTransactions extends Vue {
-  
   @State("Transactions") state!: TransactionsState;
+  
+  cancel() {
+    transactionsModule.mutate(
+      (state) => (state.uploadStatus = UploadStatus.None)
+    );
+  }
 
-  cancel() { }
+  uploadTransactions(files: FileList) {
+    transactionsModule.uploadTransactions({
+      file: files[0],
+    });
+  }
+
+  get success() {
+    return this.state.uploadStatus === UploadStatus.Success;
+  }
+
+  get uploading() {
+    return this.state.uploadStatus === UploadStatus.Uploading;
+  }
 }
 </script>
