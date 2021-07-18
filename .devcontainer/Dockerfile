@@ -8,7 +8,6 @@ RUN su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${N
 RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && \
 npm install -g \
 npm@latest \
-serverless \
 lerna \
 @vue/cli \
 wscat \

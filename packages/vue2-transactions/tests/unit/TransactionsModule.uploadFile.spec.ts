@@ -45,8 +45,8 @@ describe("TransactionsModule.uploadFile - Success", () => {
 
   const commit = jest.fn();
   const uploadFileRunAsyncMock = jest.fn();
+  const testAccountid = 12345;
 
-  
   beforeAll(async () => {
 
     // Arrange
@@ -62,7 +62,8 @@ describe("TransactionsModule.uploadFile - Success", () => {
     // Act
     await store.dispatch("Transactions/uploadTransactions",
       {
-        file: testFile
+        file: testFile,
+        accountId: testAccountid
       });
   });
 
@@ -91,7 +92,8 @@ describe("TransactionsModule.uploadFile - Success", () => {
     expect(uploadFileRunAsyncMock).toHaveBeenCalledWith(
       {
         file: testFile,
-        bucket: 'uploads-transactions'
+        accountId: testAccountid,
+        bucket: 'Transactions-uploads'
       });
   });
 

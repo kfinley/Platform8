@@ -12,7 +12,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   uploadStatus = UploadStatus.None;
 
   @Action
-  async uploadTransactions(params: { file: File }) {
+  async uploadTransactions(params: { file: File, accountId: string }) {
     
     notificationModule.dismissAll();
 
@@ -21,8 +21,9 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
 
     try {
       const runParams = {
+        accountId: params.accountId,
         file: params.file,
-        bucket: 'uploads-transactions'
+        bucket: 'Transactions-uploads' //TODO: config this...
       };
       
       const cmd = container.get<UploadFileCommand>("UploadFileCommand");

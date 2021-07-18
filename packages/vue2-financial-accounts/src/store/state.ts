@@ -1,4 +1,4 @@
-import { Account } from "@/models";
+import { Account } from "./../models";
 
 export enum AccountsStatus {
   Adding = "Adding",

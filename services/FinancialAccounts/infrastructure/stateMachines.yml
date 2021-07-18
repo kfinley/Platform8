@@ -1,0 +1,10 @@
+ProcessAccountBalanceNotification:
+  definition:
+    Comment: Process AccountBalanceTopic 
+    StartAt: AccountBalanceNotification
+    States:
+      AccountBalanceNotification:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [AccountBalanceNotification, Arn]
+        End: true

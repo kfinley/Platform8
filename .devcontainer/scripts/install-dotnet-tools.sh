@@ -1,3 +1,6 @@
+# For .net Lambda support
+curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --runtime aspnetcore --version 3.1.17
+
 dotnet tool install -g Amazon.Lambda.Tools
 dotnet new -i "Amazon.Lambda.Templates::*"
 dotnet tool install --global dotnet-ef

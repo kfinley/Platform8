@@ -1,4 +1,6 @@
+
 export interface UploadFileRequest {
+  accountId: string;
   bucket: string;
   file: File;
 }

@@ -1,0 +1,68 @@
+${self:service}UploadedTopic:
+  Type: "AWS::SNS::Topic"
+  Properties:
+    DisplayName: ${self:service}UploadedNotification
+
+AccountBalanceTopic:
+  Type: "AWS::SNS::Topic"
+  Properties:
+    DisplayName: AccountBalanceNotification
+
+${self:service}ProcessedTopic:
+  Type: "AWS::SNS::Topic"
+  Properties:
+    DisplayName: TransactionsProcessedNotification
+
+${self:service}UploadedSubscription:
+  Type: "AWS::SNS::Subscription"
+  Properties:
+    Endpoint: arn:aws:sns:us-west-1:101010101010:ProcessTransactions
+    Protocol: lambda
+    TopicArn: arn:aws:sns:us-west-1:101010101010:TransactionsUploadedTopic
+
+# ${self:service}UploadedTopicPolicy:
+#   Type: AWS::SNS::TopicPolicy
+#   Properties:
+#     PolicyDocument:
+#       Id: ${self:service}UploadedTopicPolicy
+#       Version: "2012-10-17"
+#       Statement:
+#         -
+#           Sid: AllowS3Publish
+#           Effect: Allow
+#           Principal:
+#             Service: "s3.amazonaws.com"
+#           Action: sns:Publish
+#           Resource: "*"
+#     Topics:
+#       - !Ref ${self:service}UploadedTopic
+
+${self:service}UploadsBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:service}-uploads
+    BucketEncryption:
+      ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+    NotificationConfiguration:
+      TopicConfigurations:
+        - Id: ${self:service}-uploaded
+          TopicArn: arn:aws:sns:us-west-1:101010101010:${self:service}UploadedTopic
+          Events:
+            - s3:ObjectCreated:Put
+
+${self:service}Table:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: ${self:service}
+    AttributeDefinitions:
+      - AttributeName: "PK"
+        AttributeType: "S"
+      - AttributeName: "SK"
+        AttributeType: "S"
+    KeySchema:
+      - AttributeName: "PK"
+        KeyType: "HASH"
+      - AttributeName: "SK"
+        KeyType: "RANGE"

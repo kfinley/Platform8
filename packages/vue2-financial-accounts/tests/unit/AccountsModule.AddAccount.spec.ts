@@ -2,19 +2,27 @@ import 'reflect-metadata'; // <-- deal with this...
 import Vuex from "vuex";
 import { createLocalVue } from "@vue/test-utils";
 import { AddAccountRequest } from "@/models";
-import { AccountsState, AccountsStatus, initializeModules } from "@/store";
 import { initializeModules as notificationInitializeModules } from "@platform8/vue2-notify/src/store";
 import { AddAccountCommand } from "@/commands";
 import bootstrapper from "@/boot-strapper";
+import { AccountsModule } from '@/store/accountsModule';
+import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
+import { initializeModules } from '@/store';
 
 export const storeFactory = (commit?: any) => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
 
-  const store = new Vuex.Store({});
-
-  initializeModules(store);
-  notificationInitializeModules(store);
+  const store = new Vuex.Store({
+    plugins: [
+      initializeModules,
+      notificationInitializeModules
+    ],
+    modules: {
+      "Accounts": AccountsModule,
+      "Notification": NotificationModule,
+    }
+  });
 
   if (commit !== undefined) {
     store.commit = commit;

@@ -28,10 +28,11 @@
 		"editorconfig.editorconfig",
 		"jcbuisson.vue",
 		"firsttris.vscode-jest-runner",
-    "octref.vetur",
-    "hmnd.css-signature-help",
-    "tht13.html-preview-vscode",
-    "formulahendry.dotnet-test-explorer"
+		"octref.vetur",
+		"hmnd.css-signature-help",
+		"tht13.html-preview-vscode",
+		"formulahendry.dotnet-test-explorer",
+		"threadheap.serverless-ide-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -51,7 +51,7 @@ export class AccountsModule extends VuexModule implements AccountsState {
 
     this.context.commit('mutate',
       (state: AccountsState) => state.accountsStatus = AccountsStatus.Loading);
-      
+
     try {
       const cmd = container.get<LoadAccountsCommand>("LoadAccountsCommand");
       const response = await cmd.runAsync(params);

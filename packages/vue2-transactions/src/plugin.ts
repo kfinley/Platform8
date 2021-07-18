@@ -7,6 +7,7 @@ import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { TransactionsModule } from "./store/transactionsModule";
+import bootstrapper from "./bootstrapper";
 
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
@@ -20,6 +21,7 @@ export interface TransactionsPluginOptions {
 }
 
 export const setupModules = (store: Store<any>): void => {
+  
   store.registerModule("Transactions", TransactionsModule);
   initializeModules(store);
 };
@@ -27,9 +29,10 @@ export const setupModules = (store: Store<any>): void => {
 const TransactionsPlugin = {
   install(vue: typeof Vue, options?: TransactionsPluginOptions) {
     if (options !== undefined && options.store && options.router) {
-      
+      bootstrapper();
+
       setupModules(options.store);
-      
+
       if (getModule(NotificationModule, options.store) === undefined) {
         vue.use(NotificationPlugin, {
           router: options.router,

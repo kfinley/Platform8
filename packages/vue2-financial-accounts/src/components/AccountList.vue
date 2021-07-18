@@ -54,12 +54,13 @@ export default class AccountList extends Vue {
     })
   }
   formatMoney(number: number, digits: number = 2) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
 
-    const formatOptions = { maximumFractionDigits: digits, minimumFractionDigits: digits }
-    const prefix = (number < 0 ? "-$" : "$");
-    const absValue = Math.abs(number).toLocaleString(undefined, formatOptions);
+    // const formatOptions = { maximumFractionDigits: digits, minimumFractionDigits: digits }
+    // const prefix = (number < 0 ? "-$" : "$");
+    // const absValue = Math.abs(number).toLocaleString(undefined, formatOptions);
 
-    return `${prefix}${absValue}`;
+    // return `${prefix}${absValue}`;
   }
 }
 </script>

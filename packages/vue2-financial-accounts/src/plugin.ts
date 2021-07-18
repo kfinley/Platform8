@@ -22,13 +22,19 @@ export interface FinancialAccountsPluginOptions {
   loadOnChangedGetter: () => any;
 }
 
+export const setupModules = (store: Store<any>): void => {
+  store.registerModule("Accounts", AccountsModule);
+  initializeModules(store);
+}
+
 const FinancialAccountsPlugin = {
   install(vue: typeof Vue, options?: FinancialAccountsPluginOptions) {
     if (options !== undefined && options.store && options.router) {
 
       bootstrapper();
-      initializeModules(options.store);
 
+      setupModules(options.store);
+      
       if (getModule(NotificationModule, options.store) === undefined) {
         vue.use(NotificationPlugin, {
           router: options.router,

@@ -26,14 +26,23 @@
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  Uploaded...
+                  Uploading...
                 </p>
               </div>
-              <input
-                type="file"
-                v-else
-                @change.prevent="uploadTransactions($event.target.files)"
-              />
+              <div v-else>
+                <p>
+                <select class="dropdown" v-model="selectedAccount">
+                  <option selected :value="null">Select an account...</option>
+                  <option v-for="account in accounts" :key="account.id" :value="account.id">
+                    {{account.name}}
+                  </option>
+                </select>
+                </p>
+                <input
+                  type="file"
+                  @change.prevent="uploadTransactions($event.target.files)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -43,32 +52,41 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Ref } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { State } from "vuex-class";
 import { transactionsModule, TransactionsState, UploadStatus } from "../store";
+import { AccountsState } from "@platform8/vue2-financial-accounts/src/store";
 
 @Component({})
 export default class UploadTransactions extends Vue {
-  @State("Transactions") state!: TransactionsState;
-  
+  @State("Transactions") transactionsState!: TransactionsState;
+  @State("Accounts") accountsState!: AccountsState;
+
+  selectedAccount = "";
+
   cancel() {
     transactionsModule.mutate(
       (state) => (state.uploadStatus = UploadStatus.None)
     );
   }
 
-  uploadTransactions(files: FileList) {
+  uploadTransactions(files: any) {
+
     transactionsModule.uploadTransactions({
+      accountId: this.selectedAccount,
       file: files[0],
     });
   }
+  get accounts() {
+    return this.accountsState.accounts;
+  }
 
   get success() {
-    return this.state.uploadStatus === UploadStatus.Success;
+    return this.transactionsState.uploadStatus === UploadStatus.Success;
   }
 
   get uploading() {
-    return this.state.uploadStatus === UploadStatus.Uploading;
+    return this.transactionsState.uploadStatus === UploadStatus.Uploading;
   }
 }
 </script>

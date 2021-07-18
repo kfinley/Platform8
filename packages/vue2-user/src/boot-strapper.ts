@@ -5,11 +5,13 @@ import { LoginCommand, SetPasswordCommand, RegisterCommand } from "./commands";
 
 export default function bootstrapper() {
 
-  container.bind<CognitoIdentityProvider>("CognitoIdentityProvider")
-    .toDynamicValue(() => new CognitoIdentityProvider({
-      endpoint: "http://localhost:9229"
-    }));
-
+  if (!container.isBound("CognitoIdentityProvider")) {
+    container.bind<CognitoIdentityProvider>("CognitoIdentityProvider")
+      .toDynamicValue(() => new CognitoIdentityProvider({
+        endpoint: "http://localhost:9229"
+      }));
+  }
+  
   // container.bind<CognitoIdentityProvider>("CognitoIdentityProvider")
   //   .toDynamicValue(() => new CognitoIdentityProvider({
   //     region: "us-west-1"

@@ -1,0 +1,20 @@
+ProcessUploadedTransactions:
+  definition:
+    Comment: Process Transactions step function
+    StartAt: GetFileProcessor
+    States:
+      GetFileProcessor:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [GetFileProcessor, Arn]
+        Next: ProcessTransactions
+      ProcessTransactions:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [ProcessTransactions, Arn]
+        Next: PublishTransactionProcessingResults
+      PublishTransactionProcessingResults:
+        Type: Task
+        Resource:
+          Fn::GetAtt [PublishTransactionProcessingResults, Arn]
+        End: true

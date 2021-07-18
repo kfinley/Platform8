@@ -12,15 +12,14 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.6",
     "@platform8/api-client": "^0.0.1",
-    "@platform8/config": "^0.0.1",
     "@platform8/commands": "^0.0.1",
+    "@platform8/config": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",
     "@platform8/vue2-notify": "^0.0.1",
-    "@platform8/web-ui": "^0.0.1",
     "@platform8/vue2-test-utils": "^0.0.1",
-
-    "@babel/core": "^7.14.6",
+    "@platform8/web-ui": "^0.0.1",
     "@storybook/addon-actions": "^6.3.2",
     "@storybook/addon-essentials": "^6.3.2",
     "@storybook/addon-links": "^6.3.2",
@@ -56,9 +55,9 @@
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-loader": "^15.9.7",
-    "vue-template-compiler": "^2.6.11",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
+    "vue-template-compiler": "^2.6.11",
     "vuex": "^3.4.0",
     "vuex-class": "^0.3.2",
     "vuex-module-decorators": "^1.0.1"
