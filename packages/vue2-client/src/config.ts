@@ -2,6 +2,7 @@
 // TODO: Fix this...
 import { config } from '@platform8/config/src';
 config.ClientId = import.meta.env.VITE_APP_CLIENT_ID as string;
+config.PoolId = import.meta.env.VITE_APP_POOL_ID as string;
 config.Api = import.meta.env.VITE_APP_API as string;
 config.ApiPorts = import.meta.env.VITE_APP_API_PORTS as string | undefined;
 config.ServiceWorkerPath = import.meta.env.VITE_APP_SERVICE_WORKER_PATH as string;

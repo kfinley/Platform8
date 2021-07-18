@@ -10,18 +10,17 @@
     "lint": ""
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "bootstrap": "^5.0.2",
-
     "@platform8/api-client": "^0.0.1",
     "@platform8/commands": "^0.0.1",
     "@platform8/config": "^0.0.1",
-    "@platform8/vue2-notify": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",
     "@platform8/vue2-financial-accounts": "^0.0.1",
+    "@platform8/vue2-notify": "^0.0.1",
+    "@platform8/vue2-transactions": "^0.0.1",
     "@platform8/vue2-user": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",
-
+    "bootstrap": "^5.0.2",
+    "core-js": "^3.6.5",
     "inversify-props": "^2.2.6",
     "reflect-metadata": "^0.1.13",
     "register-service-worker": "^1.7.1",
@@ -49,8 +48,8 @@
     "prettier": "^2.2.1",
     "sass": "^1.35.1",
     "typescript": "~4.1.5",
-    "vue-template-compiler": "^2.6.11",
     "vite": "^2.2.1",
-    "vite-plugin-vue2": "^1.6.2"
+    "vite-plugin-vue2": "^1.6.2",
+    "vue-template-compiler": "^2.6.11"
   }
 }

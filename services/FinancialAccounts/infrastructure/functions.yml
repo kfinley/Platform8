@@ -1,0 +1,11 @@
+AccountBalanceNotification:
+  handler: FinancialAccounts.Functions::Platform8.FinancialAccounts.Functions.AccountBalanceNotification::Handler
+  runtime: dotnetcore3.1
+  package:
+    artifact: services/FinancialAccounts/accounts-deploy-package.zip
+  
+StartProcessAccountBalanceNotification:
+  handler: startProcessAccountBalanceNotification/function.handler
+  events:
+    - sns:
+        arn: arn:aws:sns:us-west-1:101010101010:AccountBalanceTopic

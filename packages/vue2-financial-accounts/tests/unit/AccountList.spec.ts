@@ -1,6 +1,6 @@
 import 'reflect-metadata'; // <-- deal with this...
 
-import { initializeModules } from '@/store';
+import { setupModules } from '@/plugin';
 
 import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
@@ -11,7 +11,7 @@ describe("AccountList.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AccountList, (store) => {
-      initializeModules(store);
+      setupModules(store);
     });
 
     // Assert
@@ -22,7 +22,7 @@ describe("AccountList.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AccountList, (store) => {
-      initializeModules(store);
+      setupModules(store);
       store.state.Accounts = testState;
     });
 
@@ -36,7 +36,7 @@ describe("AccountList.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AccountList, (store) => {
-      initializeModules(store);
+      setupModules(store);
       store.state.Accounts = testState;
     });
 
@@ -59,7 +59,7 @@ describe("AccountList.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AccountList, (store) => {
-      initializeModules(store);
+      setupModules(store);
       store.state.Accounts = testState;
     });
 
@@ -81,7 +81,7 @@ describe("AccountList.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AccountList, (store) => {
-      initializeModules(store);
+      setupModules(store);
       store.state.Accounts = testState;
     });
 

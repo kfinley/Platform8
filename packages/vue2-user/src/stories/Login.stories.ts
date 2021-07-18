@@ -11,6 +11,9 @@ import { Notify } from "@platform8/vue2-notify/src/components";
 
 @injectable()
 class mockApiClient implements ApiClient {
+  getWithAsync<T>(url: string, params: any): Promise<ApiResponse<T>> {
+    throw new Error('Method not implemented.');
+  }
   async postAsync<T>(url: string, data: unknown, headers?: Record<string, unknown>): Promise<ApiResponse<T>> {
     action('ApiClient.postAsync')({
       'url': url,

@@ -1,6 +1,6 @@
 import 'reflect-metadata'; // <-- deal with this...
 
-import { initializeModules } from '@/store';
+import { setupModules } from '@/plugin';
 
 import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
@@ -10,7 +10,7 @@ describe("AddAccount.vue", () => {
 
     // Arrange & Act
     const component = Factory.create(Components.AddAccount, (store) => {
-      initializeModules(store);
+      setupModules(store);
     });
 
     // Assert

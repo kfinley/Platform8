@@ -1,0 +1,82 @@
+service: Platform8
+
+frameworkVersion: '2'
+variablesResolutionMode: 20210326
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline-sns
+  - serverless-s3-local
+  - serverless-step-functions
+  - serverless-offline-stepfunctions-plugin
+  - ./.devcontainer/serverless-offline/ # (customized with [slow] .netcore 3.1 lambda support)
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    excludeFiles: ./**/*.(spec|stories).ts
+
+  dynamodb:
+    noStart: true
+    start:
+      port: 8000
+      migrate: true
+      host: platform8.dynamodb
+      seed: true
+      convertEmptyValues: true
+
+  serverless-offline-sns:
+    accountId: 101010101010
+    debug: false
+
+  serverless-offline:
+    host: platform.dev
+    dotnetRunnerScript: ./scripts/invoke.ps1
+
+  s3:
+    serviceEndpoint: localhost
+    host: localhost
+    directory: ./.devcontainer/.s3
+    port: 4569
+
+  offlineStepFunctions:
+    accountId: 101010101010
+    host: platform8.sfn
+    port: 8083
+    region: us-west-1
+    functions:
+      ProcessTransactions: Transactions-ProcessTransactions
+      GetFileProcessor: Transactions-GetFileProcessor
+      PublishTransactionProcessingResults: Transactions-PublishTransactionProcessingResults
+      AccountBalanceNotification: FinancialAccounts-AccountBalanceNotification
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  # package:
+  #   individually: true
+  stage: ${opt:stage, 'Dev'}
+  region: ${opt:region, 'us-west-1'}
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  environment: ${file(./scripts/loadEnvironment.js)}
+  lambdaHashingVersion: 20201221
+  tracing:
+    lambda: true
+    apiGateway: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource: "*"
+
+resources:
+  Resources: ${file(./scripts/loadResources.js)}
+
+functions: ${file(./scripts/loadFunctions.js)}
+
+stepFunctions:
+  stateMachines: ${file(./scripts/loadStateMachines.js)}

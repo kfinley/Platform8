@@ -3,7 +3,10 @@ node_modules
 lerna-debug.log
 package.json.lerna_backup
 
+dotnet-install.sh
+
 # Serverless directories
+.build
 .serverless
 .webpack
 
@@ -12,11 +15,26 @@ package.json.lerna_backup
 .devcontainer/.cognito/db/local.json
 .devcontainer/.db/**
 .devcontainer/.s3/**
+
+# Transaction service buckets
+!.devcontainer/.s3/Transactions-uploads
+!.devcontainer/.s3/Transactions-uploads/._S3rver_cors.xml
+
 .devcontainer/.ses/**
+
+# Registration service email templates
+!.devcontainer/.ses/email-templates
+!.devcontainer/.ses/email-templates/ConfirmRegistrationTemplate.json
 
 # AWS Local Projects
 .devcontainer/aws-ses-local/**
 .devcontainer/cognito-local/**
+.devcontainer/serverless-offline/**
+.devcontainer/serverless-offline-step-functions/**
+.devcontainer/serverless-offline-stepfunctions-plugin/**
+
+# lambda dotnetcore deploy packages
+*-deploy-package.zip
 
 # dotnet
 bin

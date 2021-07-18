@@ -5,7 +5,6 @@ import { AccountsModule }  from "./store-modules";
 let accountsModule: AccountsModule;
 
 function initializeModules(store: Store<any>): void {
-  store.registerModule("Accounts", AccountsModule);
   accountsModule = getModule(AccountsModule, store);
 }
 

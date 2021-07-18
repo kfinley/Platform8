@@ -1,0 +1,21 @@
+GetFileProcessor:
+  handler: getFileProcessor/function.handler
+
+ProcessTransactions:
+  handler: processTransactions/function.handler
+
+PublishS3SnsTopic:
+  handler: publishS3SnsTopic/function.handler
+  events:
+    - s3:
+        bucket: Transactions-uploads
+        event: s3:ObjectCreated:Put
+
+PublishTransactionProcessingResults:
+  handler: publishTransactionProcessingResults/function.handler
+
+StartProcessTransactions:
+  handler: startProcessTransactions/function.handler
+  events:
+    - sns:
+        arn: arn:aws:sns:us-west-1:101010101010:TransactionsUploadedTopic

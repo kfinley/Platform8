@@ -21,6 +21,7 @@ import { NotificationState } from '@platform8/vue2-notify/src/store';
 import { AccountsState } from '@platform8/vue2-financial-accounts/src/store';
 import { UserState, RegistrationState } from '@platform8/vue2-user/src/store';
 import { AuthStatus } from '@platform8/vue2-user/src/types';
+import { TransactionsPlugin } from "@platform8/vue2-transactions/src";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@platform8/web-ui/src/styles/styles.scss";
@@ -60,6 +61,11 @@ const plugin = {
         store: options.store,
         loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
         loadOnChangedValue: AuthStatus.LoggedIn
+      });
+
+      vue.use(TransactionsPlugin, {
+        router: options.router,
+        store: options.store
       });
 
       //TODO: Fix this. Move it into the UserPlugin install like FinancialAccountsPlugin

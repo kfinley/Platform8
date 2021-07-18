@@ -4,3 +4,12 @@
 [submodule ".devcontainer/cognito-local"]
 	path = .devcontainer/cognito-local
 	url = https://github.com/kfinley/cognito-local.git
+[submodule ".devcontainer/serverless-offline-step-functions"]
+	path = .devcontainer/serverless-offline-step-functions
+	url = https://github.com/kfinley/serverless-offline-step-functions.git
+[submodule ".devcontainer/serverless-offline-stepfunctions-plugin"]
+	path = .devcontainer/serverless-offline-stepfunctions-plugin
+	url = https://github.com/kfinley/serverless-offline-stepfunctions-plugin.git
+[submodule ".devcontainer/serverless-offline"]
+	path = .devcontainer/serverless-offline
+	url = https://github.com/kfinley/serverless-offline.git
