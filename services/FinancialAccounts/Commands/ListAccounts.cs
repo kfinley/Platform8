@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Platform8.FinancialAccounts.Commands
 
     public async Task<ListAccountsResponse> Handle(ListAccountsRequest request, CancellationToken cancellationToken)
     {
-      var querySpec = new QuerySpec<Account, AccountInList>()
+      var querySpec = new QuerySpec<Account, AccountInList>
       {
         Where = (a => a.OwnerId == request.OwnerId),
         OrderBy = (a => a.Name),
@@ -30,9 +31,11 @@ namespace Platform8.FinancialAccounts.Commands
         {
           Id = a.Id,
           Name = a.Name,
-          Balance = a.StartingBalance // TODO: For now just using starting balance before adding balance tracking bits.
+          Balance = a.Balances.OrderByDescending(b => b.Date).FirstOrDefault()?.Amount ?? a.StartingBalance
         }
       };
+
+      querySpec.AddInclude(a => a.Balances);
 
       var list = await this.repository.ListAsync<AccountInList>(querySpec);
 

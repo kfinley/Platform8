@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -41,11 +42,25 @@ namespace Platform8.FinancialAccounts.Api
 
       services
         .AddOptions()
+        .AddLogging(loggingBuilder => {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
+
+      services
         .AddDefaultAWSOptions(Configuration.GetAWSOptions())
         .AddDbContext<FinancialAccountsDataContext>(options =>
           options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
                            new MySqlServerVersion(new Version(5, 7)),
-                           x => x.MigrationsAssembly("FinancialAccounts.Api")))
+                           x => x.MigrationsAssembly("FinancialAccounts.Api"))
+
+#if DEBUG
+                  // TODO: investigate.. Shouldn't have to add this b/c of the AddLogging config above.
+                  .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                  .EnableSensitiveDataLogging()
+#endif
+        )
         .AddContinuousMigrations<FinancialAccountsDataContext>()
 
         .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))

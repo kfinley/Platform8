@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,23 @@ namespace Platform8.Core.Data
     }
 
     public DbContext Context { get; set; }
+
+    public async Task<TEntity> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+      return await this.Context.Set<TEntity>().FindAsync(id);
+    }
+
+    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default) {
+      return await FirstOrDefaultAsync(new QuerySpec<TEntity>
+      {
+        Where = where
+      }, cancellationToken);
+    }
+
+    public async Task<TEntity> FirstOrDefaultAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
+    {
+      return await spec.Apply(this.Context).FirstOrDefaultAsync(cancellationToken);
+    }
 
     public async Task<IReadOnlyList<TEntity>> ListAllAsync(CancellationToken cancellationToken = default)
     {

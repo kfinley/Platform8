@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 using Platform8.Core.Data;
 
 namespace Platform8.FinancialAccounts.Models
@@ -10,7 +10,9 @@ namespace Platform8.FinancialAccounts.Models
     public string FinancialInstitution { get; set; }
     public string AccountType { get; set; }
     public decimal StartingBalance { get; set; }
+    
     public Guid OwnerId { get; set; }
+    public IList<Balance> Balances { get; set; }
   }
 
   public class AccountInList {
