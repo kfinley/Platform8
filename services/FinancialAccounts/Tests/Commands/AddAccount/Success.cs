@@ -45,13 +45,25 @@ namespace Platform8.FinancialAccounts.Tests
         StartingBalance = 234.54m
       };
 
+      var newAccountId = Guid.NewGuid();
+
       Sut.SetupAsync<IAsyncRepository<FinancialAccountsDataContext, Models.Account>, Models.Account>(r => r.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(new Models.Account {
-          Id = Guid.NewGuid(),
+          Id = newAccountId,
           Name = Request.Name,
           AccountType = Request.AccountType,
           FinancialInstitution = Request.FinancialInstitution,
           StartingBalance = Request.StartingBalance,
+          DateCreated = SystemTime.UtcNow,
+          Status = EntityStatus.Active
+        });
+      
+      Sut.SetupAsync<IAsyncRepository<FinancialAccountsDataContext, Models.Balance>, Models.Balance>(r => r.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()))
+        .ReturnsAsync(new Models.Balance {
+          Id = Guid.NewGuid(),
+          Account = Argument.Is<Account>(a => a.Id == newAccountId),
+          Amount = Request.StartingBalance,
+          Date = SystemTime.UtcNow,
           DateCreated = SystemTime.UtcNow,
           Status = EntityStatus.Active
         });
@@ -79,6 +91,12 @@ namespace Platform8.FinancialAccounts.Tests
     public void It_should_return_the_id_of_the_added_account() => should_return_the_id_of_the_added_account();
     It should_return_the_id_of_the_added_account = () => {
       Result.Id.Should().NotBeEmpty();
+    };
+
+    [Fact]
+    public void It_should_save_a_new_Balance_to_the_Data_Repository() => should_save_a_new_Balance_to_the_Data_Repository();
+    It should_save_a_new_Balance_to_the_Data_Repository = () => {
+      Sut.Verify<IAsyncRepository<FinancialAccountsDataContext, Models.Balance>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
   }
 }

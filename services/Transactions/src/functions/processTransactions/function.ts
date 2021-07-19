@@ -29,6 +29,8 @@ export const handler: Handler = async (event: any, context: Context) => {
     console.log('Transactions Saved:', saveTransactions);
 
     const payload = {
+      userId,
+      accountId,
       count: saveTransactions.count,
       saved: saveTransactions.saved,
       balance: {

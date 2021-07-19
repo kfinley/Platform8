@@ -81,8 +81,10 @@ try {
 
   #Add-Type -Path "$($dllPath)/Amazon.Lambda.AspNetCoreServer.dll"
   #Add-Type -Path "$($dllPath)/AWSSDK.Core.dll"
-  
-  Add-Type -Path "$($dllPath)/Amazon.Lambda.SNSEvents.dll"
+
+  #Add-Type -Path "$($dllPath)/Amazon.Lambda.SNSEvents.dll"
+
+  Add-Type -Path "$($dllPath)/FinancialAccounts.Models.EF3.dll"
 
   $assm = [System.Reflection.Assembly]::LoadFrom($dll)
 
