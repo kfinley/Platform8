@@ -1,5 +1,8 @@
+import { Transaction } from "../models";
+
 export interface TransactionsState {
-  transactions: any[],
+  transactions: Transaction[],
+  transactionsStatus: TransactionsStatus,
   uploadStatus: UploadStatus
 }
 
@@ -7,5 +10,13 @@ export enum UploadStatus {
   None = "None",
   Uploading = "Uploading",
   Success = "Success",
-  Fialed = "Failed"
+  Failed = "Failed"
+}
+
+export enum TransactionsStatus {
+  None = "None",
+  Loading = "Loading",
+  Loaded = "Loaded",
+  Uploading = "Uploading",
+  Failed = "Failed"
 }

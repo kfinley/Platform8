@@ -1,19 +1,22 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
-import { TransactionsState, UploadStatus } from './state';
+import { TransactionsState, TransactionsStatus, UploadStatus } from './state';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { container } from 'inversify-props';
 import { getModule } from "vuex-module-decorators";
-import { UploadFileCommand } from '@/commands';
+import { LoadTransactionsCommand, UploadFileCommand } from '@/commands';
 import { messages } from "../resources/messages";
 import { AlertType } from '@platform8/vue2-notify/src/types';
+import { Account } from '@platform8/vue2-financial-accounts/src/models';
+
 @Module({ namespaced: true, name: 'Transactions' })
 export class TransactionsModule extends VuexModule implements TransactionsState {
   transactions = [];
+  transactionsStatus = TransactionsStatus.None;
   uploadStatus = UploadStatus.None;
 
   @Action
   async uploadTransactions(params: { file: File, accountId: string }) {
-    
+
     notificationModule.dismissAll();
 
     this.context.commit('mutate',
@@ -25,7 +28,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
         file: params.file,
         bucket: 'Transactions-uploads' //TODO: config this...
       };
-      
+
       const cmd = container.get<UploadFileCommand>("UploadFileCommand");
       const response = await cmd.runAsync(runParams);
 
@@ -33,7 +36,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
         throw new Error(response.error);
       }
 
-      this.context.commit('mutate', 
+      this.context.commit('mutate',
         (state: TransactionsState) => {
           state.uploadStatus = UploadStatus.Success
         }
@@ -46,7 +49,41 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
 
     } catch (error) {
       this.context.commit('mutate',
-        (state: TransactionsState) => state.uploadStatus = UploadStatus.Fialed);
+        (state: TransactionsState) => state.uploadStatus = UploadStatus.Failed);
+
+      notificationModule.handleError({ error, rethrow: false });
+    }
+  }
+
+  @Action
+  async loadTransactions(params: { accounts: Account[] }) {
+    this.context.commit('mutate',
+      (state: TransactionsState) => state.transactionsStatus = TransactionsStatus.Loading);
+
+    try {
+      const runParams = {};
+
+      const cmd = container.get<LoadTransactionsCommand>("LoadTransactionsCommand");
+      const response = await cmd.runAsync(runParams);
+      
+      if (!response.transactions) {
+        throw new Error(response.error);
+      }
+      this.context.commit('mutate',
+        (state: TransactionsState) => {
+          state.transactions = response.transactions.map(t => {
+            return {
+              ...t,
+              account: params.accounts.find(a => a.id == t.accountId)?.name
+            }
+          });
+          state.transactionsStatus = TransactionsStatus.Loaded;
+        }
+      );
+
+    } catch (error) {
+      this.context.commit('mutate',
+        (state: TransactionsState) => state.transactionsStatus = TransactionsStatus.Failed);
 
       notificationModule.handleError({ error, rethrow: false });
     }

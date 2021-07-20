@@ -154,7 +154,7 @@ describe("TransactionsModule.uploadFile - Fail", () => {
       expect.any(Function),
       undefined
     );
-    expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Fialed");
+    expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Failed");
 
   });
 

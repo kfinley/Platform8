@@ -1,13 +1,9 @@
 import { S3Client } from '@aws-sdk/client-s3';
-import { container } from 'inversify-props';
-import { UploadFileCommand } from "./commands";
+import { Container, container } from 'inversify-props';
+import { LoadTransactionsCommand, UploadFileCommand } from "./commands";
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
-import {
-  fromCognitoIdentityPool,
-} from "@aws-sdk/credential-provider-cognito-identity";
-import { authHelper } from '@platform8/api-client/src/helpers'
-import { config } from "@platform8/config/src";
+import { apiClient, ApiClient } from '@platform8/api-client/src';
 
 export default function bootstrapper() {
 
@@ -47,7 +43,13 @@ export default function bootstrapper() {
         }
       }))
   }
+  addTransientIfNeeded<ApiClient>(apiClient, 'ApiClient', container);
+  addTransientIfNeeded<UploadFileCommand>(UploadFileCommand, "UploadFileCommand", container);
+  addTransientIfNeeded<LoadTransactionsCommand>(LoadTransactionsCommand, "LoadTransactionsCommand", container);
+}
 
-  container.addTransient<UploadFileCommand>(UploadFileCommand, "UploadFileCommand");
-
+function addTransientIfNeeded<T>(constructor: any, id: string, container: Container) {
+  if (!container.isBound(id)) {
+    container.addTransient<T>(constructor, id);
+  }
 }

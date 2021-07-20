@@ -16,10 +16,7 @@
               <p class="text-xl m-0">Upload Transactions</p>
             </div>
             <div class="card-body">
-              <div
-                class="text-center"
-                v-if="uploading"
-              >
+              <div class="text-center" v-if="uploading">
                 <p>
                   <span
                     class="spinner-border spinner-border-sm"
@@ -31,15 +28,20 @@
               </div>
               <div v-else>
                 <p>
-                <select class="dropdown" v-model="selectedAccount">
-                  <option selected :value="null">Select an account...</option>
-                  <option v-for="account in accounts" :key="account.id" :value="account.id">
-                    {{account.name}}
-                  </option>
-                </select>
+                  <select class="dropdown" v-model="selectedAccount">
+                    <option selected :value="null">Select an account...</option>
+                    <option
+                      v-for="account in accounts"
+                      :key="account.id"
+                      :value="account.id"
+                    >
+                      {{ account.name }}
+                    </option>
+                  </select>
                 </p>
                 <input
                   type="file"
+                  class="btn primary-gradien"
                   @change.prevent="uploadTransactions($event.target.files)"
                 />
               </div>
@@ -52,15 +54,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { State } from "vuex-class";
 import { transactionsModule, TransactionsState, UploadStatus } from "../store";
-import { AccountsState } from "@platform8/vue2-financial-accounts/src/store";
+import { Account } from "@platform8/vue2-financial-accounts/src/models";
 
 @Component({})
 export default class UploadTransactions extends Vue {
-  @State("Transactions") transactionsState!: TransactionsState;
-  @State("Accounts") accountsState!: AccountsState;
+  @State("Transactions") state!: TransactionsState;
+
+  @Prop()
+  accounts!: Account[];
 
   selectedAccount = "";
 
@@ -71,22 +75,18 @@ export default class UploadTransactions extends Vue {
   }
 
   uploadTransactions(files: any) {
-
     transactionsModule.uploadTransactions({
       accountId: this.selectedAccount,
       file: files[0],
     });
   }
-  get accounts() {
-    return this.accountsState.accounts;
-  }
 
   get success() {
-    return this.transactionsState.uploadStatus === UploadStatus.Success;
+    return this.state.uploadStatus === UploadStatus.Success;
   }
 
   get uploading() {
-    return this.transactionsState.uploadStatus === UploadStatus.Uploading;
+    return this.state.uploadStatus === UploadStatus.Uploading;
   }
 }
 </script>

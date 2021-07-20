@@ -2,17 +2,19 @@
   <div>
     <notify />
     <accounts />
+    <transactions />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Accounts, Notify } from "../components/";
+import { Accounts, Transactions, Notify } from "../components/";
 
 @Component({
   components: {
     Notify,
     Accounts,
+    Transactions
   }
 })
 export default class Secured extends Vue { }
