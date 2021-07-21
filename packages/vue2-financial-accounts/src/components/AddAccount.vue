@@ -1,141 +1,119 @@
 <template>
-  <div
-    class="d-flex align-items-center justify-content-center"
-  >
-    <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-        <div class="col mx-auto">
-          <div class="card z-index-0">
-            <div class="card-header text-center">
-              <button
-              type="button"
-              class="btn-close float-end"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-              v-if="state.accounts.length > 0"
-              @click.prevent="cancelAdd"
-            ></button>
-            <p class="text-xl m-0">New Account</p>
-            </div>
-            <div class="card-body">
-               <ValidationObserver ref="formObserver">
-                <form
-                  @submit.prevent="onSubmit"
-                  autocomplete="off"
-                  role="form text-left"
-                >
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="name"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="text"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Name"
-                        aria-label="Name"
-                        ref="NameElement"
-                        v-model="name"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="financialInstitution"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="text"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Financial Institution"
-                        aria-label="Finanical Institution"
-                        v-model="financialInstitution"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="accountType"
-                      type="text"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="text"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Account Type"
-                        aria-label="Account Type"
-                        v-model="accountType"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="startingBalance"
-                      type="number"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="number"
-                        step=".01"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Starting Balance"
-                        aria-label="Starting Balance"
-                        v-model="startingBalance"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="text-center">
-                    <button
-                      type="submit"
-                      class="btn primary-gradient w-100 my-4 mb-2"
-                      :disabled="processing"
-                    >
-                      <span
-                        v-if="processing"
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Add Account
-                    </button>
-                  </div>
-                </form>
-              </ValidationObserver>
-            </div>
+  <card header-text="Add Account" :cancel="cancelAdd">
+    <ValidationObserver ref="formObserver">
+    <form
+      @submit.prevent="onSubmit"
+      autocomplete="off"
+      role="form text-left"
+    >
+      <div class="mb-3">
+        <ValidationProvider
+          name="name"
+          rules="required"
+          mode="passive"
+          v-slot="{ errors }"
+        >
+          <input
+            type="text"
+            :class="['form-control', { 'is-invalid': errors[0] }]"
+            placeholder="Name"
+            aria-label="Name"
+            ref="NameElement"
+            v-model="name"
+            :disabled="processing"
+          />
+          <div v-show="errors[0]" class="invalid-feedback">
+            {{ errors[0] }}
           </div>
-        </div>
+        </ValidationProvider>
       </div>
-    </div>
-  </div>
+      <div class="mb-3">
+        <ValidationProvider
+          name="financialInstitution"
+          rules="required"
+          mode="passive"
+          v-slot="{ errors }"
+        >
+          <input
+            type="text"
+            :class="['form-control', { 'is-invalid': errors[0] }]"
+            placeholder="Financial Institution"
+            aria-label="Finanical Institution"
+            v-model="financialInstitution"
+            :disabled="processing"
+          />
+          <div v-show="errors[0]" class="invalid-feedback">
+            {{ errors[0] }}
+          </div>
+        </ValidationProvider>
+      </div>
+      <div class="mb-3">
+        <ValidationProvider
+          name="accountType"
+          type="text"
+          rules="required"
+          mode="passive"
+          v-slot="{ errors }"
+        >
+          <input
+            type="text"
+            :class="['form-control', { 'is-invalid': errors[0] }]"
+            placeholder="Account Type"
+            aria-label="Account Type"
+            v-model="accountType"
+            :disabled="processing"
+          />
+          <div v-show="errors[0]" class="invalid-feedback">
+            {{ errors[0] }}
+          </div>
+        </ValidationProvider>
+      </div>
+      <div class="mb-3">
+        <ValidationProvider
+          name="startingBalance"
+          type="number"
+          rules="required"
+          mode="passive"
+          v-slot="{ errors }"
+        >
+          <input
+            type="number"
+            step=".01"
+            :class="['form-control', { 'is-invalid': errors[0] }]"
+            placeholder="Starting Balance"
+            aria-label="Starting Balance"
+            v-model="startingBalance"
+            :disabled="processing"
+          />
+          <div v-show="errors[0]" class="invalid-feedback">
+            {{ errors[0] }}
+          </div>
+        </ValidationProvider>
+      </div>
+      <div class="text-center">
+        <button
+          type="submit"
+          class="btn primary-gradient w-100 my-4 mb-2"
+          :disabled="processing"
+        >
+          <span
+            v-if="processing"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Add Account
+        </button>
+      </div>
+    </form>
+    </ValidationObserver>
+  </card>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Ref } from "vue-property-decorator";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { accountsModule, AccountsState, AccountsStatus } from "../store";
 
@@ -143,6 +121,7 @@ import { accountsModule, AccountsState, AccountsStatus } from "../store";
   components: {
     ValidationProvider,
     ValidationObserver,
+    Card,
   }
 })
 export default class AddAccount extends Vue {

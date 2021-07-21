@@ -1,54 +1,43 @@
 <template>
-  <div
-    class="d-flex align-items-center justify-content-center"
-    v-if="state.accounts.length > 0"
-  >
-    <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-        <div class="col mx-auto">
-          <div class="card z-index-0">
-            <div class="card-header text-center">
-              <p class="text-xl m-0">Accounts</p>
-            </div>
-            <div class="card-body p-0">
-              <ul id="account-list" class="container striped-list">
-                <li class="row list-header">
-                  <div class="col">Name</div>
-                  <div class="col text-end px-4">Balance</div>
-                </li>
-                <li
-                  class="row"
-                  v-for="(account, index) in state.accounts"
-                  :key="index"
-                >
-                  <div class="col">{{ account.name }}</div>
-                  <div class="col text-end px-4">
-                    {{ formatMoney(account.balance) }}
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <a
-                href="#addAccount"
-                class="text-dark font-weight-bold"
-                @click.prevent="addAccount"
-                >Add account</a
-              >
-            </div>
-          </div>
+  <card header-text="Accounts" :show-close="false" v-if="state.accounts.length > 0">
+    <ul id="account-list" class="container striped-list p-0">
+      <li class="row list-header">
+        <div class="col">Name</div>
+        <div class="col text-end px-4">Balance</div>
+      </li>
+      <li
+        class="row"
+        v-for="(account, index) in state.accounts"
+        :key="index"
+      >
+        <div class="col">{{ account.name }}</div>
+        <div class="col text-end px-4">
+          {{ formatMoney(account.balance) }}
         </div>
-      </div>
-    </div>
-  </div>
+      </li>
+    </ul>
+    <template v-slot:footer>
+      <a
+      href="#addAccount"
+        class="text-dark font-weight-bold"
+        @click.prevent="addAccount"
+        >Add account</a
+      >
+    </template>
+  </card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { accountsModule, AccountsState, AccountsStatus } from "../store";
 
-@Component({})
+@Component({
+  components: {
+    Card,
+  }
+})
 export default class AccountList extends Vue {
   @State("Accounts") state!: AccountsState;
 
@@ -65,4 +54,3 @@ export default class AccountList extends Vue {
   }
 }
 </script>
-

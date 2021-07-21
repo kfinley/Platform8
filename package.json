@@ -7,7 +7,7 @@
   "scripts": {
     "dev:setup": "echo \"TODO:// Write a script that sets up local Cognito settings and SES email templates.\" && exit 1",
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
-    "storybook:vue2-user": "lerna run storybook --stream --scope=@platform8/vue2-user",
+    "storybook:user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-financial-accounts",
     "storybook:transactions": "lerna run storybook --stream --scope=@platform8/vue2-transactions",
     "storybook:budget": "lerna run storybook --stream --scope=@platform8/vue2-budget-manager",

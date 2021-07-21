@@ -1,93 +1,74 @@
 <template>
-  <div
-    class="d-flex align-items-center justify-content-center"
-    style="height: 90vh;"
-  >
-    <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-          <div class="card z-index-0">
-            <div class="card-header text-center pt-4">
-              <p>Set Password</p>
+  <card header-text="Set Password" :show-close="false" style="height: 90vh">
+    <ValidationObserver ref="formObserver">
+      <form @submit.prevent="onSubmit" autocomplete="off" role="form text-left">
+        <div class="mb-3">
+          <ValidationProvider
+            name="password1"
+            rules="required"
+            mode="passive"
+            v-slot="{ errors }"
+          >
+            <input
+              type="password"
+              :class="['form-control', { 'is-invalid': errors[0] }]"
+              placeholder="Password"
+              aria-label="Password"
+              v-model="password1"
+              ref="password1Element"
+              :disabled="processing"
+            />
+            <div v-show="errors[0]" class="invalid-feedback">
+              {{ errors[0] }}
             </div>
-            <div class="card-body">
-              <ValidationObserver ref="formObserver">
-                <form
-                  @submit.prevent="onSubmit"
-                  autocomplete="off"
-                  role="form text-left"
-                >
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="password1"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="password"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Password"
-                        aria-label="Password"
-                        v-model="password1"
-                        ref="password1Element"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-                  <div class="mb-3">
-                    <ValidationProvider
-                      name="password2"
-                      rules="required"
-                      mode="passive"
-                      v-slot="{ errors }"
-                    >
-                      <input
-                        type="password"
-                        :class="['form-control', { 'is-invalid': errors[0] }]"
-                        placeholder="Confirm Password"
-                        aria-label="Confirm Password"
-                        v-model="password2"
-                        :disabled="processing"
-                      />
-                      <div v-show="errors[0]" class="invalid-feedback">
-                        {{ errors[0] }}
-                      </div>
-                    </ValidationProvider>
-                  </div>
-
-                  <div class="text-center">
-                    <button
-                      type="submit"
-                      class="btn primary-gradient w-100 my-4 mb-2"
-                      :disabled="processing"
-                    >
-                      <span
-                        v-if="processing"
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Set Password
-                    </button>
-                  </div>
-                </form>
-              </ValidationObserver>
-            </div>
-          </div>
+          </ValidationProvider>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="mb-3">
+          <ValidationProvider
+            name="password2"
+            rules="required"
+            mode="passive"
+            v-slot="{ errors }"
+          >
+            <input
+              type="password"
+              :class="['form-control', { 'is-invalid': errors[0] }]"
+              placeholder="Confirm Password"
+              aria-label="Confirm Password"
+              v-model="password2"
+              :disabled="processing"
+            />
+            <div v-show="errors[0]" class="invalid-feedback">
+              {{ errors[0] }}
+            </div>
+          </ValidationProvider>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn primary-gradient w-100 my-4 mb-2"
+            :disabled="processing"
+          >
+            <span
+              v-if="processing"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Set Password
+          </button>
+        </div>
+      </form>
+    </ValidationObserver>
+  </card>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Ref, Prop } from "vue-property-decorator";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { userModule, UserState } from "../store";
+import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { AuthStatus } from "../types";
 import { messages } from "../resources/messages";
@@ -96,6 +77,7 @@ import { messages } from "../resources/messages";
   components: {
     ValidationProvider,
     ValidationObserver,
+    Card,
   },
 })
 export default class SetPassword extends Vue {
@@ -121,7 +103,7 @@ export default class SetPassword extends Vue {
 
     userModule.login({
       email: this.username,
-      password: this.previousPassword
+      password: this.previousPassword,
     });
   }
 
@@ -131,13 +113,13 @@ export default class SetPassword extends Vue {
       userModule.changePassword({
         username: this.username,
         previousPassword: this.previousPassword,
-        proposedPassword: this.password1
+        proposedPassword: this.password1,
       });
     }
   }
 
   get processing() {
-    return this.state.authStatus === AuthStatus.SettingPassword
+    return this.state.authStatus === AuthStatus.SettingPassword;
   }
 
   get messages() {

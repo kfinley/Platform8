@@ -1,58 +1,52 @@
 <template>
-  <div class="container">
-    <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-      <div class="col mx-auto">
-        <div class="card z-index-0">
-          <div class="card-header text-center">
-            <p class="text-xl m-0">Transactions</p>
-          </div>
-          <div class="card-body p-0">
-            <ul id="transaction-list" class="container striped-list">
-              <li class="row list-header">
-                <div class="col">Date</div>
-                <div class="col">Account</div>
-                <div class="col text-end px-4">Amount</div>
-              </li>
-              <li
-                class="row"
-                v-for="(transaction, index) in transactionsState.transactions"
-                :key="index"
-              >
-                <div class="row p-1">
-                  <div class="col font-weight-bold">{{ new Date(transaction.date).toLocaleDateString('en-US') }}</div>
-                  <div class="col font-italic">{{ transaction.account }}</div>
-                  <div class="col font-weight-bolder text-lg text-end px-3">
-                    {{ formatMoney(transaction.amount) }}
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-11 px-3 py-2">{{ transaction.description }}</div>
-                </div>
-              
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer">
-            <a
-              href="#addTransactions"
-              class="text-dark font-weight-bold"
-              @click.prevent="addTransactions"
-              >Add transactions</a
-            >
+  <card header-text="Transactions" :show-close="false">
+     <ul id="transaction-list" class="container striped-list p-0">
+      <li class="row list-header">
+        <div class="col">Date</div>
+        <div class="col">Account</div>
+        <div class="col text-end px-4">Amount</div>
+      </li>
+      <li
+        class="row"
+        v-for="(transaction, index) in transactionsState.transactions"
+        :key="index"
+      >
+        <div class="row p-1">
+          <div class="col font-weight-bold">{{ new Date(transaction.date).toLocaleDateString('en-US') }}</div>
+          <div class="col font-italic">{{ transaction.account }}</div>
+          <div class="col font-weight-bolder text-lg text-end px-3">
+            {{ formatMoney(transaction.amount) }}
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="row">
+            <div class="col-11 px-3 py-2">{{ transaction.description }}</div>
+        </div>
+      
+      </li>
+    </ul>
+    <template v-slot:footer>
+      <a
+        href="#addTransactions"
+        class="text-dark font-weight-bold"
+        @click.prevent="addTransactions"
+        >Add transactions</a
+      >
+    </template>
+  </card>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { transactionsModule, TransactionsState, TransactionsStatus } from "../store";
 import { Account } from '@platform8/vue2-financial-accounts/src/models';
 
-@Component({})
+@Component({
+  components: {
+    Card,
+  }
+})
 export default class TransactionList extends Vue {
   @State("Transactions") transactionsState!: TransactionsState;
 

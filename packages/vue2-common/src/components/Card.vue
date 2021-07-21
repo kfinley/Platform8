@@ -43,8 +43,8 @@ export default class Card extends Vue {
   @Prop()
   headerText!: string;
 
-  @Prop({ default: () => true})
-  showClose!: () => boolean;
+  @Prop({ default: true})
+  showClose!: boolean;
 
 }
 </script>
