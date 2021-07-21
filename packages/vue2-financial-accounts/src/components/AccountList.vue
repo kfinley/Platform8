@@ -11,13 +11,10 @@
               <p class="text-xl m-0">Accounts</p>
             </div>
             <div class="card-body p-0">
-              <ul
-                id="account-list"
-                class="container striped-list"
-              >
+              <ul id="account-list" class="container striped-list">
                 <li class="row list-header">
                   <div class="col">Name</div>
-                  <div class="col text-center">Balance</div>
+                  <div class="col text-end px-4">Balance</div>
                 </li>
                 <li
                   class="row"
@@ -25,12 +22,19 @@
                   :key="index"
                 >
                   <div class="col">{{ account.name }}</div>
-                  <div class="col text-end px-5">{{ formatMoney(account.balance) }}</div>
+                  <div class="col text-end px-4">
+                    {{ formatMoney(account.balance) }}
+                  </div>
                 </li>
               </ul>
             </div>
             <div class="card-footer">
-              <a href="#addAccount" class="text-dark font-weight-bold" @click.prevent="addAccount">Add account</a>
+              <a
+                href="#addAccount"
+                class="text-dark font-weight-bold"
+                @click.prevent="addAccount"
+                >Add account</a
+              >
             </div>
           </div>
         </div>
@@ -51,16 +55,13 @@ export default class AccountList extends Vue {
   addAccount() {
     accountsModule.mutate((state: AccountsState) => {
       state.accountsStatus = AccountsStatus.Adding;
-    })
+    });
   }
-  formatMoney(number: number, digits: number = 2) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
-
-    // const formatOptions = { maximumFractionDigits: digits, minimumFractionDigits: digits }
-    // const prefix = (number < 0 ? "-$" : "$");
-    // const absValue = Math.abs(number).toLocaleString(undefined, formatOptions);
-
-    // return `${prefix}${absValue}`;
+  formatMoney(number: number) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(number);
   }
 }
 </script>
