@@ -98,7 +98,7 @@ export default class UploadTransactions extends Vue {
   }
 
   get showClose() {
-    return this.success || this.accounts.length > 0
+    return this.success || this.accounts?.length > 0
   }
 }
 </script>
