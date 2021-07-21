@@ -8,7 +8,6 @@ import { testAccountsState as testState } from "./data";
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
 import { AccountsModule } from '@/store/accountsModule';
 
-
 let store = new Vuex.Store({
   plugins: [
     initializeModules,

@@ -2,12 +2,22 @@ import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import AddAccount from "@/components/AddAccount.vue";
 import { AccountsStatus, initializeModules } from '@/store';
-import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
+import { initializeModules as initializeNotifications } from "@platform8/vue2-notify/src/store";
+import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
+import { AccountsModule } from '@/store/accountsModule';
 
-let store = new Vuex.Store({});
-setupNotificationModule(store);
-initializeModules(store);
+let store = new Vuex.Store({
+  plugins: [
+    initializeModules,
+    initializeNotifications,
+  ],
+  modules: {
+    "Notification": NotificationModule,
+    "Accounts": AccountsModule,
+  }
+});
+
 
 export default {
   title: 'Components/AddAccount',

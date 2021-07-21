@@ -74,7 +74,7 @@ describe("AccountList.vue", () => {
     const accountDetails = accountDetailsRow?.children as HTMLCollection;
     expect(accountDetails.length).toEqual(2);
     expect(accountDetails[0].textContent).toEqual(testState.accounts[0].name);
-    expect(accountDetails[1].textContent).toEqual(`$6,232.43`);
+    expect(accountDetails[1].textContent?.trim()).toEqual(`$6,232.43`);
   });
 
   it("shows negative money amounts with a negative sign", () => {
@@ -94,7 +94,7 @@ describe("AccountList.vue", () => {
     expect(accountDetailsRow?.children.length).toEqual(2);
 
     const accountDetails = accountDetailsRow?.children as HTMLCollection;
-    expect(accountDetails[1].textContent).toEqual(`-$12,385.65`);
+    expect(accountDetails[1].textContent?.trim()).toEqual(`-$12,385.65`);
   });
 });
 
