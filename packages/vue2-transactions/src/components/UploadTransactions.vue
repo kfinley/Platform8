@@ -10,7 +10,7 @@
                 class="btn-close float-end"
                 data-bs-dismiss="alert"
                 aria-label="Close"
-                v-if="success"
+                v-if="success || accounts.length > 0"
                 @click.prevent="cancel"
               ></button>
               <p class="text-xl m-0">Upload Transactions</p>
@@ -56,7 +56,12 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { State } from "vuex-class";
-import { transactionsModule, TransactionsState, UploadStatus } from "../store";
+import {
+  transactionsModule,
+  TransactionsState,
+  TransactionsStatus,
+  UploadStatus,
+} from "../store";
 import { Account } from "@platform8/vue2-financial-accounts/src/models";
 
 @Component({})
@@ -69,9 +74,12 @@ export default class UploadTransactions extends Vue {
   selectedAccount = "";
 
   cancel() {
-    transactionsModule.mutate(
-      (state) => (state.uploadStatus = UploadStatus.None)
-    );
+    transactionsModule.mutate((state) => {
+      state.uploadStatus = UploadStatus.None;
+      if (this.accounts.length > 0) {
+        state.transactionsStatus = TransactionsStatus.Loaded;
+      }
+    });
   }
 
   uploadTransactions(files: any) {

@@ -11,20 +11,24 @@
               <li class="row list-header">
                 <div class="col">Date</div>
                 <div class="col">Account</div>
-                <div class="col">Description</div>
-                <div class="col text-center">Amount</div>
+                <div class="col text-end px-4">Amount</div>
               </li>
               <li
                 class="row"
                 v-for="(transaction, index) in transactionsState.transactions"
                 :key="index"
               >
-                <div class="col">{{ transaction.date.toLocaleDateString('en-US') }}</div>
-                <div class="col">{{ transaction.account }}</div>
-                <div class="col">{{ transaction.description }}</div>
-                <div class="col text-end px-5">
-                  {{ formatMoney(transaction.amount) }}
+                <div class="row p-1">
+                  <div class="col font-weight-bold">{{ new Date(transaction.date).toLocaleDateString('en-US') }}</div>
+                  <div class="col font-italic">{{ transaction.account }}</div>
+                  <div class="col font-weight-bolder text-lg text-end px-3">
+                    {{ formatMoney(transaction.amount) }}
+                  </div>
                 </div>
+                <div class="row">
+                    <div class="col-11 px-3 py-2">{{ transaction.description }}</div>
+                </div>
+              
               </li>
             </ul>
           </div>
@@ -55,12 +59,6 @@ export default class TransactionList extends Vue {
   @Prop()
   accounts!: Account[];
   
-  mounted() {
-    transactionsModule.loadTransactions({
-      accounts: this.accounts
-    });
-  }
-
   addTransactions() {
     transactionsModule.mutate((state: TransactionsState) => {
       state.transactionsStatus = TransactionsStatus.Uploading;

@@ -20,13 +20,13 @@ export class UploadFileCommand implements Command<UploadFileRequest, UploadFileR
         AccessToken: authHelper.authToken()
       });
 
-      const uploaadParams = {
+      const uploadParams = {
         Bucket: params.bucket,
         Key: `${user.Username}/${params.accountId}/${params.file.lastModified}_${params.file.name}`,
         Body: params.file
       };
 
-      await this.s3Client.send(new PutObjectCommand(uploaadParams));
+      await this.s3Client.send(new PutObjectCommand(uploadParams));
 
       return {
         success: true,

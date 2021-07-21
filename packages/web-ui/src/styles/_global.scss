@@ -92,12 +92,12 @@ h6 {
   color: $dark !important;
 }
 
-.striped-list li ~ li {
-  font-size: x-large;
-}
-
 // Skip the first li (header) and stripe every other row
 .striped-list li ~ li:nth-of-type(odd) {
+  background: $stripe-color;
+}
+
+.striped {
   background: $stripe-color;
 }
 

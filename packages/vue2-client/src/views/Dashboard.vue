@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="dashboard">
     <notify />
-    <accounts />
     <transactions />
+    <accounts />
   </div>
 </template>
 
@@ -19,3 +19,9 @@ import { Accounts, Transactions, Notify } from "../components/";
 })
 export default class Secured extends Vue { }
 </script>
+
+<style>
+.dashboard > * {
+  padding: 5px;
+}
+</style>

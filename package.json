@@ -18,7 +18,8 @@
     "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions --scope=@platform8/transactions",
     "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",
     "dev:sls": "sls offline start",
-    "dotnet:package:accounts": "cd services/FinancialAccounts && ./package.sh"
+    "dotnet:package:accounts": "cd services/FinancialAccounts && ./package.sh",
+    "ddb:migrate": "serverless dynamodb migrate"
   },
   "engines": {
     "node": ">=14.15.0"

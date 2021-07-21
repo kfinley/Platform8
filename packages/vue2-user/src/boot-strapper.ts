@@ -1,5 +1,5 @@
 import { ApiClient, apiClient } from '@platform8/api-client/src';
-import { container } from 'inversify-props';
+import { Container, container } from 'inversify-props';
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
 import { LoginCommand, SetPasswordCommand, RegisterCommand } from "./commands";
 
@@ -17,8 +17,14 @@ export default function bootstrapper() {
   //     region: "us-west-1"
   //   }));
 
-  container.addTransient<ApiClient>(apiClient, 'ApiClient');
-  container.addTransient<LoginCommand>(LoginCommand, "LoginCommand");
-  container.addTransient<RegisterCommand>(RegisterCommand, "RegisterCommand");
-  container.addTransient<SetPasswordCommand>(SetPasswordCommand, "SetPasswordCommand");
+  addTransientIfNeeded<ApiClient>(apiClient, 'ApiClient', container);
+  addTransientIfNeeded<LoginCommand>(LoginCommand, "LoginCommand", container);
+  addTransientIfNeeded<RegisterCommand>(RegisterCommand, "RegisterCommand", container);
+  addTransientIfNeeded<SetPasswordCommand>(SetPasswordCommand, "SetPasswordCommand", container);
+}
+
+function addTransientIfNeeded<T>(constructor: any, id: string, container: Container) {
+  if (!container.isBound(id)) {
+    container.addTransient<T>(constructor, id);
+  }
 }
