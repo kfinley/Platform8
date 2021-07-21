@@ -10,7 +10,7 @@
                 class="btn-close float-end"
                 data-bs-dismiss="alert"
                 aria-label="Close"
-                v-if="success || accounts.length > 0"
+                v-if="showClose"
                 @click.prevent="cancel"
               ></button>
               <p class="text-xl m-0">Upload Transactions</p>
@@ -95,6 +95,10 @@ export default class UploadTransactions extends Vue {
 
   get uploading() {
     return this.state.uploadStatus === UploadStatus.Uploading;
+  }
+
+  get showClose() {
+    return this.success || this.accounts.length > 0
   }
 }
 </script>

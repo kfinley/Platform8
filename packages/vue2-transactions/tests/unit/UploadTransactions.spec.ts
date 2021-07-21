@@ -5,6 +5,7 @@ import { setupModules as setupAccountsModules } from '@platform8/vue2-financial-
 
 import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
+import { testAccountsState } from '@/stories/data';
 
 describe("UploadTransactions.vue", () => {
   it("mounts", () => {
@@ -13,6 +14,9 @@ describe("UploadTransactions.vue", () => {
     const component = Factory.create(Components.UploadTransactions, (store) => {
       setupModules(store);
       setupAccountsModules(store);
+      store.state.Accounts = testAccountsState;
+    }, {
+      accounts: testAccountsState.accounts
     });
 
     // Assert
