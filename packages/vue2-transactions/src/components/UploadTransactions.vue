@@ -1,60 +1,44 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center">
-    <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-        <div class="col mx-auto">
-          <div class="card z-index-0">
-            <div class="card-header text-center">
-              <button
-                type="button"
-                class="btn-close float-end"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-                v-if="showClose"
-                @click.prevent="cancel"
-              ></button>
-              <p class="text-xl m-0">Upload Transactions</p>
-            </div>
-            <div class="card-body">
-              <div class="text-center" v-if="uploading">
-                <p>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                  Uploading...
-                </p>
-              </div>
-              <div v-else>
-                <p>
-                  <select class="dropdown" v-model="selectedAccount">
-                    <option selected :value="null">Select an account...</option>
-                    <option
-                      v-for="account in accounts"
-                      :key="account.id"
-                      :value="account.id"
-                    >
-                      {{ account.name }}
-                    </option>
-                  </select>
-                </p>
-                <input
-                  type="file"
-                  class="btn primary-gradien"
-                  @change.prevent="uploadTransactions($event.target.files)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <card
+    header-text="Upload Transactions"
+    :cancel="cancel"
+    :show-close="showClose"
+  >
+    <div class="text-center" v-if="uploading">
+      <p>
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Uploading...
+      </p>
     </div>
-  </div>
+    <div v-else>
+      <p>
+        <select class="dropdown" v-model="selectedAccount">
+          <option selected :value="null">Select an account...</option>
+          <option
+            v-for="account in accounts"
+            :key="account.id"
+            :value="account.id"
+          >
+            {{ account.name }}
+          </option>
+        </select>
+      </p>
+      <input
+        type="file"
+        class="btn primary-gradien"
+        @change.prevent="uploadTransactions($event.target.files)"
+      />
+    </div>
+  </card>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import {
   transactionsModule,
@@ -64,7 +48,11 @@ import {
 } from "../store";
 import { Account } from "@platform8/vue2-financial-accounts/src/models";
 
-@Component({})
+@Component({
+  components: {
+    Card,
+  },
+})
 export default class UploadTransactions extends Vue {
   @State("Transactions") state!: TransactionsState;
 
@@ -98,7 +86,7 @@ export default class UploadTransactions extends Vue {
   }
 
   get showClose() {
-    return this.success || this.accounts?.length > 0
+    return this.success || this.accounts?.length > 0;
   }
 }
 </script>
