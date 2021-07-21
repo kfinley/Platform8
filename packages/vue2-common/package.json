@@ -1,16 +1,39 @@
 {
   "name": "@platform8/vue2-common",
   "version": "0.0.1",
-  "description": "Shared Vue code",
+  "description": "Vue2 Component Design System",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "rkf",
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@platform8/web-ui": "^0.0.1",
+    "@storybook/addon-actions": "^6.3.4",
+    "@storybook/addon-essentials": "^6.3.4",
+    "@storybook/addon-links": "^6.3.4",
+    "@storybook/vue": "^6.3.4",
+    "babel-loader": "^8.2.2",
+    "bootstrap": "^5.0.2",
+    "core-js": "^3.6.5",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.12.0",
+    "prettier": "^2.2.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^2.0.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "typescript": "~4.1.5",
     "vee-validate": "^3.4.10",
     "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-loader": "^15.9.7",
     "vue-property-decorator": "9.1.2",
+    "vue-template-compiler": "^2.6.11",
     "vuex": "^3.4.0"
   }
 }
