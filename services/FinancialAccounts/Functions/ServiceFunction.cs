@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Platform8.FinancialAccounts.Functions
 {
-
   //
   // Based on concepts from https://www.c-sharpcorner.com/article/dependency-injection-with-serverless-functions/
   // This implementation unwraps the static readonly Lazy<IServiceProvider> provided in the article into
@@ -41,7 +40,7 @@ namespace Platform8.FinancialAccounts.Functions
     }
 
     private static Lazy<IServiceProvider> lazyServiceProvider;
-    private IServiceScope Scope => lazyServiceProvider.Value.CreateScope();
+    protected IServiceScope Scope => lazyServiceProvider.Value.CreateScope();
 
     private static string EnvironmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 

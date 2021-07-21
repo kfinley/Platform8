@@ -16,7 +16,6 @@ namespace Platform8.FinancialAccounts.Functions
 {
   public abstract class MediatorFunction: ServiceFunction
   {
-
     protected IMediator Mediator
     {
       get

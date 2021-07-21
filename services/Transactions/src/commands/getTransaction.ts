@@ -11,18 +11,19 @@ export class GetTransactionCommand implements Command<GetTransactionRequest, Get
   private ddbClient!: DynamoDBClient;
 
   async runAsync(params: GetTransactionRequest): Promise<GetTransactionResponse> {
-
     if (params.transaction) {
       // Set the parameters
       const query = {
-        TableName: "Transactions",
+        TableName: "Transactions",        
         ExpressionAttributeValues: marshall({
           ":PK": `USER#${params.userId}`,
-          ":SK": `ACCOUNT#${params.accountId}|DATE#${params.transaction.date.toISOString()}|AMOUNT#${params.transaction.amount}`,
+          ":SK": `ACCOUNT#${params.accountId}AMOUNT#${params.transaction.amount}`,
           ":description": params.transaction.description,
+          ":date": params.transaction.date.toISOString()
         }),
         KeyConditionExpression: "PK = :PK and begins_with(SK, :SK)",
-        FilterExpression: "contains (description, :description)",
+        FilterExpression: "contains (description, :description) and #date = :date",
+        ExpressionAttributeNames: { "#date": "date" }
       };
 
       const data = await this.ddbClient.send(new QueryCommand(query));

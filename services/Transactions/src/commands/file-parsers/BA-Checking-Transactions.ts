@@ -14,9 +14,9 @@ export class BA_Checking_Transactions_File_Parser_Command implements Command<Fil
 
     let data: ParsedTransactions = {
       startDate: new Date(beginningBalanceRow[0]),
-      beginningBalance: Number.parseFloat(beginningBalanceRow[3].replace('"', '')),
+      beginningBalance: Number.parseFloat(beginningBalanceRow[3].replace(/"/g, '')),
       endDate: new Date(endingBalanceRow[0].split(' ')[4]),
-      endingBalance: Number.parseFloat(endingBalanceRow[2].replace('"', '')),
+      endingBalance: Number.parseFloat(endingBalanceRow[2].replace(/"/g, '')),
       transactions: new Array<Transaction>(),
     };
 
@@ -28,8 +28,8 @@ export class BA_Checking_Transactions_File_Parser_Command implements Command<Fil
         data.transactions.push({
           id: uuid.v4(),
           date: new Date(transactionRow[0]),
-          description: transactionRow[1].replace('"', ''),
-          amount: Number.parseFloat(transactionRow[2].replace('"', ''))
+          description: transactionRow[1].replace(/"/g, ''),
+          amount: Number.parseFloat(transactionRow[2].replace(/"/g, ''))
         });
       }
     }

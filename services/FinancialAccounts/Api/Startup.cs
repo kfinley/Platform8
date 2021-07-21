@@ -112,7 +112,6 @@ namespace Platform8.FinancialAccounts.Api
 
             ValidAudience = clientId,
             ValidateAudience = false   // TODO: check this...
-
           };
         });
 

@@ -1,5 +1,6 @@
 using System;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +59,51 @@ namespace Platform8.User.Api
       //
       // *****************************
 
+      services
+        .AddAuthentication(options =>
+        {
+          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+          // Validate using issuer public keys
+          var serviceURL = Configuration.GetValue<string>("Service:Cognito:ServiceURL");
+          var poolId = Configuration.GetValue<string>("Service:Cognito:PoolId");
+          var clientId = Configuration.GetValue<string>("Service:Cognito:ClientId");
+
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+            // https://stackoverflow.com/a/53244447
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) =>
+            {
+              // get JsonWebKeySet from AWS
+              var json = new System.Net.WebClient().DownloadString(parameters.ValidIssuer + "/.well-known/jwks.json");
+
+              // serialize the result (JsonSerializer fails to deserialize so using Newtonsoft for now)
+              var keys = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonWebKeySet>(json).Keys;
+
+              // cast the result to be the type expected by IssuerSigningKeyResolver
+              return (IEnumerable<SecurityKey>)keys;
+            },
+
+            ValidIssuer = $"{serviceURL}/{poolId}",
+            // For local dev we're skipping validation of issuer b/c it doesn't work with cognito-local
+#if DEBUG
+            ValidateIssuer = false,
+#else
+            ValidateIssuer = true,
+#endif
+
+            LifetimeValidator = (before, expires, token, param) => expires > SystemTime.UtcNow,
+            ValidateLifetime = true,
+
+            ValidAudience = clientId,
+            ValidateAudience = false   // TODO: check this...
+
+          };
+        });
 
       services.AddControllers();
       services.AddCors();

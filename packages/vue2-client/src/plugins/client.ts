@@ -9,7 +9,6 @@ import { getModule } from 'vuex-module-decorators';
 import { extend } from 'vee-validate';
 
 import { RouteNames } from "../router";
-// import { initializeModules } from "../store";
 
 import { setupValidation } from '@platform8/vue2-common/src/validation';
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
@@ -54,8 +53,6 @@ const plugin = {
         DefaultRoute: RouteNames.Home,
       });
 
-      const foo = () => (<UserState>options.store.state.User).authStatus;
-      
       vue.use(FinancialAccountsPlugin, {
         router: options.router,
         store: options.store,
@@ -80,14 +77,6 @@ const plugin = {
       getModule(RegistrationModule, options.store);
 
       setupValidation(extend);
-
-      // initializeModules(options.store);
-
-      // option to add all components
-      // Object.keys(components).forEach((name) => {
-      //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      //   Vue.component(name, (components as any)[name]);
-      // });
 
       // router provided to add any plugin routes.
       // i.e. options.router.addRoutes(routes);

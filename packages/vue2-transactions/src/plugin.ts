@@ -8,7 +8,7 @@ import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { TransactionsModule } from "./store/transactionsModule";
 import bootstrapper from "./bootstrapper";
-
+import { AccountsState } from "@platform8/vue2-financial-accounts/src/store";
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
   install: PluginFunction<TransactionsPluginOptions>;
@@ -18,6 +18,7 @@ export interface TransactionsPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  accountsGetter: () => any;
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -41,6 +42,16 @@ const TransactionsPlugin = {
       }
       options.router.addRoutes(routes);
 
+      options.store.watch(
+        () => (<AccountsState>options.store.state.Accounts).accounts,
+        (newValue) => {
+          if (newValue.length > 0) {
+            getModule(TransactionsModule, options.store).loadTransactions({
+              accounts: newValue
+            });
+          }
+        },
+      );
     }
   },
 };

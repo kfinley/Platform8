@@ -51,7 +51,13 @@ export class SaveTransactionsCommand implements Command<SaveTransactionsRequest,
         S: `USER#${userId}`
       },
       SK: {
-        S: `ACCOUNT#${accountId}|DATE#${transaction.date.toISOString()}|AMOUNT#${transaction.amount}|TRANSACTION#${transaction.id}`
+        S: `ACCOUNT#${accountId}AMOUNT#${transaction.amount}`
+      },
+      GSI1PK: {
+        S: `USER#${userId}`
+      },
+      GSI1SK: {
+        S: `DATE#${transaction.date.toISOString()}`
       },
       type: {
         S: 'Transaction'
@@ -63,10 +69,13 @@ export class SaveTransactionsCommand implements Command<SaveTransactionsRequest,
         S: transaction.description
       },
       date: {
-        S: transaction.date.toString()
+        S: transaction.date.toISOString()
       },
       amount: {
         N: transaction.amount.toString()
+      },
+      accountId: {
+        S: accountId
       }
     }
   }

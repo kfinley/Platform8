@@ -7,7 +7,7 @@ import accountsResources from '../resources/accounts';
 @injectable()
 export class AddAccountCommand implements Command<AddAccountRequest, AddAccountResponse> {
 
-  @Inject('AccountsApiClient')
+  @Inject('ApiClient')
   private apiClient!: ApiClient;
 
   public async runAsync(account: AddAccountRequest): Promise<AddAccountResponse> {

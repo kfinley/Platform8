@@ -19,8 +19,10 @@ custom:
     excludeFiles: ./**/*.(spec|stories).ts
 
   dynamodb:
-    noStart: true
+    stages:
+      - ${self:provider.stage}
     start:
+      noStart: true
       port: 8000
       migrate: true
       host: platform8.dynamodb
