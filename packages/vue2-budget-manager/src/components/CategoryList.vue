@@ -90,6 +90,7 @@ export default class CategoryList extends Vue {
 @media (min-width: 768px) { 
   #category-list > li {
     margin-bottom: 5px;
+    padding: 0px 4px;
   }
 
   #category-list > li > div {
