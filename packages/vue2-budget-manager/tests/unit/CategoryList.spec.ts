@@ -30,7 +30,7 @@ describe("CategoryList.vue", () => {
     // Assert
     const categoryList = component.find("#category-list");
     expect(categoryList.element).toBeInstanceOf(HTMLElement);
-    expect(categoryList.element.children.length).toEqual(2);
+    expect(categoryList.element.children.length).toEqual(5);
   });
 
   it("should show Category name", () => {

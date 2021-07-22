@@ -18,6 +18,8 @@ export interface BudgetManagementPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  loadOnChangedValue: any;
+  loadOnChangedGetter: () => any;
 }
 
 export const setupModules = (store: Store<any>): void => {

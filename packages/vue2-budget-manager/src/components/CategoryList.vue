@@ -1,6 +1,6 @@
 <template>
-  <card header-text="Categories" :show-close="false" v-if="hasCategories">
-    <ul id="category-list" class="container row tiled-list">
+  <card header-text="Categories" :show-close="false">
+    <ul id="category-list" class="container row tiled-list"  v-if="hasCategories">
       <li
         class="col-lg-4 col-md-6 row-sm"
         v-for="(category, index) in state.budget.categories"
@@ -32,6 +32,9 @@
         </div>
       </li>
     </ul>
+    <div class="text-center" v-else>
+      Start your budget by adding categories.
+    </div>
     <template v-slot:footer>
       <a
         href="#addCategory"

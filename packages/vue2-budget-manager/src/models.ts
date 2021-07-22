@@ -19,3 +19,14 @@ export interface Classification {
   id: string;
   name: string;
 }
+
+export interface AddCategoryRequest {  
+  name: string;
+  allocation: NumberRange;
+}
+
+export interface AddCategoryResponse {
+  id: string;
+  success: boolean;
+  error: string | undefined;
+}
