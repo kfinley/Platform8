@@ -97,11 +97,26 @@ h6 {
   background: $stripe-color;
 }
 
+.striped-list-no-header li:nth-of-type(even){
+  background: $stripe-color;
+}
+
 .striped {
   background: $stripe-color;
 }
 
 .list-header {
   background: $light;
-  border-bottom: 1px solid #dee2e6 !important;
+  border-bottom: 1px solid $header-border !important;
 }
+
+.tiled-list {
+  list-style-type: none;  
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 1199.98px) { 
+  .card-body {
+    padding: 0px;
+  }
+ }

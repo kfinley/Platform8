@@ -2,6 +2,7 @@ import { Budget } from "./../models";
 
 export enum BudgetStatus {
   None = "None",
+  AddingCategory = "AddingCategory",
   Failed = "Failed",
   Loaded = "Loaded",
   Loading = "Loading",
@@ -9,5 +10,5 @@ export enum BudgetStatus {
 }
 export interface BudgetState {
   budget: Budget
-  budgetStatus: BudgetStatus
+  status: BudgetStatus
 }

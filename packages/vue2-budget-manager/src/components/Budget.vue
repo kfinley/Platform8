@@ -9,21 +9,30 @@
       Loading budget...
     </div>
     <div class="text-center" v-else>
-      <p>Budget Manager</p>
+      <card header-text="Budget Manager" :show-close="false">
+        <category-list />
+      </card>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Card } from "@platform8/vue2-common/src/components";
+import CategoryList from "./CategoryList.vue";
 import { State } from "vuex-class";
 import { BudgetState, BudgetStatus } from "./../store";
 
-@Component({})
+@Component({
+  components: {
+    Card,
+    CategoryList,
+  }
+})
 export default class Budget extends Vue {
   @State("Budget") state!: BudgetState;
 
   get loading() {
-    return this.state.budgetStatus === BudgetStatus.Loading;
+    return this.state.status === BudgetStatus.Loading;
   }
 }
 </script>
