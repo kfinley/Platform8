@@ -10,8 +10,8 @@
           <div class="col-8 font-weight-bold">
             {{ category.name }}
           </div>
-          <div class="col-4 float-end font-italic">
-            <span class="float-end">
+          <div class="col-4">
+            <span class="float-end font-italic">
               {{ category.allocation.start }}-{{ category.allocation.end }}%
             </span>
           </div>
