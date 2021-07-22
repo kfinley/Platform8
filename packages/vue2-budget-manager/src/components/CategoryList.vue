@@ -11,7 +11,9 @@
             {{ category.name }}
           </div>
           <div class="col-4 float-end font-italic">
-            {{ category.allocation.start }}-{{ category.allocation.end }}%
+            <span class="float-end">
+              {{ category.allocation.start }}-{{ category.allocation.end }}%
+            </span>
           </div>
         </div>
         <div class="row">
