@@ -113,12 +113,6 @@ h6 {
 .tiled-list {
   margin-left: 0px;
   margin-right: 0px;
+  padding: 0px;
   list-style-type: none;  
 }
-
-// Medium devices (tablets, less than 992px)
-@media (max-width: 1199.98px) { 
-  .card-body {
-    padding: 0px;
-  }
- }
