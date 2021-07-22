@@ -8,7 +8,7 @@ import { Budget } from '@/models';
 export class BudgetModule extends VuexModule implements BudgetState {
 
   budget!: Budget;
-  budgetStatus = BudgetStatus.None;
+  status = BudgetStatus.None;
 
   @Mutation
   mutate(mutation: (state: BudgetState) => void) {
