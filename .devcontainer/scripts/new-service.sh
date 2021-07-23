@@ -49,10 +49,12 @@ echo
 echo Adding API project references... 
 dotnet add Api/$1.Api.csproj package MediatR
 dotnet add Api/$1.Api.csproj package MediatR.Extensions.Microsoft.DependencyInjection
+dotnet add Api/$1.Api.csproj package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add Api/$1.Api.csproj package AWSSDK.Extensions.NETCore.Setup
 dotnet add Api/$1.Api.csproj package EFContinuousMigrations
 dotnet add Api/$1.Api.csproj package Microsoft.EntityFrameworkCore
 dotnet add Api/$1.Api.csproj package Microsoft.EntityFrameworkCore.Design
+dotnet add Api/$1.Api.csproj package Newtonsoft.Json
 dotnet add Api/$1.Api.csproj package Pomelo.EntityFrameworkCore.MySql
 dotnet add Api/$1.Api.csproj reference $CORE_PROJECT Commands/$1.Commands.csproj
 
@@ -72,6 +74,7 @@ dotnet add Data/$1.Data.csproj reference $CORE_DATA_PROJECT Models/$1.Models.csp
 echo
 echo Adding Models project reference...
 dotnet add Models/$1.Models.csproj package MediatR
+dotnet add Models/$1.Models.csproj reference $CORE_PROJECT $CORE_DATA_PROJECT
 
 echo
 echo Adding Tests project reference...
@@ -81,7 +84,7 @@ dotnet add Tests/$1.Tests.csproj package MediatR
 dotnet add Tests/$1.Tests.csproj package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add Tests/$1.Tests.csproj package Moq
 dotnet add Tests/$1.Tests.csproj package Moq.AutoMock
-dotnet add Tests/$1.Tests.csproj reference $TESTS_COMMON_PROJECT $CORE_DATA_PROJECT Models/$1.Models.csproj Commands/$1.Commands.csproj Data/$1.Data.csproj
+dotnet add Tests/$1.Tests.csproj reference $TESTS_COMMON_PROJECT $CORE_PROJECT $CORE_DATA_PROJECT Models/$1.Models.csproj Commands/$1.Commands.csproj Data/$1.Data.csproj
 
 echo
 echo Creating Serverless config files...

@@ -15,14 +15,16 @@
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
     "clean": "lerna clean --yes",
     "test": "lerna run --stream test:unit --scope=@platform8/vue2-financial-accounts --scope=@platform8/vue2-transactions --scope=@platform8/transactions  --scope=@platform8/vue2-budget-manager && npm run test:dotnet",
-    "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/FinancialAccounts/Tests/FinancialAccounts.Tests.csproj",
+    "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/FinancialAccounts/Tests/FinancialAccounts.Tests.csproj && npm run test:dotnet:budget",
+    "test:dotnet:budget": "dotnet test services/Budget/Tests/Budget.Tests.csproj",
     "test:accounts": "lerna run --stream test:unit --scope=@platform8/vue2-financial-accounts",
     "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions --scope=@platform8/transactions",
-    "test:budget": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager",
+    "test:budget": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager && dotnet test services/Budget/Tests/Budget.Tests.csproj",
     "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",
     "dev:sls": "sls offline start",
     "dotnet:package:accounts": "cd services/FinancialAccounts && ./package.sh",
-    "ddb:migrate": "serverless dynamodb migrate"
+    "ddb:migrate": "serverless dynamodb migrate",
+    "init-auth": "./.devcontainer/scripts/init-auth.sh"
   },
   "engines": {
     "node": ">=14.15.0"
