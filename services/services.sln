@@ -41,17 +41,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Models", "Tran
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Budget", "Budget", "{3CCB2498-1D7F-4AB4-B46C-796B7197AFE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Api", "Budget\Api\Budget.Api.csproj", "{92403E7E-0881-4175-ADD0-5493C7E37FE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Api", "Budget\Api\BudgetService.Api.csproj", "{92403E7E-0881-4175-ADD0-5493C7E37FE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Commands", "Budget\Commands\Budget.Commands.csproj", "{02831823-B75F-4A0D-AC14-6604E46CBC50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Commands", "Budget\Commands\BudgetService.Commands.csproj", "{02831823-B75F-4A0D-AC14-6604E46CBC50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Tests", "Budget\Tests\Budget.Tests.csproj", "{1292B287-08D8-4425-A6C3-DA35F0E15939}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Tests", "Budget\Tests\BudgetService.Tests.csproj", "{1292B287-08D8-4425-A6C3-DA35F0E15939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Models", "Budget\Models\Budget.Models.csproj", "{4BE4025D-6E6C-47F4-94F8-6A866B708F10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Models", "Budget\Models\BudgetService.Models.csproj", "{4BE4025D-6E6C-47F4-94F8-6A866B708F10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Functions", "Budget\Functions\Budget.Functions.csproj", "{1C6BC7BD-D593-4564-81FC-F8BAE571D025}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Functions", "Budget\Functions\BudgetService.Functions.csproj", "{1C6BC7BD-D593-4564-81FC-F8BAE571D025}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Data", "Budget\Data\Budget.Data.csproj", "{4C75C644-EAAE-4D09-977D-282BF3F70559}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Data", "Budget\Data\BudgetService.Data.csproj", "{4C75C644-EAAE-4D09-977D-282BF3F70559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -20,9 +20,9 @@ using MediatR;
 
 using Platform8.Core;
 using Platform8.Core.Data;
-using Platform8.Budget.Data;
+using Platform8.BudgetService.Data;
 
-namespace Platform8.Budget.Api
+namespace Platform8.BudgetService.Api
 {
   public class Startup
   {
@@ -53,7 +53,7 @@ namespace Platform8.Budget.Api
         .AddDbContext<BudgetDataContext>(options =>
           options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
                            new MySqlServerVersion(new Version(5, 7)),
-                           x => x.MigrationsAssembly("Budget.Api"))
+                           x => x.MigrationsAssembly("BudgetService.Api"))
 
 #if DEBUG
                   // TODO: investigate.. Shouldn't have to add this b/c of the AddLogging config above.
@@ -64,8 +64,8 @@ namespace Platform8.Budget.Api
         .AddContinuousMigrations<BudgetDataContext>()
 
         .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
-
-        .AddMediatR(Budget.Commands.CommandsAssembly.Value);
+        .AddMediatR(BudgetService.Commands.CommandsAssembly.Value)
+        .AddAutoMapper(BudgetService.Commands.CommandsAssembly.Value);
 
       //
       // *****************************
@@ -122,8 +122,9 @@ namespace Platform8.Budget.Api
               .RequireAuthenticatedUser()
               .Build()))
       )
-      .AddJsonOptions(options =>
-        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
+      .AddJsonOptions(options => {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+      });
 
       services.AddSwaggerGen(c =>
       {

@@ -13,6 +13,7 @@
     "@platform8/api-client": "^0.0.1",
     "@platform8/commands": "^0.0.1",
     "@platform8/config": "^0.0.1",
+    "@platform8/vue2-budget-manager": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",
     "@platform8/vue2-financial-accounts": "^0.0.1",
     "@platform8/vue2-notify": "^0.0.1",

@@ -25,4 +25,17 @@ export const setupValidation = (extend: (name: string, schema: ValidationRule) =
     ...required,
     message: requiredMessage
   });
+
+  extend('positive', {
+    message: (field, params) => `${fieldToSentenceCase(field)} is should be a positive number`,
+    validate: value => value >= 0 
+  });
+
+  extend('gt', {
+    message: (field, params) => `${fieldToSentenceCase(field)} should be greater than ${params[0]}`,
+    validate: (value, [other]) => {
+      return value > other;
+    }
+  });
+  
 };

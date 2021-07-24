@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Budget.Api.Migrations
+namespace BudgetService.Api.Migrations
 {
     public partial class BudgetandCategories : Migration
     {

@@ -13,13 +13,13 @@ using Argument = Moq.It;
 
 using Platform8.Tests.Common.Specs;
 using Platform8.Tests.Common;
-using Platform8.Budget.Commands;
-using Platform8.Budget.Models;
+using Platform8.BudgetService.Commands;
+using Platform8.BudgetService.Models;
 using Platform8.Core.Data;
-using Platform8.Budget.Data;
+using Platform8.BudgetService.Data;
 using Platform8.Core;
 
-namespace Platform8.Budget.Tests
+namespace Platform8.BudgetService.Tests
 {
   [Subject("Add Category")]
   public class When_AddCategory_With_No_Budget_Existing_Requested : SpecBase
@@ -39,7 +39,7 @@ namespace Platform8.Budget.Tests
     Establish context = () =>
     {
     
-      var testBudget = new Models.Budget
+      var testBudget = new Data.Budget
       {
         Id = Guid.NewGuid(),
         OwnerId = TestUserId
@@ -56,16 +56,16 @@ namespace Platform8.Budget.Tests
         }
       };
 
-      Sut.SetupAsync<IAsyncRepository<BudgetDataContext, Models.Budget>, Models.Budget>(r => r.SaveAsync(Argument.IsAny<Models.Budget>(), Argument.IsAny<CancellationToken>()))
-        .ReturnsAsync(new Models.Budget {
+      Sut.SetupAsync<IAsyncRepository<BudgetDataContext, Data.Budget>, Data.Budget>(r => r.SaveAsync(Argument.IsAny<Data.Budget>(), Argument.IsAny<CancellationToken>()))
+        .ReturnsAsync(new Data.Budget {
           Id = Guid.NewGuid(),
           OwnerId = TestUserId,
           DateCreated = SystemTime.UtcNow,          
           Status = EntityStatus.Active
         });
 
-      Sut.SetupAsync<IAsyncRepository<BudgetDataContext, Models.Category>, Models.Category>(r => r.SaveAsync(Argument.IsAny<Models.Category>(), Argument.IsAny<CancellationToken>()))
-        .ReturnsAsync(new Models.Category {
+      Sut.SetupAsync<IAsyncRepository<BudgetDataContext, Data.Category>, Data.Category>(r => r.SaveAsync(Argument.IsAny<Data.Category>(), Argument.IsAny<CancellationToken>()))
+        .ReturnsAsync(new Data.Category {
           Id = Guid.NewGuid(),
           Name = Request.Name,
           Allocation = Request.Allocation,
@@ -89,13 +89,13 @@ namespace Platform8.Budget.Tests
     public void It_should_try_to_get_the_Budget_the_user() => should_try_to_get_the_Budget_the_user();
     It should_try_to_get_the_Budget_the_user = () =>
     {
-      Sut.Verify<IAsyncRepository<BudgetDataContext, Models.Budget>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Budget, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<BudgetDataContext, Data.Budget>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Data.Budget, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
     public void It_should_save_a_new_Budget_to_the_Data_Repository() => should_save_a_new_Budget_to_the_Data_Repository();
     It should_save_a_new_Budget_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<BudgetDataContext, Models.Budget>>(p => p.SaveAsync(Argument.Is<Models.Budget>(b => 
+        Sut.Verify<IAsyncRepository<BudgetDataContext, Data.Budget>>(p => p.SaveAsync(Argument.Is<Data.Budget>(b => 
           b.OwnerId == TestUserId
         ), Argument.IsAny<CancellationToken>()), Times.Once());
     };
@@ -103,7 +103,7 @@ namespace Platform8.Budget.Tests
     [Fact]
     public void It_should_save_a_new_Category_to_the_Data_Repository() => should_save_a_new_Category_to_the_Data_Repository();
     It should_save_a_new_Category_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<BudgetDataContext, Models.Category>>(p => p.SaveAsync(Argument.Is<Models.Category>(c =>           
+        Sut.Verify<IAsyncRepository<BudgetDataContext, Data.Category>>(p => p.SaveAsync(Argument.Is<Data.Category>(c =>           
           c.Name == Request.Name &&
           c.Allocation == Request.Allocation &&
           c.Budget.Id.HasValue() 

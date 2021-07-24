@@ -1,10 +1,28 @@
-using Platform8.Core;
-using Platform8.Core.Data;
+﻿using System;
 
-namespace Platform8.Budget.Models {
-  public class Category : BaseEntity {
+using MediatR;
+
+using Platform8.Core;
+
+namespace Platform8.BudgetService.Models
+{
+  public class Category { 
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public NumberRange Allocation { get; set; }
-    public Budget Budget { get; set; }
+    public Models.Budget Budget { get; set; }
+  }
+
+  public class AddCategoryRequest : IRequest<AddCategoryResponse>
+  {
+    public Guid OwnerId { get; set; }
+    public string Name { get; set; }
+    public NumberRange Allocation { get; set; }
+  }
+
+  public class AddCategoryResponse {
+    public Guid Id { get; set; }
+    public Guid BudgetId { get; set; }
+    public bool Success { get; set; }
   }
 }

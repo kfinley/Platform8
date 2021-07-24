@@ -3,7 +3,7 @@ import { createVuePlugin } from 'vite-plugin-vue2';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [ createVuePlugin() ],
+  plugins: [createVuePlugin()],
   server: {
     port: 8080
   },
@@ -14,6 +14,13 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src')
       }
     ]
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@platform8/web-ui/src/styles/_variables.scss";`
+      }
+    }
   },
   build: {
     chunkSizeWarningLimit: 600,

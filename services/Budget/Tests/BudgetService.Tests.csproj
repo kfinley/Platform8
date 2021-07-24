@@ -29,9 +29,9 @@
     <ProjectReference Include="..\..\..\dotnet\Tests.Common\Tests.Common.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
-    <ProjectReference Include="..\Models\Budget.Models.csproj" />
-    <ProjectReference Include="..\Commands\Budget.Commands.csproj" />
-    <ProjectReference Include="..\Data\Budget.Data.csproj" />
+    <ProjectReference Include="..\Models\BudgetService.Models.csproj" />
+    <ProjectReference Include="..\Commands\BudgetService.Commands.csproj" />
+    <ProjectReference Include="..\Data\BudgetService.Data.csproj" />
   </ItemGroup>
 
 </Project>

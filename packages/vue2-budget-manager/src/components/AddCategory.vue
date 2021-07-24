@@ -1,5 +1,5 @@
 <template>
-  <card header-text="Add Category">
+  <card header-text="Add Category" :cancel="cancelAdd">
     <ValidationObserver ref="formObserver">
       <form @submit.prevent="onSubmit" autocomplete="off" role="form text-left">
         <div class="mb-3">
@@ -26,15 +26,15 @@
         <div class="mb-3">
           <ValidationProvider
             name="allocationStart"
-            rules="required"
+            rules="required|positive"
             mode="passive"
             v-slot="{ errors }"
           >
             <input
               type="text"
               :class="['form-control', { 'is-invalid': errors[0] }]"
-              placeholder="Allocation % Start"
-              aria-label="Allocation % Start"
+              placeholder="Allocation Start %"
+              aria-label="Allocation Start %"
               v-model="allocationStart"
               :disabled="processing"
             />
@@ -47,15 +47,15 @@
           <ValidationProvider
             name="allocationEnd"
             type="text"
-            rules="required"
+            rules="required|positive|gt:@allocationStart"
             mode="passive"
             v-slot="{ errors }"
           >
             <input
               type="text"
               :class="['form-control', { 'is-invalid': errors[0] }]"
-              placeholder="Allocation % End"
-              aria-label="Allocation % End"
+              placeholder="Allocation End %"
+              aria-label="Allocation End %"
               v-model="allocationEnd"
               :disabled="processing"
             />
@@ -128,6 +128,12 @@ export default class AddCategory extends Vue {
 
   get processing() {
     return this.state.status === BudgetStatus.Saving;
+  }
+
+  cancelAdd() {
+    budgetModule.mutate((state: BudgetState) => {
+      state.status = BudgetStatus.Loaded;
+    });
   }
 }
 </script>

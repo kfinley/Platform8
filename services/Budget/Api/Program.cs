@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 using Platform8.Core;
 
-namespace Platform8.Budget.Api
+namespace Platform8.BudgetService.Api
 {
   public class Program
   {

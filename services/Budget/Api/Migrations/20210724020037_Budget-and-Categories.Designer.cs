@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Platform8.Budget.Data;
+using Platform8.BudgetService.Data;
 
-namespace Budget.Api.Migrations
+namespace BudgetService.Api.Migrations
 {
     [DbContext(typeof(BudgetDataContext))]
-    [Migration("20210723173518_Budget-and-Categories")]
+    [Migration("20210724020037_Budget-and-Categories")]
     partial class BudgetandCategories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace Budget.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.8");
 
-            modelBuilder.Entity("Platform8.Budget.Models.Budget", b =>
+            modelBuilder.Entity("Platform8.BudgetService.Data.Budget", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
@@ -40,7 +40,7 @@ namespace Budget.Api.Migrations
                     b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("Platform8.Budget.Models.Category", b =>
+            modelBuilder.Entity("Platform8.BudgetService.Data.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
@@ -66,9 +66,9 @@ namespace Budget.Api.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Platform8.Budget.Models.Category", b =>
+            modelBuilder.Entity("Platform8.BudgetService.Data.Category", b =>
                 {
-                    b.HasOne("Platform8.Budget.Models.Budget", "Budget")
+                    b.HasOne("Platform8.BudgetService.Data.Budget", "Budget")
                         .WithMany("Categories")
                         .HasForeignKey("BudgetId");
 
@@ -98,7 +98,7 @@ namespace Budget.Api.Migrations
                     b.Navigation("Budget");
                 });
 
-            modelBuilder.Entity("Platform8.Budget.Models.Budget", b =>
+            modelBuilder.Entity("Platform8.BudgetService.Data.Budget", b =>
                 {
                     b.Navigation("Categories");
                 });

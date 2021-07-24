@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.1" />
     <PackageReference Include="EFContinuousMigrations" Version="1.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -22,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
-    <ProjectReference Include="..\Commands\Budget.Commands.csproj" />
+    <ProjectReference Include="..\Commands\BudgetService.Commands.csproj" />
   </ItemGroup>
 
 </Project>

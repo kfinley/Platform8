@@ -20,13 +20,25 @@ export interface Classification {
   name: string;
 }
 
-export interface AddCategoryRequest {  
+export interface AddCategoryRequest {
   name: string;
   allocation: NumberRange;
 }
 
 export interface AddCategoryResponse {
   id: string;
+  budgetId: string;
   success: boolean;
   error: string | undefined;
+}
+
+export interface GetBudgetRequest { }
+
+export interface GetBudgetResponse {
+  budget: Budget;
+  error: string | undefined;
+}
+
+export interface BudgetModuleSettings {
+  onCloseRedirectRouteName: string;
 }

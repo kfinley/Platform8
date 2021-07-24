@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 using MediatR;
 
-using Platform8.Budget.Models;
+using Platform8.BudgetService.Models;
 
-namespace Platform8.Budget.Api.Controllers
+namespace Platform8.BudgetService.Api.Controllers
 {
   [Authorize]
   [ApiController]
@@ -19,6 +19,7 @@ namespace Platform8.Budget.Api.Controllers
 
     private readonly ILogger<CategoryController> logger;
     private readonly IMediator mediator;
+    
     public CategoryController(IMediator mediator, ILogger<CategoryController> logger)
     {
       this.mediator = mediator;

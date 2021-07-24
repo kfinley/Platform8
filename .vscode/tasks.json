@@ -43,7 +43,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/services/Budget/Budget.sln",
+        "${workspaceFolder}/services/Budget/BudgetService.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

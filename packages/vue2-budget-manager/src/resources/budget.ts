@@ -13,6 +13,10 @@ export default {
     return `${budgetServiceUri}/budget/v1`
   },
 
+  get budget() {
+    return `${this.serviceBasePath}`;
+  },
+
   get category() {
     return `${this.serviceBasePath}/category`;
   },

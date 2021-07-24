@@ -1,5 +1,5 @@
 <template>
-  <card header-text="Budget Manager" card-body-classes="px-0" :show-close="false">
+  <card header-text="Budget Manager" card-body-classes="px-0" :cancel="cancel">
     <div class="text-center" v-if="loading">
       <span
         class="spinner-border spinner-border-sm"
@@ -18,7 +18,7 @@ import { Card } from "@platform8/vue2-common/src/components";
 import CategoryList from "./CategoryList.vue";
 import AddCategory from "./AddCategory.vue";
 import { State } from "vuex-class";
-import { BudgetState, BudgetStatus } from "./../store";
+import { budgetModule, BudgetState, BudgetStatus } from "./../store";
 
 @Component({
   components: {
@@ -35,11 +35,15 @@ export default class Budget extends Vue {
   }
 
   get loaded() {
-    return this.state.status === BudgetStatus.Loaded;
+    return this.state.status === BudgetStatus.Loaded || this.state.status === BudgetStatus.None;
   }
 
   get addingCategory() {
     return this.state.status === BudgetStatus.AddingCategory;
+  }
+  
+  cancel() {
+    budgetModule.close(this.$router);
   }
 }
 </script>

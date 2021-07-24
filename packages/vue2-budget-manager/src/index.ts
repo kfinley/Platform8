@@ -1,5 +1,5 @@
-import FinancialAccountsPlugin from "./plugin";
+import BudgetPlugin from "./plugin";
 
 export {
-  FinancialAccountsPlugin
+  BudgetPlugin
 };

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using Platform8.Core.Data;
 
-namespace Platform8.Budget.Data
+namespace Platform8.BudgetService.Data
 {
-  public class CategoryConfiguration : EntityTypeConfiguration<Models.Category>
+  public class CategoryConfiguration : EntityTypeConfiguration<Category>
   {
-    public override void Configure(EntityTypeBuilder<Models.Category> builder)
+    public override void Configure(EntityTypeBuilder<Category> builder)
     {
       base.ConfigureEntityTable(builder);
       builder.OwnsOne(c => c.Allocation).Property(p => p.Start).HasPrecision(10, 4);

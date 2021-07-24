@@ -12,5 +12,5 @@
   "function-runtime": "dotnetcore3.1",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "Budget.Functions::Platform8.Budget.Functions.Function::FunctionHandler"
+  "function-handler": "BudgetService.Functions::Platform8.BudgetService.Functions.Function::FunctionHandler"
 }

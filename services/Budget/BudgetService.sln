@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Api", "Api\Budget.Api.csproj", "{8534A3FD-0FF2-4D7A-AB84-35E7098222A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Api", "Api\BudgetService.Api.csproj", "{8534A3FD-0FF2-4D7A-AB84-35E7098222A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Commands", "Commands\Budget.Commands.csproj", "{30D51849-76FB-41A8-A52A-E0E460F0D8EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Commands", "Commands\BudgetService.Commands.csproj", "{30D51849-76FB-41A8-A52A-E0E460F0D8EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Data", "Data\Budget.Data.csproj", "{04C034E7-BA46-4394-8F38-331ED9973214}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Data", "Data\BudgetService.Data.csproj", "{04C034E7-BA46-4394-8F38-331ED9973214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Models", "Models\Budget.Models.csproj", "{27BAD1E2-814D-4074-AE6F-ACF594D9356A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Models", "Models\BudgetService.Models.csproj", "{27BAD1E2-814D-4074-AE6F-ACF594D9356A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Functions", "Functions\Budget.Functions.csproj", "{2A4563EB-730E-411F-8E92-C837B9DC0667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Functions", "Functions\BudgetService.Functions.csproj", "{2A4563EB-730E-411F-8E92-C837B9DC0667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Tests", "Tests\Budget.Tests.csproj", "{56C3B72C-8C34-403B-BAC5-49B97EFC67AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.Tests", "Tests\BudgetService.Tests.csproj", "{56C3B72C-8C34-403B-BAC5-49B97EFC67AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
