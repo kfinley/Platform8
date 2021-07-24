@@ -38,12 +38,12 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build-budget-service",
+      "label": "build-budgets-service",
       "command": "dotnet",
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/services/Budget/BudgetService.sln",
+        "${workspaceFolder}/services/Budgets/Budgets.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
