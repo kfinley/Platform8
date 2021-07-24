@@ -78,7 +78,7 @@ export const testCategories = [
     ]
   },
   {
-    id: 'b6b14d83-c91c-4038-94ea-2b49f5af91b8',
+    id: 'b2be15a8-c061-4527-92fc-50c880906bc8',
     name: "Entertainment",
     allocation: {
       start: 5,
@@ -86,21 +86,30 @@ export const testCategories = [
     },
     classifications: [
       {
-        id: "95f53a88-da12-404c-b388-e7b5fde648ed",
+        id: "08be6817-086e-4bfe-8f07-f27eb2f98945",
         name: "Concerts",
       },
       {
-        id: "5cf1c968-bf57-4825-a919-f14635db04b9",
+        id: "61823543-6cf6-41c8-a0ea-38f243de6dac",
         name: "Drinks",
       },
       {
-        id: "bc6ec95d-2f31-4cbe-b821-63edb6cc1fb9",
+        id: "019fbf9d-133d-4833-b186-441eb1668656",
         name: "Video Streaming"
       },
       {
-        id: "fb43d27a-1930-4625-aa1a-827ebb051925",
+        id: "3b085cca-e12b-4075-a1ce-396b60826d7c",
         name: "Music Streaming"
       }
     ]
+  },
+  {
+    id: '538635ee-4ab9-4b1e-99ab-7cfc81f4f7a0',
+    name: 'Empty Category',
+    allocation: {
+      start: 10,
+      end: 15
+    },
+    classifications: []
   }
 ];

@@ -8,6 +8,7 @@ import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import bootstrapper from "./boot-strapper";
 import { BudgetModule } from "./store/store-modules";
+import { budgetModule } from "./store";
 
 export interface BudgetManagementPlugin
   extends PluginObject<BudgetManagementPluginOptions> {
@@ -18,6 +19,9 @@ export interface BudgetManagementPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  loadOnChangedValue: any;
+  loadOnChangedGetter: () => any;
+  onCloseRedirectRouteName: string;
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -41,6 +45,19 @@ const BudgetManagementPlugin = {
       }
       options.router.addRoutes(routes);
 
+      budgetModule.settings = {
+        onCloseRedirectRouteName: options.onCloseRedirectRouteName
+      };
+
+      options.store.watch(
+        options.loadOnChangedGetter,
+        (newValue) => {
+
+          if (newValue === options.loadOnChangedValue) {
+            budgetModule.loadBudget();
+          }
+        },
+      );
     }
   },
 };

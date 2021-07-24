@@ -42,3 +42,5 @@ obj
 
 # Mac
 .DS_Store
+
+mono_crash.*

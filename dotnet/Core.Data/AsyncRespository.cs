@@ -36,6 +36,16 @@ namespace Platform8.Core.Data
       }, cancellationToken);
     }
 
+    public async Task<TEntity> FirstOrDefaultAsync<TProperty>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TProperty>> include, CancellationToken cancellationToken = default) {
+      var querySpec = new QuerySpec<TEntity>
+      {
+        Where = where
+      };
+      querySpec.AddInclude(include);
+
+      return await FirstOrDefaultAsync(querySpec, cancellationToken);
+    }
+
     public async Task<TEntity> FirstOrDefaultAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
     {
       return await spec.Apply(this.Context).FirstOrDefaultAsync(cancellationToken);

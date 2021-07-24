@@ -1,6 +1,6 @@
 <template>
-  <card header-text="Categories" :show-close="false" v-if="hasCategories">
-    <ul id="category-list" class="container row tiled-list">
+  <card header-text="Categories" :showClose="showClose" :cancel="close">
+    <ul id="category-list" class="container row tiled-list"  v-if="showList">
       <li
         class="col-lg-4 col-md-6 row-sm"
         v-for="(category, index) in state.budget.categories"
@@ -32,6 +32,9 @@
         </div>
       </li>
     </ul>
+    <div class="text-center" v-else>
+      Start your budget by adding categories.
+    </div>
     <template v-slot:footer>
       <a
         href="#addCategory"
@@ -62,9 +65,23 @@ export default class CategoryList extends Vue {
     });
   }
 
-  get hasCategories() {
-    return this.state.budget?.categories?.length > 0;
+  get showList() {
+    return (
+      this.state.budget != undefined &&
+      this.state.budget.categories.length > 0
+    )
   }
+
+  get showClose() {
+    return false;
+  }
+
+  close() {
+    budgetModule.mutate((state: BudgetState) => {
+      state.status = BudgetStatus.Loaded;
+    });
+  }
+
 }
 </script>
 

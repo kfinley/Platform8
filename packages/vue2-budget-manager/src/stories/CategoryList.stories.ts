@@ -28,7 +28,7 @@ const WithDataTemplate: Story = (args, { argTypes }) => ({
           budget: {
             categories: testCategories
           },
-          budgetStatus: BudgetStatus.Loaded
+          status: BudgetStatus.Loaded
         }
       }
     }

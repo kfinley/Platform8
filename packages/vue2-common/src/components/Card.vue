@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center justify-content-center">
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-        <div class="col mx-auto">
+        <div class="col p-0">
           <div class="card z-index-0">
             <div class="card-header text-center">
               <button
@@ -18,7 +18,7 @@
                 {{ headerText }}                
               </p>              
             </div>
-            <div class="card-body">
+            <div :class="`card-body ${cardBodyClasses}`">
               <slot></slot>
             </div>
             <div  v-if="!!this.$slots.footer" class="card-footer">
@@ -45,6 +45,9 @@ export default class Card extends Vue {
 
   @Prop({ default: true})
   showClose!: boolean;
+
+  @Prop({ default: ''})
+  cardBodyClasses!: string;
 
 }
 </script>

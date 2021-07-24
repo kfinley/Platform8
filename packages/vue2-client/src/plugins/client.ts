@@ -21,6 +21,7 @@ import { AccountsState } from '@platform8/vue2-financial-accounts/src/store';
 import { UserState, RegistrationState } from '@platform8/vue2-user/src/store';
 import { AuthStatus } from '@platform8/vue2-user/src/types';
 import { TransactionsPlugin } from "@platform8/vue2-transactions/src";
+import { BudgetPlugin } from "@platform8/vue2-budget-manager/src";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@platform8/web-ui/src/styles/styles.scss";
@@ -64,6 +65,14 @@ const plugin = {
         router: options.router,
         store: options.store
       });
+
+      vue.use(BudgetPlugin, {
+        router: options.router,
+        store: options.store,
+        loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
+        loadOnChangedValue: AuthStatus.LoggedIn,
+        onCloseRedirectRouteName: RouteNames.Dashboard
+      })
 
       //TODO: Fix this. Move it into the UserPlugin install like FinancialAccountsPlugin
       userBootStrapper();
