@@ -8,7 +8,7 @@ import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { TransactionsModule } from "./store/transactionsModule";
 import bootstrapper from "./bootstrapper";
-import { AccountsState } from "@platform8/vue2-financial-accounts/src/store";
+import { AccountsState } from "@platform8/vue2-accounts/src/store";
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
   install: PluginFunction<TransactionsPluginOptions>;
@@ -22,7 +22,7 @@ export interface TransactionsPluginOptions {
 }
 
 export const setupModules = (store: Store<any>): void => {
-  
+
   store.registerModule("Transactions", TransactionsModule);
   initializeModules(store);
 };

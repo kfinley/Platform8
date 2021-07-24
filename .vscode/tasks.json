@@ -14,12 +14,12 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build-financial-accounts-service",
+      "label": "build-accounts-service",
       "command": "dotnet",
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/services/FinancialAccounts/FinancialAccounts.sln",
+        "${workspaceFolder}/services/Accounts/Accounts.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

@@ -52,7 +52,7 @@ custom:
       ProcessTransactions: Transactions-ProcessTransactions
       GetFileProcessor: Transactions-GetFileProcessor
       PublishTransactionProcessingResults: Transactions-PublishTransactionProcessingResults
-      AccountBalanceNotification: FinancialAccounts-AccountBalanceNotification
+      AccountBalanceNotification: Accounts-AccountBalanceNotification
 
 provider:
   name: aws

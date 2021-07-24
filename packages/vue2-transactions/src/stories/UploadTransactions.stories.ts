@@ -6,8 +6,8 @@ import { initializeModules as initializeNotifications } from "@platform8/vue2-no
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { TransactionsModule } from '@/store/store-modules';
-import { AccountsModule } from '@platform8/vue2-financial-accounts/src/store/store-modules';
-import { AccountsStatus, initializeModules as initializeAccounts } from "@platform8/vue2-financial-accounts/src/store";
+import { AccountsModule } from '@platform8/vue2-accounts/src/store/store-modules';
+import { AccountsStatus, initializeModules as initializeAccounts } from "@platform8/vue2-accounts/src/store";
 
 let store = new Vuex.Store({
   plugins: [

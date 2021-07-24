@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-11 px-3 py-2">{{ transaction.description }}</div>
         </div>
-      
+
       </li>
     </ul>
     <template v-slot:footer>
@@ -40,7 +40,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { transactionsModule, TransactionsState, TransactionsStatus } from "../store";
-import { Account } from '@platform8/vue2-financial-accounts/src/models';
+import { Account } from '@platform8/vue2-accounts/src/models';
 
 @Component({
   components: {
@@ -52,7 +52,7 @@ export default class TransactionList extends Vue {
 
   @Prop()
   accounts!: Account[];
-  
+
   addTransactions() {
     transactionsModule.mutate((state: TransactionsState) => {
       state.transactionsStatus = TransactionsStatus.Uploading;

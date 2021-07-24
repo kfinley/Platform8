@@ -1,7 +1,7 @@
 import 'reflect-metadata'; // <-- deal with this...
 
 import { setupModules } from '@/plugin';
-import { setupModules as setupAccountsModules } from '@platform8/vue2-financial-accounts/src/plugin';
+import { setupModules as setupAccountsModules } from '@platform8/vue2-accounts/src/plugin';
 
 import * as Components from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"

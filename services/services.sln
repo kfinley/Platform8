@@ -15,17 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Models", "User\Models\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Tests", "User\Tests\User.Tests.csproj", "{EAEA1764-058D-4B5F-861B-3D9E910CC0D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FinancialAccounts", "FinancialAccounts", "{FD75C91D-DB71-4A73-B55C-AB7E2D2021B1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{FD75C91D-DB71-4A73-B55C-AB7E2D2021B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialAccounts.Api", "FinancialAccounts\Api\FinancialAccounts.Api.csproj", "{2D48B4B4-1154-474F-B2D3-856880661594}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Api", "Accounts\Api\Accounts.Api.csproj", "{2D48B4B4-1154-474F-B2D3-856880661594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialAccounts.Commands", "FinancialAccounts\Commands\FinancialAccounts.Commands.csproj", "{D4E603AF-28B1-4C6D-B8F8-0D432F6EF633}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Commands", "Accounts\Commands\Accounts.Commands.csproj", "{D4E603AF-28B1-4C6D-B8F8-0D432F6EF633}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialAccounts.Data", "FinancialAccounts\Data\FinancialAccounts.Data.csproj", "{2D6454D9-35C5-46C7-BB6B-B6AB9AB1D0F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Data", "Accounts\Data\Accounts.Data.csproj", "{2D6454D9-35C5-46C7-BB6B-B6AB9AB1D0F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialAccounts.Models", "FinancialAccounts\Models\FinancialAccounts.Models.csproj", "{B08DDA24-8203-42FE-83DD-E91B90BFC272}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Models", "Accounts\Models\Accounts.Models.csproj", "{B08DDA24-8203-42FE-83DD-E91B90BFC272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialAccounts.Tests", "FinancialAccounts\Tests\FinancialAccounts.Tests.csproj", "{93DCEA38-392A-4962-86BC-73A5261E0530}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Tests", "Accounts\Tests\Accounts.Tests.csproj", "{93DCEA38-392A-4962-86BC-73A5261E0530}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\dotnet\Core\Core.csproj", "{F75A6FAE-6A12-4166-A04C-06D791CDC439}"
 EndProject

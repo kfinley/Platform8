@@ -46,7 +46,7 @@ import {
   TransactionsStatus,
   UploadStatus,
 } from "../store";
-import { Account } from "@platform8/vue2-financial-accounts/src/models";
+import { Account } from "@platform8/vue2-accounts/src/models";
 
 @Component({
   components: {

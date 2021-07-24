@@ -4,7 +4,7 @@ import { Transactions } from "@/components";
 import { initializeModules, TransactionsStatus, UploadStatus } from '@/store';
 import { initializeModules as initializeNotifications } from "@platform8/vue2-notify/src/store";
 import { Notify } from "@platform8/vue2-notify/src/components";
-import { AccountsStatus, initializeModules as initializeAccounts } from "@platform8/vue2-financial-accounts/src/store";
+import { AccountsStatus, initializeModules as initializeAccounts } from "@platform8/vue2-accounts/src/store";
 import { container, injectable } from 'inversify-props';
 import { Command } from '@platform8/commands/src';
 import { LoadTransactionsRequest, LoadTransactionsResponse } from '@/models';

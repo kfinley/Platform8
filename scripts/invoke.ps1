@@ -84,7 +84,7 @@ try {
 
   #Add-Type -Path "$($dllPath)/Amazon.Lambda.SNSEvents.dll"
 
-  Add-Type -Path "$($dllPath)/FinancialAccounts.Models.EF3.dll"
+  Add-Type -Path "$($dllPath)/Accounts.Models.EF3.dll"
 
   $assm = [System.Reflection.Assembly]::LoadFrom($dll)
 
