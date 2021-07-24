@@ -5,7 +5,7 @@ let budgetServiceUri = config.Api;
 if (config.ApiPorts && config.ApiPorts.includes('budget')) {
   const port = config.ApiPorts.split(',').find(x => x.startsWith('budget:'))?.split(':')[1];
   budgetServiceUri = `${budgetServiceUri}:${port}`;
-  console.log(`Financial Accounts Service: ${budgetServiceUri}`);
+  console.log(`Budget Service: ${budgetServiceUri}`);
 }
 
 export default {

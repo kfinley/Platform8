@@ -12,12 +12,12 @@ import { RouteNames } from "../router";
 
 import { setupValidation } from '@platform8/vue2-common/src/validation';
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
-import { FinancialAccountsPlugin } from "@platform8/vue2-financial-accounts/src";
+import { AccountsPlugin } from "@platform8/vue2-accounts/src";
 import { UserPlugin } from "@platform8/vue2-user/src";
 import userBootStrapper from "@platform8/vue2-user/src/boot-strapper";
 import { RegistrationModule, UserModule } from '@platform8/vue2-user/src/store/store-modules';
 import { NotificationState } from '@platform8/vue2-notify/src/store';
-import { AccountsState } from '@platform8/vue2-financial-accounts/src/store';
+import { AccountsState } from '@platform8/vue2-accounts/src/store';
 import { UserState, RegistrationState } from '@platform8/vue2-user/src/store';
 import { AuthStatus } from '@platform8/vue2-user/src/types';
 import { TransactionsPlugin } from "@platform8/vue2-transactions/src";
@@ -54,7 +54,7 @@ const plugin = {
         DefaultRoute: RouteNames.Home,
       });
 
-      vue.use(FinancialAccountsPlugin, {
+      vue.use(AccountsPlugin, {
         router: options.router,
         store: options.store,
         loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
@@ -74,7 +74,7 @@ const plugin = {
         onCloseRedirectRouteName: RouteNames.Dashboard
       })
 
-      //TODO: Fix this. Move it into the UserPlugin install like FinancialAccountsPlugin
+      //TODO: Fix this. Move it into the UserPlugin install like AccountsPlugin
       userBootStrapper();
 
       //HACK: Calls to Vuex.registerModule inside plugins will wipe out the store getters.

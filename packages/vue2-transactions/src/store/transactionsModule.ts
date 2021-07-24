@@ -6,7 +6,7 @@ import { getModule } from "vuex-module-decorators";
 import { LoadTransactionsCommand, UploadFileCommand } from '@/commands';
 import { messages } from "../resources/messages";
 import { AlertType } from '@platform8/vue2-notify/src/types';
-import { Account } from '@platform8/vue2-financial-accounts/src/models';
+import { Account } from '@platform8/vue2-accounts/src/models';
 
 @Module({ namespaced: true, name: 'Transactions' })
 export class TransactionsModule extends VuexModule implements TransactionsState {
@@ -65,7 +65,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
 
       const cmd = container.get<LoadTransactionsCommand>("LoadTransactionsCommand");
       const response = await cmd.runAsync(runParams);
-      
+
       if (!response.transactions) {
         throw new Error(response.error);
       }

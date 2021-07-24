@@ -5,5 +5,5 @@ module.exports = {
     mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
     scriptPath: `${__dirname}/scripts`,
     servicesPath: `./services`,
-    services: ['FinancialAccounts', 'Transactions'],
+    services: ['Accounts', 'Transactions'],
 };
