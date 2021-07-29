@@ -90,7 +90,7 @@ describe("TransactionsModule.loadTransactions - Success", () => {
   });
 
   it("should set transactions", () => {
-    console.log(commit.mock.calls[1][1].toString());
+    
     // Assert
     // check that mutate was the second call to commit
     expect(commit).toHaveBeenNthCalledWith(2,

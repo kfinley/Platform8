@@ -39,5 +39,8 @@ export const testTransactionsState = {
       description: 'Transaction 3',
       account: testAccountsState.accounts[0].name
     }
-  ]
+  ],
+  actionText: "Expense",
+  actionComponent: "add-expense-action",
+  actionFunction: "Expenses/addActionActivated",        
 }

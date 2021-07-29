@@ -45,7 +45,6 @@ describe("TransactionList.vue", () => {
       store.state.Transactions = testTransactionsState;
     });
 
-
     // Assert
     const accountList = component.find(".transaction-action-container");
     expect(accountList.element).toBeInstanceOf(HTMLElement);

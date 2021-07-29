@@ -1,4 +1,4 @@
-import AddCategory from "./AddCtegory.vue";
+import AddCategory from "./AddCategory.vue";
 import Budget from "./Budget.vue";
 import CategoryList from "./CategoryList.vue";
 import CategoryComponent from "./CategoryComponent.vue";

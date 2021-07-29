@@ -23,7 +23,7 @@ export interface TransactionsPluginOptions {
   loadOnChangedGetter: () => any;
   actionText: string;
   actionComponent: string;
-  actionFunction: (transactionId: string) => void,
+  actionFunction: string,
 }
 
 export const setupModules = (store: Store<any>): void => {

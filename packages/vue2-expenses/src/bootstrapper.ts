@@ -1,6 +1,6 @@
 import { ApiClient, apiClient } from '@platform8/api-client/src';
 import { Container, container } from 'inversify-props';
-import { AddExpenseCommand } from './commands/AddExpense';
+import { AddExpenseCommand } from './commands';
 
 export default function bootstrapper() {
   addTransientIfNeeded<ApiClient>(apiClient, 'ApiClient', container);
