@@ -32,5 +32,12 @@ namespace Platform8.Budgets.Api.Controllers
       request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
       return Ok(await mediator.Send(request));
     }
+
+    [HttpGet]
+    [Route("/budgets/v1/category")]
+    public async Task<IActionResult> Category([FromQuery]CategoryByNameRequest request) {
+      request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
+      return Ok(await mediator.Send(request));
+    }
   }
 }

@@ -2,7 +2,7 @@ import 'reflect-metadata'; // <-- deal with this...
 
 import { setupModules } from '@/plugin';
 
-import * as Components from "@/components";
+import { CategoryList } from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
 import { testCategories } from './data';
 
@@ -12,7 +12,7 @@ describe("CategoryList.vue", () => {
 
   beforeAll(() => {
     // Arrange & Act
-    component = Factory.create(Components.CategoryList, (store) => {
+    component = Factory.create(CategoryList, (store) => {
       setupModules(store);
       store.state.Budget.budget = {
         id: "123",

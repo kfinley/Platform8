@@ -1,8 +1,7 @@
 import 'reflect-metadata'; // <-- deal with this...
 
 import { setupModules } from '@/plugin';
-
-import * as Components from "@/components";
+import { AddCategory } from "@/components";
 import { Factory } from "../../../vue2-test-utils/src"
 import { testCategories } from './data';
 
@@ -12,7 +11,7 @@ describe("AddCategory.vue", () => {
 
   beforeAll(() => {
     // Arrange & Act
-    component = Factory.create(Components.AddCategory, (store) => {
+    component = Factory.create(AddCategory, (store) => {
       setupModules(store);
       store.state.Budget.budget = {
         id: "123",

@@ -8,7 +8,9 @@ import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { TransactionsModule } from "./store/transactionsModule";
 import bootstrapper from "./bootstrapper";
-import { AccountsState } from "@platform8/vue2-accounts/src/store";
+import { TransactionsState, transactionsModule } from "./store";
+
+
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
   install: PluginFunction<TransactionsPluginOptions>;
@@ -18,7 +20,10 @@ export interface TransactionsPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
-  accountsGetter: () => any;
+  loadOnChangedGetter: () => any;
+  actionText: string;
+  actionComponent: string;
+  actionFunction: (transactionId: string) => void,
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -42,8 +47,12 @@ const TransactionsPlugin = {
       }
       options.router.addRoutes(routes);
 
+      (<TransactionsState>options.store.state.Transactions).actionFunction = options.actionFunction;      
+      (<TransactionsState>options.store.state.Transactions).actionText = options.actionText;
+      (<TransactionsState>options.store.state.Transactions).actionComponent = options.actionComponent;
+
       options.store.watch(
-        () => (<AccountsState>options.store.state.Accounts).accounts,
+        options.loadOnChangedGetter,
         (newValue) => {
           if (newValue.length > 0) {
             getModule(TransactionsModule, options.store).loadTransactions({

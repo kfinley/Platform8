@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
-import CategoryList from "@/components/CategoryList.vue";
+import { CategoryList } from "@/components";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { store } from './store';
 import { BudgetStatus } from '@/store';

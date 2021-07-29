@@ -9,6 +9,7 @@ import { getModule } from "vuex-module-decorators";
 import bootstrapper from "./boot-strapper";
 import { BudgetModule } from "./store/store-modules";
 import { budgetModule } from "./store";
+import { CategoryComponent } from "./components";
 
 export interface BudgetManagementPlugin
   extends PluginObject<BudgetManagementPluginOptions> {
@@ -44,6 +45,8 @@ const BudgetManagementPlugin = {
         });
       }
       options.router.addRoutes(routes);
+      
+      Vue.component("Category", CategoryComponent);
 
       budgetModule.settings = {
         onCloseRedirectRouteName: options.onCloseRedirectRouteName

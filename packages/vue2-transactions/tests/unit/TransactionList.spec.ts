@@ -26,8 +26,30 @@ describe("TransactionList.vue", () => {
     const component = Factory.create(Components.TransactionList, (store) => {
       setupModules(store);
       store.state.Accounts = testAccountsState;
+      store.state.Transactions = {
+        transactions: testTransactionsState.transactions,
+        actionText: 'Action'
+      };
+    });
+
+
+
+  });
+
+  it("shows action as a button", () => {
+
+    // Arrange & Act
+    const component = Factory.create(Components.TransactionList, (store) => {
+      setupModules(store);
+      store.state.Accounts = testAccountsState;
       store.state.Transactions = testTransactionsState;
     });
 
-  });
+
+    // Assert
+    const accountList = component.find(".transaction-action-container");
+    expect(accountList.element).toBeInstanceOf(HTMLElement);
+
+    
+  })
 });
