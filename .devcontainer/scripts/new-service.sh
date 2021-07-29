@@ -28,7 +28,7 @@ rm -rf Functions/src
 rm -rf Functions/test
 dotnet new xunit -o Tests -n $1.Tests
 
-echo 
+echo
 echo Creating dotnet solution and adding projects...
 dotnet new sln
 dotnet sln add Api/$1.Api.csproj
@@ -45,8 +45,9 @@ CORE_PROJECT=../../dotnet/Core/Core.csproj
 CORE_DATA_PROJECT=../../dotnet/Core.Data/Core.Data.csproj
 TESTS_COMMON_PROJECT=../../dotnet/Tests.Common/Tests.Common.csproj
 
-echo 
-echo Adding API project references... 
+echo
+echo Adding API project references...
+dotnet add Api/$1.Api.csproj package AutoMapper.Extensions.Microsoft.DependencyInjection
 dotnet add Api/$1.Api.csproj package MediatR
 dotnet add Api/$1.Api.csproj package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add Api/$1.Api.csproj package Microsoft.AspNetCore.Authentication.JwtBearer
@@ -60,6 +61,7 @@ dotnet add Api/$1.Api.csproj reference $CORE_PROJECT Commands/$1.Commands.csproj
 
 echo
 echo Adding Commands project reference...
+dotnet add Commands/$1.Commands.csproj package AutoMapper
 dotnet add Commands/$1.Commands.csproj package MediatR
 dotnet add Commands/$1.Commands.csproj package Microsoft.Extensions.Logging
 dotnet add Commands/$1.Commands.csproj package Microsoft.Extensions.Options
@@ -74,7 +76,7 @@ dotnet add Data/$1.Data.csproj reference $CORE_DATA_PROJECT Models/$1.Models.csp
 echo
 echo Adding Models project reference...
 dotnet add Models/$1.Models.csproj package MediatR
-dotnet add Models/$1.Models.csproj reference $CORE_PROJECT $CORE_DATA_PROJECT
+dotnet add Models/$1.Models.csproj reference $CORE_PROJECT
 
 echo
 echo Adding Tests project reference...

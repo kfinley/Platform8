@@ -19,9 +19,21 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-11 px-3 py-2">{{ transaction.description }}</div>
-        </div>
-
+            <div class="col-10 px-3 py-2">{{ transaction.description }}</div>
+            <div class="col-2" v-if="transactionsState.actionText !== undefined">
+              <action :transaction-id="transaction.id" />
+            </div>
+        </div>        
+        <component 
+          v-if="actionIsActive && transactionsState.actionTargetId == transaction.id" 
+          @cancel="closeActionComponent"
+          :is="transactionsState.actionComponent" 
+          category-component="category"
+          :transaction-id="transaction.id"
+          :amount="transaction.amount"
+          :description="transaction.description"
+          @saved="closeActionComponent"
+           />        
       </li>
     </ul>
     <template v-slot:footer>
@@ -38,13 +50,15 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Card } from "@platform8/vue2-common/src/components";
+import Action from "./Action.vue";
 import { State } from "vuex-class";
-import { transactionsModule, TransactionsState, TransactionsStatus } from "../store";
+import { transactionsModule, TransactionsState, TransactionsStatus, ActionStatus } from "../store";
 import { Account } from '@platform8/vue2-accounts/src/models';
 
 @Component({
   components: {
     Card,
+    Action,
   }
 })
 export default class TransactionList extends Vue {
@@ -65,5 +79,16 @@ export default class TransactionList extends Vue {
       currency: "USD",
     }).format(number);
   }
+
+  get actionIsActive() {
+    return this.transactionsState.actionStatus === ActionStatus.Active;
+  }
+
+  closeActionComponent() {
+    transactionsModule.mutate((state: TransactionsState) => {
+      state.actionStatus = ActionStatus.None;
+      state.actionTargetId = undefined;
+    });
+  }  
 }
 </script>

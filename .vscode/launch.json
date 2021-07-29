@@ -106,6 +106,32 @@
       }
     },
     {
+      // Use IntelliSense to find out which attributes exist for C# debugging
+      // Use hover for the description of the existing attributes
+      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Launch Expenses Api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-expenses-service",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/services/Expenses/Api/bin/Debug/net5.0/Expenses.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/services/Expenses/Api",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
+        "uriFormat": "http://localhost:%s/swagger/index.html"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
       "name": ".NET Core Attach",
       "type": "coreclr",
       "request": "attach"

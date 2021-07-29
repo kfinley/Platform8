@@ -22,8 +22,11 @@ import { UserState, RegistrationState } from '@platform8/vue2-user/src/store';
 import { AuthStatus } from '@platform8/vue2-user/src/types';
 import { TransactionsPlugin } from "@platform8/vue2-transactions/src";
 import { BudgetPlugin } from "@platform8/vue2-budget-manager/src";
+import { ExpensesPlugin } from "@platform8/vue2-expenses/src";
+import { ExpensesModule }  from "@platform8/vue2-expenses/src/store/expensesModule";
 
 import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap-icons/font/bootstrap-icons.css";
 import "@platform8/web-ui/src/styles/styles.scss";
 
 export interface ClientPlugin extends PluginObject<ClientPluginOptions> {
@@ -61,9 +64,18 @@ const plugin = {
         loadOnChangedValue: AuthStatus.LoggedIn
       });
 
+      vue.use(ExpensesPlugin, { 
+        router: options.router,
+        store: options.store,
+      });
+
       vue.use(TransactionsPlugin, {
         router: options.router,
-        store: options.store
+        store: options.store,
+        actionText: "Expense",
+        actionComponent: "add-expense-action",
+        actionFunction: "Expenses/addActionActivated",        
+        loadOnChangedGetter: () => (<AccountsState>options.store.state.Accounts).accounts,
       });
 
       vue.use(BudgetPlugin, {
@@ -84,6 +96,7 @@ const plugin = {
       //
       getModule(UserModule, options.store);
       getModule(RegistrationModule, options.store);
+      getModule(ExpensesModule, options.store);
 
       setupValidation(extend);
 

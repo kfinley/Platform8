@@ -9,6 +9,7 @@
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-accounts",
+    "storybook:expenses": "lerna run storybook --stream --scope=@platform8/vue2-expenses",
     "storybook:transactions": "lerna run storybook --stream --scope=@platform8/vue2-transactions",
     "storybook:budgets": "lerna run storybook --stream --scope=@platform8/vue2-budget-manager",
     "storybook:common": "lerna run storybook --stream --scope=@platform8/vue2-common",

@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
-import { TransactionsState, TransactionsStatus, UploadStatus } from './state';
+import { TransactionsState, TransactionsStatus, UploadStatus, ActionStatus } from './state';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { container } from 'inversify-props';
 import { getModule } from "vuex-module-decorators";
@@ -10,9 +10,15 @@ import { Account } from '@platform8/vue2-accounts/src/models';
 
 @Module({ namespaced: true, name: 'Transactions' })
 export class TransactionsModule extends VuexModule implements TransactionsState {
+
   transactions = [];
   transactionsStatus = TransactionsStatus.None;
   uploadStatus = UploadStatus.None;
+  
+  actionStatus = ActionStatus.None;
+  actionText = undefined;
+  actionComponent = undefined;
+  actionFunction = ''; // !: (transactionId: string) => void | undefined;
 
   @Action
   async uploadTransactions(params: { file: File, accountId: string }) {
@@ -87,6 +93,23 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
 
       notificationModule.handleError({ error, rethrow: false });
     }
+  }
+
+  @Action
+  performAction(transactionId: string) {
+    this.context.commit('mutate',
+      (state: TransactionsState) => {        
+        state.actionStatus = ActionStatus.None;
+        state.actionTargetId = transactionId;
+      });
+
+    this.context.commit('mutate',
+      (state: TransactionsState) => {
+        state.actionTargetId = transactionId; 
+        state.actionStatus = ActionStatus.Active;
+      });
+    
+    this.context.dispatch(this.actionFunction, transactionId, { root: true });    
   }
 
   @Mutation
