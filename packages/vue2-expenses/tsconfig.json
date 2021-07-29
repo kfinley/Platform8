@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "preserveSymlinks": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
@@ -23,6 +25,7 @@
     },
     "lib": [
       "esnext",
+      "ES2018",
       "dom",
       "dom.iterable",
       "scripthost"

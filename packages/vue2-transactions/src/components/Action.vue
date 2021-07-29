@@ -1,6 +1,6 @@
 <template>
   <div class='transaction-action-container'>
-    <button class="primary-gradient" @click.prevent="action()">{{ state.actionText }}</button>
+    <button class="primary-gradient" @click.prevent="action" v-html="state.actionText" />
   </div>
 
 </template>

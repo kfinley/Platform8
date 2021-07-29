@@ -1,34 +1,80 @@
 <template>
   <div class="row add-expense-panel">
     <div class="col-8 align-self-center">
-      <component :is="categoryComponent" />
+      <component :is="categoryComponent" v-model="category" />
     </div>
     <div class="col-4 align-self-center action-controls" align="center">
-      <i class="bi bi-x-circle align-self-center clickable" @click.prevent="cancel" title="Cancel"> </i>
-      <i class="bi bi-check-circle align-self-center clickable primary" title="Save Expense"></i>
+      <i
+        class="bi bi-x-circle align-self-center clickable"
+        @click.prevent="cancel"
+        title="Cancel"
+      >
+      </i>
+      <i
+        class="bi bi-check-circle align-self-center clickable primary"
+        @click.prevent="save"
+        title="Save Expense"
+      ></i>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { expensesModule, ExpensesState, ActionStatus } from "../store";
+import { State } from "vuex-class";
 
 @Component
 export default class AddExpenseAction extends Vue {
-  @Prop()
-  transactionId!: string;
+  @State("Expenses") state!: ExpensesState;
 
-  @Prop()
-  amount!: string;
+  category: { id: string; name: string } = {
+    id: '',
+    name: ''
+  };
 
   @Prop()
   categoryComponent: string;
 
-  category!: object;
+  @Prop()
+  transactionId!: string;
+
+  @Prop()
+  amount: number;
+
+  @Prop()
+  description: string;
+
+  @Prop({ default: true})
+  isFullTransaction!: boolean;
+
+  mounted() {
+    expensesModule.mutate(
+      (state: ExpensesState) => (state.addActionStatus = ActionStatus.Loaded)
+    );
+  }
 
   cancel() {
-    this.$emit('cancel');
+    this.$emit("cancel");
   }
+
+  save() {    
+    expensesModule.addExpense({
+      description: this.description,
+      amount: this.amount,
+      isFullTransaction: this.isFullTransaction,
+      transactionId: this.transactionId,
+      categoryId: this.category.id,
+    });
+  }
+
+  @Watch("state.addActionStatus")
+  onStatusChanged(value: ActionStatus) {    
+    if (value == ActionStatus.Saved) {
+      this.$emit("saved");
+    }
+  }
+
 }
 </script>
 

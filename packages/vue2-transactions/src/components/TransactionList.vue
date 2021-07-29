@@ -26,10 +26,14 @@
         </div>        
         <component 
           v-if="actionIsActive && transactionsState.actionTargetId == transaction.id" 
-          @cancel="cancelAddExpense"
+          @cancel="closeActionComponent"
           :is="transactionsState.actionComponent" 
-          category-component="category" 
-          :transaction-id="transaction.id" />        
+          category-component="category"
+          :transaction-id="transaction.id"
+          :amount="transaction.amount"
+          :description="transaction.description"
+          @saved="closeActionComponent"
+           />        
       </li>
     </ul>
     <template v-slot:footer>
@@ -80,11 +84,11 @@ export default class TransactionList extends Vue {
     return this.transactionsState.actionStatus === ActionStatus.Active;
   }
 
-  cancelAddExpense() {
+  closeActionComponent() {
     transactionsModule.mutate((state: TransactionsState) => {
       state.actionStatus = ActionStatus.None;
       state.actionTargetId = undefined;
     });
-  }
+  }  
 }
 </script>
