@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\dotnet\Aws.Commands\Aws.Commands.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\Data\Expenses.Data.csproj" />

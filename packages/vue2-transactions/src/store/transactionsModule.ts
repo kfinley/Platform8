@@ -14,7 +14,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   transactions = [];
   transactionsStatus = TransactionsStatus.None;
   uploadStatus = UploadStatus.None;
-  
+
   actionStatus = ActionStatus.None;
   actionText = undefined;
   actionComponent = undefined;
@@ -96,20 +96,25 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   }
 
   @Action
+  setHasChanges(params: { transactionId: string }) {
+    console.log('TODO: Fetch the latest version which should include linked items...')
+  }
+
+  @Action
   performAction(transactionId: string) {
     this.context.commit('mutate',
-      (state: TransactionsState) => {        
+      (state: TransactionsState) => {
         state.actionStatus = ActionStatus.None;
         state.actionTargetId = transactionId;
       });
 
     this.context.commit('mutate',
       (state: TransactionsState) => {
-        state.actionTargetId = transactionId; 
+        state.actionTargetId = transactionId;
         state.actionStatus = ActionStatus.Active;
       });
-    
-    this.context.dispatch(this.actionFunction, transactionId, { root: true });    
+
+    this.context.dispatch(this.actionFunction, transactionId, { root: true });
   }
 
   @Mutation

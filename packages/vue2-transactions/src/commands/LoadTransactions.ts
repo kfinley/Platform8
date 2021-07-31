@@ -19,6 +19,6 @@ export class LoadTransactionsCommand implements Command<LoadTransactionsRequest,
       };
     }
 
-    throw new Error(`Add account failed. Error: ${response.data}`);
+    throw new Error(`Load transactions failed. Error: ${response.data}`);
   }
 }

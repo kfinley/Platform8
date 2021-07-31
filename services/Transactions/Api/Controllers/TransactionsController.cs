@@ -29,7 +29,7 @@ namespace Platform8.Transactions.Api.Controllers
     [HttpGet]
     [Route("/transactions/v1/")]
     public async Task<IActionResult> Transactions([FromQuery] ListTransactionsRequest request) {
-      request.UserId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
+      request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
       return Ok(await mediator.Send(request));
     }
   }

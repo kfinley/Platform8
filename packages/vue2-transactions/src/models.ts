@@ -3,7 +3,14 @@ export interface Transaction {
   date: Date,
   description: string,
   amount: number,
-  accountId: string
+  accountId: string,
+  linkedItems?: linkedItem[]
+}
+
+export interface linkedItem {
+  type: string,
+  id: string,
+  attributes: Record<string, object>
 }
 
 export interface TransactionInList extends Transaction {

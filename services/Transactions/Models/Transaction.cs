@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using MediatR;
 
 namespace Platform8.Transactions.Models
 {
@@ -11,4 +14,13 @@ namespace Platform8.Transactions.Models
     public decimal Amount { get; set; }
   }
 
+  public class ListTransactionsRequest : IRequest<ListTransactionsResponse>
+  {
+    public Guid? OwnerId { get; set; }
+    public DateTime StartDate { get; set; }
+  }
+  public class ListTransactionsResponse : List<Transaction>
+  {
+    public ListTransactionsResponse(IEnumerable<Transaction> list) : base(list) { }
+  }
 }

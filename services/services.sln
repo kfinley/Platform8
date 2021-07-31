@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Models", "Expenses
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Tests", "Expenses\Tests\Expenses.Tests.csproj", "{7C119A8A-6119-4E4B-9B3F-1B5DF46C1466}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aws.Commands", "..\dotnet\Aws.Commands\Aws.Commands.csproj", "{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -404,6 +406,18 @@ Global
 		{7C119A8A-6119-4E4B-9B3F-1B5DF46C1466}.Release|x64.Build.0 = Release|Any CPU
 		{7C119A8A-6119-4E4B-9B3F-1B5DF46C1466}.Release|x86.ActiveCfg = Release|Any CPU
 		{7C119A8A-6119-4E4B-9B3F-1B5DF46C1466}.Release|x86.Build.0 = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|x64.Build.0 = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Debug|x86.Build.0 = Debug|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|x64.ActiveCfg = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|x64.Build.0 = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F83F5A7-3935-4FB8-B5D4-18F0DA008D66}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0450DC28-91C2-474A-BFA3-8DC37EE00909} = {DC618C20-915F-4260-86CF-82E212544064}

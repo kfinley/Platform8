@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,20 +26,22 @@ namespace Platform8.Transactions.Commands
         IndexName = DynamoConstants.GSI1,
         ExpressionAttributeValues = new Dictionary<string, AttributeValue>
         {
-          {":GSI1PK", new AttributeValue { S = $"USER#{request.UserId}" }},
-          {":GSI1SK", new AttributeValue { S = $"DATE#{request.StartDate.ToString("o")}" }}
+          {":PK", new AttributeValue { S = $"OWNER#{request.OwnerId}" }},
+          {":GSI1SK", new AttributeValue { S = $"DATE#{request.StartDate.ToString("o")}" }},
+          {":type", new AttributeValue { S = "Transaction" }}
         },
-        KeyConditionExpression = "GSI1PK = :GSI1PK and GSI1SK >= :GSI1SK",
-
+        KeyConditionExpression = "PK = :PK and GSI1SK >= :GSI1SK",
+        FilterExpression = "#type = :type",
+        ExpressionAttributeNames = new Dictionary<string, string> {
+          { "#type", "type" }
+        }
       };
 
       var data = await this.dynamoDbClient.QueryAsync(query);
 
       var list = new List<Transaction>();
 
-      data.Items.ForEach(t => {
-        list.Add(ConvertItemToTransaction(new DynamoItem(t)));
-      });
+      data.Items.ForEach(i => list.Add(ConvertItemToTransaction(new DynamoItem(i))));
 
       return new ListTransactionsResponse(list);
     }

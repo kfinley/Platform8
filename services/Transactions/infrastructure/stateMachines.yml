@@ -18,3 +18,24 @@ ProcessUploadedTransactions:
         Resource:
           Fn::GetAtt [PublishTransactionProcessingResults, Arn]
         End: true
+
+${self:service}-ProcessExpenseAddedNotification:
+  definition:
+    Comment: Add expense as a LinkedItem to Transaction step function
+    StartAt: ${self:service}-ProcessMessage
+    States:
+      ${self:service}-ProcessMessage:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [${self:service}-ProcessMessage, Arn]
+        Next: ${self:service}-AddLinkedItem
+      ${self:service}-AddLinkedItem:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [${self:service}-AddLinkedItem, Arn]
+        Next: ${self:service}-PublishAddLinkedItemResults
+      ${self:service}-PublishAddLinkedItemResults:
+        Type: Task
+        Resource:
+          Fn::GetAtt [${self:service}-PublishAddLinkedItemResults, Arn]
+        End: true

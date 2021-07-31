@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+using Amazon.SimpleNotificationService;
+
 using ContinuousMigrations;
 using MediatR;
 
@@ -50,6 +52,7 @@ namespace Platform8.Expenses.Api
 
       services
         .AddDefaultAWSOptions(Configuration.GetAWSOptions())
+        .AddAWSService<IAmazonSimpleNotificationService>(Configuration.GetAWSOptions("Service:SNS"))
         .AddDbContext<DataContext>(options =>
           options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
                            new MySqlServerVersion(new Version(5, 7)),
@@ -64,6 +67,7 @@ namespace Platform8.Expenses.Api
         .AddContinuousMigrations<DataContext>()
 
         .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddMediatR(Aws.Commands.CommandsAssembly.Value)
         .AddMediatR(Expenses.Commands.CommandsAssembly.Value)
         .AddAutoMapper(Expenses.Commands.CommandsAssembly.Value);
         

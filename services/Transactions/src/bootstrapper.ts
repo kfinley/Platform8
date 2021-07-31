@@ -6,7 +6,9 @@ import {
   GetFileProcessorCommand,
   ProcessFileCommand,
   SaveTransactionsCommand,
-  GetTransactionCommand
+  GetTransactionCommand,
+  SaveTransactionCommand,
+  SaveLinkedItemCommand
 } from "./commands";
 import {
   FileProcessors
@@ -29,6 +31,8 @@ export default function bootstrapper() {
   addTransientIfNeeded<ProcessFileCommand>(ProcessFileCommand, "ProcessFileCommand", container);
   addTransientIfNeeded<SaveTransactionsCommand>(SaveTransactionsCommand, "SaveTransactionsCommand", container);
   addTransientIfNeeded<GetTransactionCommand>(GetTransactionCommand, "GetTransactionCommand", container);
+  addTransientIfNeeded<SaveTransactionCommand>(SaveTransactionCommand, "SaveTransactionCommand", container);
+  addTransientIfNeeded<SaveLinkedItemCommand>(SaveLinkedItemCommand, "SaveLinkedItemCommand", container);
 
   addTransientIfNeeded<BA_Checking_Transactions_File_Parser_Command>(
     BA_Checking_Transactions_File_Parser_Command,

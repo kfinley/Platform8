@@ -1,7 +1,6 @@
 
 import { Command } from '@platform8/commands/src';
 import { Transaction, ParsedTransactions, FileParserRequest, FileParserResponse } from "../../models";
-import * as uuid from "uuid";
 
 export class BA_Checking_Transactions_File_Parser_Command implements Command<FileParserRequest, FileParserResponse<ParsedTransactions>> {
 
@@ -25,8 +24,7 @@ export class BA_Checking_Transactions_File_Parser_Command implements Command<Fil
       let transactionRow = allLines[i].split(',');
       // Skip any empty rows
       if (transactionRow.length == 4) {
-        data.transactions.push({
-          id: uuid.v4(),
+        data.transactions.push({          
           date: new Date(transactionRow[0]),
           description: transactionRow[1].replace(/"/g, ''),
           amount: Number.parseFloat(transactionRow[2].replace(/"/g, ''))

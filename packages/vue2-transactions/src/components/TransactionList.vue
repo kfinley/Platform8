@@ -32,7 +32,7 @@
           :transaction-id="transaction.id"
           :amount="transaction.amount"
           :description="transaction.description"
-          @saved="closeActionComponent"
+          @saved="actionComponentSaved(transaction.id)"
            />        
       </li>
     </ul>
@@ -89,6 +89,14 @@ export default class TransactionList extends Vue {
       state.actionStatus = ActionStatus.None;
       state.actionTargetId = undefined;
     });
-  }  
+  }
+
+  actionComponentSaved(transactionId: string) {
+    transactionsModule.setHasChanges({
+      transactionId
+    });
+
+    this.closeActionComponent();
+  }
 }
 </script>

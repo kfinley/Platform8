@@ -53,6 +53,9 @@ custom:
       GetFileProcessor: Transactions-GetFileProcessor
       PublishTransactionProcessingResults: Transactions-PublishTransactionProcessingResults
       AccountBalanceNotification: Accounts-AccountBalanceNotification
+      Transactions-ProcessMessage: Transactions-ProcessMessage
+      Transactions-AddLinkedItem: Transactions-AddLinkedItem
+      Transactions-PublishAddLinkedItemResults: Transactions-PublishAddLinkedItemResults
 
 provider:
   name: aws
