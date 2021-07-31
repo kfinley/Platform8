@@ -14,8 +14,7 @@ export default {
   },
 
   get transactions() {
-    return `${this.serviceBasePath}/`;
-  },
-
+    return `${this.serviceBasePath}`;
+  }
 }
 

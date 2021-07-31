@@ -1,0 +1,4 @@
+ExpenseAddedTopic:
+  Type: "AWS::SNS::Topic"
+  Properties:
+    DisplayName: ExpenseAddedNotification

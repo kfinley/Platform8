@@ -17,11 +17,11 @@ export const handler: Handler = async (event: any, context: Context) => {
     });
 
     const keySplit = event.key.split('/');
-    const userId = keySplit[0];
+    const ownerId = keySplit[0];
     const accountId = keySplit[1];
 
     const saveTransactions = await container.get<SaveTransactionsCommand>('SaveTransactionsCommand').runAsync({
-      userId,
+      ownerId,
       accountId,
       transactions: processFile.data.transactions
     });
@@ -29,7 +29,7 @@ export const handler: Handler = async (event: any, context: Context) => {
     console.log('Transactions Saved:', saveTransactions);
 
     const payload = {
-      userId,
+      ownerId,
       accountId,
       count: saveTransactions.count,
       saved: saveTransactions.saved,

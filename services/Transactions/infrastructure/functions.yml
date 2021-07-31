@@ -19,3 +19,18 @@ StartProcessTransactions:
   events:
     - sns:
         arn: arn:aws:sns:us-west-1:101010101010:TransactionsUploadedTopic
+
+StartProcessExpenseAddedNotification:
+  handler: startProcessExpenseAddedNotification/function.handler
+  events:
+    - sns:
+        arn: arn:aws:sns:us-west-1:101010101010:ExpenseAddedTopic
+
+ProcessMessage:
+  handler: processMessage/function.handler
+
+AddLinkedItem:
+  handler: addLinkedItem/function.handler
+
+PublishAddLinkedItemResults:
+  handler: publishAddLinkedItemResult/function.handler

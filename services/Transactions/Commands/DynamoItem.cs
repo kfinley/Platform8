@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Amazon.DynamoDBv2.Model;
+using Platform8.Core;
 
 namespace Platform8.Transactions.Commands
 {
@@ -40,6 +41,5 @@ namespace Platform8.Transactions.Commands
     public decimal GetDecimal(string key) {
       return Convert.ToDecimal(item.GetValueOrDefault(key)?.N);
     }
-
   }
 }

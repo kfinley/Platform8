@@ -1,8 +1,15 @@
 export interface Transaction {
-  id?: string,
-  date: Date,
-  description: string,
-  amount: number
+  id?: string;
+  date: Date;
+  description: string;
+  amount: number;
+  accountId?: string;
+  linkedItems?: LinkedItem[];
+}
+
+export interface LinkedItem {
+  id?: string;
+  attributes: Record<string, any>;
 }
 
 export interface GetFileProcessorRequest {
@@ -19,9 +26,9 @@ export enum FileProcessors {
 }
 
 export interface ProcessFileRequest {
-  processor: FileProcessors,
-  bucket: string,
-  key: string
+  processor: FileProcessors;
+  bucket: string;
+  key: string;
 }
 
 export interface ProcessFileResponse<T> {
@@ -38,7 +45,7 @@ export interface ParsedTransactions {
   endingBalance: number;
   startDate: Date;
   endDate: Date;
-  transactions: Array<Transaction>
+  transactions: Array<Transaction>;
 }
 
 export interface FileParserResponse<T> {
@@ -46,9 +53,8 @@ export interface FileParserResponse<T> {
   data: T;
 }
 
-
 export interface SaveTransactionsRequest {
-  userId: string;
+  ownerId: string;
   accountId: string;
   transactions: Array<Transaction>;
 }
@@ -59,14 +65,14 @@ export interface SaveTransactionsResponse {
   saved: number;
 }
 
-
 export interface GetTransactionRequest {
-  userId: string;
-  accountId: string;
+  ownerId: string;
+  accountId?: string;
   transaction?: Transaction;
   id?: string;
 }
 
 export interface GetTransactionResponse {
-  data?: Transaction;
+  id?: string;
+  data?: Transaction;  
 }

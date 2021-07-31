@@ -16,9 +16,16 @@ ${self:service}ProcessedTopic:
 ${self:service}UploadedSubscription:
   Type: "AWS::SNS::Subscription"
   Properties:
-    Endpoint: arn:aws:sns:us-west-1:101010101010:ProcessTransactions
+    Endpoint: arn:aws:sns:us-west-1:101010101010:StartProcessTransactions
     Protocol: lambda
     TopicArn: arn:aws:sns:us-west-1:101010101010:TransactionsUploadedTopic
+
+${self:service}ExpenseAddedSubscription:
+  Type: "AWS::SNS::Subscription"
+  Properties:
+    Endpoint: arn:aws:sns:us-west-1:101010101010:StartProcessExpenseAddedNotification
+    Protocol: lambda
+    TopicArn: arn:aws:sns:us-west-1:101010101010:ExpenseAddedTopic
 
 # ${self:service}UploadedTopicPolicy:
 #   Type: AWS::SNS::TopicPolicy
@@ -66,8 +73,6 @@ ${self:service}Table:
         AttributeType: S
       - AttributeName: SK
         AttributeType: S
-      - AttributeName: GSI1PK
-        AttributeType: S
       - AttributeName: GSI1SK
         AttributeType: S
     ProvisionedThroughput:
@@ -76,7 +81,7 @@ ${self:service}Table:
     GlobalSecondaryIndexes:
       - IndexName: GSI1
         KeySchema:
-          - AttributeName: GSI1PK
+          - AttributeName: PK
             KeyType: HASH
           - AttributeName: GSI1SK
             KeyType: RANGE

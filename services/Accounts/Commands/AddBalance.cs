@@ -31,7 +31,7 @@ namespace Platform8.Accounts.Commands
 
       this.logger.LogInformation($"Processing AddBalanceRequest for accountId: {request.AccountId}");
 
-      if ((await this.balances.FirstOrDefaultAsync(b => b.Date == request.Date && b.Amount == request.Amount)).HasValue()) {
+      if ((await this.balances.FirstOrDefaultAsync(b => b.Date >= request.Date && b.Amount == request.Amount)).HasValue()) {
         this.logger.LogInformation($"Balance exists for accountId: {request.AccountId}");
       } else {
         var account = await this.accounts.GetAsync(request.AccountId);

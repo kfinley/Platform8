@@ -1,14 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
 using Microsoft.Extensions.Configuration;
@@ -20,7 +16,6 @@ using Microsoft.OpenApi.Models;
 
 
 using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
 
 using MediatR;
 
