@@ -50,19 +50,35 @@ export function convertTransactionToItem(ownerId: string, accountId: string, tra
   }
 }
 
+function convertLinkedItemAttributeToItemAttribute(key: string, linkedItem: LinkedItem): AttributeValue {
+
+  switch (key) {
+    case "amount":
+      return {
+        N: linkedItem.attributes[key].toString()
+      }
+    case "date":
+      return {
+        S: new Date(linkedItem.attributes[key].toString()).toISOString()
+      }
+    default:
+      return {
+        S: linkedItem.attributes[key].toString()
+      }
+  }
+}
+
 export function convertLinkedItemToItem(ownerId: string, transaction: Transaction, linkedItem: LinkedItem): {
   [key: string]: AttributeValue;
 } | undefined {
 
   let attributes: Record<string, AttributeValue> = {};
-  
+
   //Guard to ensure all attributes are camel case.
   const toCamelCase = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
 
   Object.keys(linkedItem.attributes).forEach((key) => {
-    attributes[toCamelCase(key)] = {
-      S: linkedItem.attributes[key].toString()
-    }
+    attributes[toCamelCase(key)] = convertLinkedItemAttributeToItemAttribute(key,linkedItem)
   });
 
   let item = {
@@ -73,7 +89,7 @@ export function convertLinkedItemToItem(ownerId: string, transaction: Transactio
       S: `ITEM#${linkedItem.id}TRANSACTION#${transaction.id}`
     },
     GSI1SK: {
-      S: `DATE#${transaction.date}`
+      S: `DATE#${transaction.date}ACCOUNT#${transaction.accountId}AMOUNT#${transaction.amount}TRANSACTION#${transaction.id}`
     },
     type: {
       S: 'LinkedItem'

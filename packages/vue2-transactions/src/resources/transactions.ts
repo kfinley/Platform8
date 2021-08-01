@@ -10,11 +10,15 @@ if (config.ApiPorts && config.ApiPorts.includes('transactions')) {
 
 export default {
   get serviceBasePath() {
-    return `${serviceUri}/transactions/v1`
+    return `${serviceUri}/transactions/v1`;
   },
 
   get transactions() {
     return `${this.serviceBasePath}`;
+  },
+
+  get unreviewedTransactions() {
+    return `${serviceUri}/transactions/v1/unreviewed`;
   }
 }
 
