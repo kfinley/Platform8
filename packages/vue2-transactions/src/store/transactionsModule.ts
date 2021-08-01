@@ -7,6 +7,7 @@ import { LoadTransactionsCommand, UploadFileCommand } from '@/commands';
 import { messages } from "../resources/messages";
 import { AlertType } from '@platform8/vue2-notify/src/types';
 import { Account } from '@platform8/vue2-accounts/src/models';
+import { Transaction, TransactionStatus } from '@/models';
 
 @Module({ namespaced: true, name: 'Transactions' })
 export class TransactionsModule extends VuexModule implements TransactionsState {
@@ -18,7 +19,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   actionStatus = ActionStatus.None;
   actionText = undefined;
   actionComponent = undefined;
-  actionFunction = ''; // !: (transactionId: string) => void | undefined;
+  actionFunction = '';
 
   @Action
   async uploadTransactions(params: { file: File, accountId: string }) {
@@ -62,12 +63,14 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   }
 
   @Action
-  async loadTransactions(params: { accounts: Account[] }) {
+  async loadTransactions(params: { status: TransactionStatus, accounts: Account[] }) {
     this.context.commit('mutate',
       (state: TransactionsState) => state.transactionsStatus = TransactionsStatus.Loading);
 
     try {
-      const runParams = {};
+      const runParams = {
+        status: params.status
+      };
 
       const cmd = container.get<LoadTransactionsCommand>("LoadTransactionsCommand");
       const response = await cmd.runAsync(runParams);
@@ -97,7 +100,11 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
 
   @Action
   setHasChanges(params: { transactionId: string }) {
-    console.log('TODO: Fetch the latest version which should include linked items...')
+    this.context.commit('mutate',
+      (state: TransactionsState) => {
+        let transaction = state.transactions.find(t => t.id == params.transactionId) as Transaction;
+        transaction.hasChanges = true;
+      });
   }
 
   @Action
@@ -121,6 +128,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   mutate(mutation: (state: TransactionsState) => void) {
     mutation(this);
   }
+
 }
 
 export const getTransactionsModule = (vue: Vue) => getModule(TransactionsModule, vue.$store);

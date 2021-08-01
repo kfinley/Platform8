@@ -27,22 +27,27 @@ export class SaveLinkedItemCommand implements Command<SaveLinkedItemRequest, Sav
 
 
   async runAsync(params: SaveLinkedItemRequest): Promise<SaveLinkedItemResponse> {
-    
+
     if (params.linkedItem.id) {
       throw new Error("Not implemented");
     } else {
       params.linkedItem.id = uuid.v4();
-      
+
       if (params.transaction.linkedItems === undefined) {
         params.transaction.linkedItems = [];
       }
-      
-      const Item = convertLinkedItemToItem(params.ownerId, params.transaction, { id: uuid.v4(), attributes: params.linkedItem });
+
+      const Item = convertLinkedItemToItem(params.ownerId, params.transaction,
+      {
+        id: uuid.v4(),
+        attributes: params.linkedItem
+      });
 
       var response = await this.ddbClient.send(new PutItemCommand({
         TableName: 'Transactions',
         Item
       }));
+
       if (response.$metadata.httpStatusCode !== 200) {
         throw new Error("Unexpected response in SaveLinkedItem");
       }

@@ -3,7 +3,6 @@ import { Context, Handler } from 'aws-lambda';
 import { container } from 'inversify-props';
 import bootstrapper from '../../bootstrapper';
 import { SaveLinkedItemCommand } from '../../commands';
-import { Transaction } from '../../models';
 
 bootstrapper();
 

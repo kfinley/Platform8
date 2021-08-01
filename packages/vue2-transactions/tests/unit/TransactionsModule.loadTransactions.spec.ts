@@ -7,6 +7,8 @@ import { LoadTransactionsCommand } from "@/commands";
 import bootstrapper from "@/bootstrapper";
 import { TransactionsModule } from '@/store/store-modules';
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
+import { TransactionStatus } from '@/models';
+import { testAccountsState, testTransactionsState } from "@/stories/data";
 
 export const storeFactory = (commit?: any) => {
   const localVue = createLocalVue();
@@ -42,13 +44,16 @@ describe("TransactionsModule.loadTransactions - Success", () => {
 
     LoadTransactionsCommand.prototype.runAsync = loadTransactionsRunAsyncMock;
     loadTransactionsRunAsyncMock.mockReturnValue(Promise.resolve({
-      transactions: []
+      transactions: testTransactionsState.transactions
     }));
 
     bootstrapper();
 
     // Act
-    await store.dispatch("Transactions/loadTransactions");
+    await store.dispatch("Transactions/loadTransactions", {
+      status: TransactionStatus.Unreviewed,
+      accounts: testAccountsState.accounts
+    });
   });
 
   it("should dispatch Transactions/loadTransactions", () => {
@@ -73,7 +78,9 @@ describe("TransactionsModule.loadTransactions - Success", () => {
   it("should run LoadTransactions", () => {
 
     // Assert
-    expect(loadTransactionsRunAsyncMock).toHaveBeenCalledWith({});
+    expect(loadTransactionsRunAsyncMock).toHaveBeenCalledWith({
+      status: TransactionStatus.Unreviewed
+    });
   });
 
   it("should set transactionsStatus to Loaded", () => {

@@ -27,14 +27,9 @@ namespace Platform8.Transactions.Commands
         ExpressionAttributeValues = new Dictionary<string, AttributeValue>
         {
           {":PK", new AttributeValue { S = $"OWNER#{request.OwnerId}" }},
-          {":GSI1SK", new AttributeValue { S = $"DATE#{request.StartDate.ToString("o")}" }},
-          {":type", new AttributeValue { S = "Transaction" }}
+          {":GSI1SK", new AttributeValue { S = $"DATE#{request.StartDate.ToString("o")}ACCOUNT" }}
         },
-        KeyConditionExpression = "PK = :PK and GSI1SK >= :GSI1SK",
-        FilterExpression = "#type = :type",
-        ExpressionAttributeNames = new Dictionary<string, string> {
-          { "#type", "type" }
-        }
+        KeyConditionExpression = "PK = :PK and GSI1SK >= :GSI1SK"
       };
 
       var data = await this.dynamoDbClient.QueryAsync(query);

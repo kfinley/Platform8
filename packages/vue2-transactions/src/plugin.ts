@@ -3,13 +3,13 @@ import { Store } from "vuex";
 import { initializeModules } from "./store";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { NotificationPlugin } from "@platform8/vue2-notify/src/";
-import { routes, RouteNames } from "./router";
+import { routes } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import { TransactionsModule } from "./store/transactionsModule";
 import bootstrapper from "./bootstrapper";
-import { TransactionsState, transactionsModule } from "./store";
-
+import { TransactionsState } from "./store";
+import { TransactionStatus } from "./models";
 
 export interface TransactionsPlugin
   extends PluginObject<TransactionsPluginOptions> {
@@ -27,7 +27,6 @@ export interface TransactionsPluginOptions {
 }
 
 export const setupModules = (store: Store<any>): void => {
-
   store.registerModule("Transactions", TransactionsModule);
   initializeModules(store);
 };
@@ -56,6 +55,7 @@ const TransactionsPlugin = {
         (newValue) => {
           if (newValue.length > 0) {
             getModule(TransactionsModule, options.store).loadTransactions({
+              status: TransactionStatus.Unreviewed,
               accounts: newValue
             });
           }

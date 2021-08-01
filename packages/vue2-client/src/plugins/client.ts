@@ -72,7 +72,7 @@ const plugin = {
       vue.use(TransactionsPlugin, {
         router: options.router,
         store: options.store,
-        actionText: "Expense",
+        actionText: "Review",
         actionComponent: "add-expense-action",
         actionFunction: "Expenses/addActionActivated",        
         loadOnChangedGetter: () => (<AccountsState>options.store.state.Accounts).accounts,

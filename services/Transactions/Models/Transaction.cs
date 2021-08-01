@@ -19,8 +19,20 @@ namespace Platform8.Transactions.Models
     public Guid? OwnerId { get; set; }
     public DateTime StartDate { get; set; }
   }
+
   public class ListTransactionsResponse : List<Transaction>
   {
     public ListTransactionsResponse(IEnumerable<Transaction> list) : base(list) { }
+  }
+
+  public class UnreviewedTransactionsRequest : IRequest<UnreviewedTransactionsResponse>
+  {
+    public Guid? OwnerId { get; set; }
+    public DateTime StartDate { get; set; }
+  }
+
+  public class UnreviewedTransactionsResponse : List<Transaction>
+  {
+    public UnreviewedTransactionsResponse(IEnumerable<Transaction> list) : base(list) { }
   }
 }
