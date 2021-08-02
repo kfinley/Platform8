@@ -1,13 +1,19 @@
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
 
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime;
@@ -16,6 +22,7 @@ using Amazon.SimpleEmail;
 using ContinuousMigrations;
 using MediatR;
 
+using Platform8.Core;
 using Platform8.Core.Data;
 using Platform8.User.Data;
 using Platform8.User.Models;
