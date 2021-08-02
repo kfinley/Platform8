@@ -29,7 +29,8 @@ export class SaveTransactionCommand implements Command<SaveTransactionRequest, S
   async runAsync(params: SaveTransactionRequest): Promise<SaveTransactionResponse> {
 
     if (params.transaction.id) {
-      console.log('has id', params.transaction);
+      throw new Error("Not implemented");
+    } else {
       var existingTransaction = await this.getTransactionCommand.runAsync({
         ownerId: params.ownerId,
         accountId: params.accountId,
@@ -41,7 +42,6 @@ export class SaveTransactionCommand implements Command<SaveTransactionRequest, S
           error: 'Transaction exists'
         }
       }
-    } else {
       params.transaction.id = uuid.v4();
       const Item = convertTransactionToItem(params.ownerId, params.accountId, params.transaction);
       var response = await this.ddbClient.send(new PutItemCommand({

@@ -10,6 +10,7 @@ export function convertItemToTransaction(item: Record<string, AttributeValue> | 
   return {
     id: item.id.S as string,
     date: new Date(item.date.S as string),
+    sequence: Number.parseFloat(item.sequence.N as string) as number,
     description: item.description.S as string,
     amount: Number.parseFloat(item.amount.N as string) as number,
     accountId: item.accountId.S as string
@@ -27,7 +28,7 @@ export function convertTransactionToItem(ownerId: string, accountId: string, tra
       S: `TRANSACTION#${transaction.id}`
     },
     GSI1SK: {
-      S: `DATE#${transaction.date.toISOString()}ACCOUNT#${accountId}AMOUNT#${transaction.amount}`
+      S: `DATE#${transaction.date.toISOString()}ACCOUNT#${accountId}AMOUNT#${transaction.amount}SEQ#${transaction.sequence}`
     },
     type: {
       S: 'Transaction'
@@ -46,6 +47,9 @@ export function convertTransactionToItem(ownerId: string, accountId: string, tra
     },
     accountId: {
       S: accountId
+    },
+    sequence: {
+      N: transaction.sequence.toString()
     }
   }
 }
@@ -89,7 +93,7 @@ export function convertLinkedItemToItem(ownerId: string, transaction: Transactio
       S: `ITEM#${linkedItem.id}TRANSACTION#${transaction.id}`
     },
     GSI1SK: {
-      S: `DATE#${transaction.date}ACCOUNT#${transaction.accountId}AMOUNT#${transaction.amount}TRANSACTION#${transaction.id}`
+      S: `DATE#${transaction.date}ACCOUNT#${transaction.accountId}AMOUNT#${transaction.amount}SEQ#${transaction.sequence}TRANSACTION#${transaction.id}`
     },
     type: {
       S: 'LinkedItem'

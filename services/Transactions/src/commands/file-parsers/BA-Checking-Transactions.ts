@@ -24,8 +24,13 @@ export class BA_Checking_Transactions_File_Parser_Command implements Command<Fil
       let transactionRow = allLines[i].split(',');
       // Skip any empty rows
       if (transactionRow.length == 4) {
-        data.transactions.push({          
+        const hasSequence = transactionRow[1].indexOf('POSTING SEQ 0');
+        
+        data.transactions.push({
           date: new Date(transactionRow[0]),
+          sequence: hasSequence > -1
+            ? Number.parseInt(transactionRow[1].substring(hasSequence + 12)) 
+            : 1,
           description: transactionRow[1].replace(/"/g, ''),
           amount: Number.parseFloat(transactionRow[2].replace(/"/g, ''))
         });

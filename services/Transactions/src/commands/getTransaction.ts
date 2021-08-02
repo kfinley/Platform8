@@ -20,7 +20,7 @@ export class GetTransactionCommand implements Command<GetTransactionRequest, Get
         IndexName: "GSI1",   
         ExpressionAttributeValues: marshall({
           ":PK": `OWNER#${params.ownerId}`,
-          ":GSI1SK": `DATE#${params.transaction.date.toISOString()}ACCOUNT#${params.accountId}AMOUNT#${params.transaction.amount}`,
+          ":GSI1SK": `DATE#${params.transaction.date.toISOString()}ACCOUNT#${params.accountId}AMOUNT#${params.transaction.amount}SEQ#${params.transaction.sequence}`,
           ":description": params.transaction.description
         }),
         KeyConditionExpression: "PK = :PK and begins_with(GSI1SK, :GSI1SK)",

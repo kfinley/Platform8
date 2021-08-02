@@ -47,6 +47,7 @@ namespace Platform8.Transactions.Commands
       {
         Id = item.GetGuid("id"),
         Date = item.GetDate("date"),
+        Sequence = item.GetInt32("sequence"),
         Amount = item.GetDecimal("amount"),
         AccountId = item.GetGuid("accountId"),
         Description = item.GetString("description")
