@@ -10,6 +10,7 @@ namespace Platform8.Transactions.Models
     public Guid Id { get; set; }
     public Guid AccountId { get; set; }
     public DateTime Date { get; set; }
+    public int Sequence { get; set; }
     public string Description { get; set; }
     public decimal Amount { get; set; }
   }
