@@ -5,7 +5,7 @@
   "description": "",
   "author": "rkf",
   "scripts": {
-    "dev:setup": "echo \"TODO:// Write a script that sets up local Cognito settings and SES email templates.\" && exit 1",
+    "dev:init": "git submodule update --init --recursive && ./.devcontainer/scripts/setup.sh",
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-accounts",
