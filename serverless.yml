@@ -34,12 +34,13 @@ custom:
     debug: false
 
   serverless-offline:
-    host: platform.dev
+    host: platform8.sls
     dotnetRunnerScript: ./scripts/invoke.ps1
 
   s3:
-    serviceEndpoint: localhost
-    host: localhost
+    serviceEndpoint: platform8.sls
+    address: 0.0.0.0
+    host: platform8.sls
     directory: ./.devcontainer/.s3
     port: 4569
 

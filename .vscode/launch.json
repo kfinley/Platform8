@@ -2,9 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
       "name": "Launch User Api",
       "type": "coreclr",
       "request": "launch",
@@ -22,15 +19,22 @@
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
       }
     },
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Attach to User (Docker)",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.user"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/User/Api"
+      }
+    },
+    {
       "name": "Launch Accounts Api",
       "type": "coreclr",
       "request": "launch",
@@ -54,9 +58,19 @@
       }
     },
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Attach to Accounts (Docker)",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.accounts"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Accounts/Api"
+      }
+    },
+    {
       "name": "Launch Transactions Api",
       "type": "coreclr",
       "request": "launch",
@@ -74,15 +88,22 @@
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
       }
     },
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Attach to Transactions (Docker)",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.transactions"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Transactions/Api"
+      }
+    },
+    {
       "name": "Launch Budgets Api",
       "type": "coreclr",
       "request": "launch",
@@ -100,15 +121,22 @@
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
       }
     },
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Attach to Budgets (Docker)",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.budgets"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Budgets/Api"
+      }
+    },
+    {
       "name": "Launch Expenses Api",
       "type": "coreclr",
       "request": "launch",
@@ -126,15 +154,20 @@
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
       }
     },
     {
-      "name": ".NET Core Attach",
+      "name": "Attach to Expenses (Docker)",
       "type": "coreclr",
-      "request": "attach"
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.expenses"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Expenses/Api"
+      }
     }
   ]
 }

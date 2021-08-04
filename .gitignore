@@ -33,6 +33,9 @@ dotnet-install.sh
 .devcontainer/serverless-offline-step-functions/**
 .devcontainer/serverless-offline-stepfunctions-plugin/**
 
+# VS Debugger
+.devcontainer/vsdbg
+
 # lambda dotnetcore deploy packages
 *-deploy-package.zip
 

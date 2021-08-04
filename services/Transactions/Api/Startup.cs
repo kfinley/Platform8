@@ -155,8 +155,6 @@ namespace Platform8.Transactions.Api
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Platform8 Transactions Api v1"));
       }
 
-      app.UseHttpsRedirection();
-
       app.UseRouting();
 
       app.UseCors(builder => builder

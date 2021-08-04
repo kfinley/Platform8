@@ -9,10 +9,6 @@
     <EnvironmentName>Development</EnvironmentName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core">
-      <Version>3.7.0.45</Version>
-    </PackageReference>
-    <PackageReference Include="AWS.Logger.AspNetCore" Version="3.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.17" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.17" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.17" />
