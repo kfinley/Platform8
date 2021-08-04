@@ -6,6 +6,8 @@ services:
     build:
       context: ./
       dockerfile: ./.devcontainer/Dockerfile
+    environment:
+      DOCKER_HOST: unix:///var/run/docker-host.sock
     volumes:
       - $HOME/.aws:/home/vscode/.aws
     command: ./.devcontainer/scripts/setup.sh && sleep infinity
@@ -55,16 +57,16 @@ services:
       AWS_ACCESS_KEY_ID: S3RVER
       AWS_SECRET_ACCESS_KEY: S3RVER
       # WAIT_TIME_SCALE: VALUE
-      LAMBDA_ENDPOINT: http://platform.dev:3002
+      LAMBDA_ENDPOINT: http://platform8.sls:3002
       # BATCH_ENDPOINT: VALUE
       DYNAMODB_ENDPOINT: http://platform8.dynamodb:8000
       # ECS_ENDPOINT: VALUE
       # GLUE_ENDPOINT: VALUE
       # SAGE_MAKER_ENDPOINT: VALUE
       # SQS_ENDPOINT: VALUE
-      SNS_ENDPOINT: http://platform.dev:4002
+      SNS_ENDPOINT: http://platform8.sls:4002
 
-  dynamodb.local:
+  platform8.dynamodb:
     container_name: platform8.dynamodb
     image: amazon/dynamodb-local
     ports:
@@ -73,10 +75,130 @@ services:
       - ./.devcontainer/.db:/home/dynamodblocal/db
     command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal/db"]
 
-  dynamodb.admin:
+  platform8.dynamodb.admin:
     container_name: platform8.dynamodb.admin
     image: aaronshaf/dynamodb-admin
     ports:
       - 8001:8001
     environment:
-      - DYNAMO_ENDPOINT=http://dynamodb.local:8000 dynamodb-admin
+      DYNAMO_ENDPOINT: http://platform8.dynamodb:8000
+
+  platform8.accounts:
+    container_name: platform8.accounts
+    build:
+      args:
+        Port: 5001
+      context: .
+      dockerfile: ./.devcontainer/local-service.Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5001
+    command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Accounts.Api.dll"
+    volumes:
+      - ./services/Accounts/Api:/Api
+      - ./.devcontainer/vsdbg:/vsdbg
+
+  platform8.budgets:
+    container_name: platform8.budgets
+    build:
+      args:
+        Port: 5003
+      context: .
+      dockerfile: ./.devcontainer/local-service.Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5003
+    command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Budgets.Api.dll"
+    volumes:
+      - ./services/Budgets/Api:/Api
+      - ./.devcontainer/vsdbg:/vsdbg
+
+  platform8.expenses:
+    container_name: platform8.expenses
+    build:
+      args:
+        Port: 5004
+      context: .
+      dockerfile: ./.devcontainer/local-service.Dockerfile
+    ports:
+      - "5004:5004"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5004
+    command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Expenses.Api.dll"
+    volumes:
+      - ./services/Expenses/Api:/Api
+      - ./.devcontainer/vsdbg:/vsdbg
+
+  platform8.transactions:
+    container_name: platform8.transactions
+    build:
+      args:
+        Port: 5002
+      context: .
+      dockerfile: ./.devcontainer/local-service.Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5002
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
+    command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Transactions.Api.dll"
+    volumes:
+      - ./services/Transactions/Api:/Api
+      - ./.devcontainer/vsdbg:/vsdbg
+
+  platform8.user:
+    container_name: platform8.user
+    build:
+      args:
+        Port: 5000
+      context: .
+      dockerfile: ./.devcontainer/local-service.Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+    command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet User.Api.dll"
+    volumes:
+      - ./services/User/Api:/Api
+      - ./.devcontainer/vsdbg:/vsdbg
+
+  platform8.web:
+    container_name: platform8.web
+    build:
+      context: .
+      dockerfile: ./.devcontainer/vite-client.Dockerfile
+    tty: true
+    stdin_open: true
+    ports:
+      - "8080:8080"
+    command: sh -c "npm run dev:client:docker"
+    volumes:
+      - .:/vite-client
+
+  platform8.sls:
+    container_name: platform8.sls
+    build:
+      context: .
+      dockerfile: ./.devcontainer/sls-local.Dockerfile
+    tty: true
+    stdin_open: true
+    ports:
+      - "3002:3002"
+      - "4002:4002"
+      - "4569:4569"
+    environment:
+      AWS_ACCOUNT_ID: 101010101010
+      AWS_REGION: us-west-1
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
+    command: sh -c "npm run dev:sls"
+    volumes:
+      - .:/sls-offline

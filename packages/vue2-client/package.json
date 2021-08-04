@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "dev:docker": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "test:unit": "",
@@ -22,7 +23,7 @@
     "@platform8/vue2-user": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",
     "bootstrap": "^5.0.2",
-    "bootstrap-icons": "^1.5.0",    
+    "bootstrap-icons": "^1.5.0",
     "core-js": "^3.6.5",
     "inversify-props": "^2.2.6",
     "reflect-metadata": "^0.1.13",

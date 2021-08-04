@@ -2,7 +2,6 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/dotnet
 {
 	"name": "YAP 8",
-
 	"dockerComposeFile": [
 		// must be in root for workspace to match file system
 		"../dev-compose.yml",

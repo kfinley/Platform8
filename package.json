@@ -14,6 +14,7 @@
     "storybook:budgets": "lerna run storybook --stream --scope=@platform8/vue2-budget-manager",
     "storybook:common": "lerna run storybook --stream --scope=@platform8/vue2-common",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
+    "dev:client:docker": "lerna run dev:docker --stream --scope=@platform8/vue2-client",
     "clean": "lerna clean --yes",
     "test": "lerna run --stream test:unit --scope=@platform8/vue2-accounts --scope=@platform8/vue2-transactions --scope=@platform8/transactions  --scope=@platform8/vue2-budget-manager && npm run test:dotnet",
     "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/Accounts/Tests/Accounts.Tests.csproj && npm run test:dotnet:budgets",
