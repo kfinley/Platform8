@@ -8,8 +8,6 @@ services:
       dockerfile: ./.devcontainer/Dockerfile
     environment:
       DOCKER_HOST: unix:///var/run/docker-host.sock
-    volumes:
-      - $HOME/.aws:/home/vscode/.aws
     command: ./.devcontainer/scripts/setup.sh && sleep infinity
 
   platform8.cognito:
