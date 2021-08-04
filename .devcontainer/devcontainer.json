@@ -31,7 +31,8 @@
 		"hmnd.css-signature-help",
 		"tht13.html-preview-vscode",
 		"formulahendry.dotnet-test-explorer",
-		"threadheap.serverless-ide-vscode"
+		"threadheap.serverless-ide-vscode",
+		"ms-azuretools.vscode-docker"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
