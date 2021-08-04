@@ -1,16 +1,12 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM jwilder/dockerize as dockerize
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine as final
 ARG Port
 
-ENV DOCKERIZE_VERSION v0.6.1
+COPY --from=dockerize /usr/local/bin/dockerize /usr/local/bin
 
-RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils && \
-    apt-get install -y procps
-
-WORKDIR /Api
+RUN apk update && \
+    apk add --upgrade procps
 
 VOLUME /Api
 VOLUME /vsdbg

@@ -8,6 +8,9 @@ services:
       dockerfile: ./.devcontainer/Dockerfile
     environment:
       DOCKER_HOST: unix:///var/run/docker-host.sock
+      AWS_REGION: us-west-1
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
     command: ./.devcontainer/scripts/setup.sh && sleep infinity
 
   platform8.cognito:
@@ -93,6 +96,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5001
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
     command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Accounts.Api.dll"
     volumes:
       - ./services/Accounts/Api:/Api
@@ -110,6 +115,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5003
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
     command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Budgets.Api.dll"
     volumes:
       - ./services/Budgets/Api:/Api
@@ -127,6 +134,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5004
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
     command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet Expenses.Api.dll"
     volumes:
       - ./services/Expenses/Api:/Api
@@ -163,6 +172,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5000
+      AWS_ACCESS_KEY_ID: S3RVER
+      AWS_SECRET_ACCESS_KEY: S3RVER
     command: sh -c "dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval 3s dotnet User.Api.dll"
     volumes:
       - ./services/User/Api:/Api
@@ -170,13 +181,10 @@ services:
 
   platform8.web:
     container_name: platform8.web
-    build:
-      context: .
-      dockerfile: ./.devcontainer/vite-client.Dockerfile
-    tty: true
-    stdin_open: true
+    image: node:14
     ports:
       - "8080:8080"
+    working_dir: /vite-client
     command: sh -c "npm run dev:client:docker"
     volumes:
       - .:/vite-client

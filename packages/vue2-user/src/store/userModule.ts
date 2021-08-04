@@ -32,7 +32,7 @@ export class UserModule extends VuexModule implements UserState {
           });
 
         authHelper.setTokens(response.authenticationResult as AuthenticationResult);
-        
+
         if (response.error) {
           throw new Error(response.error);
         }
@@ -69,7 +69,8 @@ export class UserModule extends VuexModule implements UserState {
             state.authStatus = AuthStatus.LoggedIn;
             state.authTokens = response.authenticationResult as AuthenticationResult;
             state.authSession = undefined;
-          })
+          });
+          authHelper.setTokens(response.authenticationResult as AuthenticationResult);
         }
 
         if (response.error) {

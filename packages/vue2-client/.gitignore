@@ -4,7 +4,7 @@ node_modules
 
 
 # local env files
-.env.local
+#.env.local       #TODO: For now allowing .env.local into the repo until secrets are handled properly and deploy is built.
 .env.*.local
 
 # Log files

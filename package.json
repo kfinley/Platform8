@@ -5,7 +5,7 @@
   "description": "",
   "author": "rkf",
   "scripts": {
-    "dev:init": "npm install && lerna bootstrap && git submodule update --init --recursive && ./.devcontainer/scripts/install-dotnet-tools.sh",
+    "dev:init": "./.devcontainer/scripts/dev-init.sh",
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-accounts",
@@ -21,10 +21,11 @@
     "test:dotnet:budgets": "dotnet test services/Budgets/Tests/Budgets.Tests.csproj",
     "test:accounts": "lerna run --stream test:unit --scope=@platform8/vue2-accounts",
     "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions --scope=@platform8/transactions",
-    "test:budgets": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager && run npm test:dotnet:budgets",
+    "test:budgets": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager && npm run test:dotnet:budgets",
     "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",
     "dev:sls": "sls offline start",
-    "dotnet:package:accounts": "cd services/Accounts && ./package.sh",
+    "docker:services:restart": "./.devcontainer/scripts/restart-containers.sh",
+    "dotnet:package:accounts": "PATH=$PATH:/home/vscode/.dotnet/tools && cd ./services/Accounts && ./package.sh",
     "ddb:migrate": "serverless dynamodb migrate",
     "init-auth": "./.devcontainer/scripts/init-auth.sh"
   },

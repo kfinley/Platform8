@@ -21,7 +21,7 @@ namespace Platform8.Core.Data
               e.State == EntityState.Added))
       .ForEach<EntityEntry>(entityEntry =>
       {
-        if (((BaseEntity)entityEntry.Entity).Id.HasValue())
+        if (((IEntity)entityEntry.Entity).Id.HasValue())
         {
           var existing = this.Find((BaseEntity)entityEntry.Entity, entity => ((BaseEntity)entityEntry.Entity).Id == entity.Id );
           if (existing.HasValue()) {
@@ -40,7 +40,10 @@ namespace Platform8.Core.Data
 
     private TEntity Find<TEntity>(TEntity entity, Func<TEntity, bool> predicate) where TEntity : class
     {
-      var genericMethod = this.GetType().GetMethod("Set");
+      // TEntity here is a BaseEntity and not the actual entity type so we can't use .Set<TEntity>.
+      // Look up the Set method with no params and invoke it using entity.GetType() which will return the correct Entity type.
+      
+      var genericMethod = this.GetType().GetMethods().Where(m => m.Name == "Set" && m.GetParameters().Count() == 0).First();
       var set = genericMethod.MakeGenericMethod(new[] { entity.GetType() }).Invoke(this, null) as IQueryable<TEntity>;
 
       return set.FirstOrDefault(predicate);
