@@ -3,63 +3,33 @@
   "tasks": [
     {
       "label": "build-user-service",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/services/User/User.sln",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "type":"shell",
+      "command": "docker stop platform8.user && dotnet build ${workspaceFolder}/services/User/User.sln && docker start platform8.user ",
+      "problemMatcher": []
     },
     {
       "label": "build-accounts-service",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/services/Accounts/Accounts.sln",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "command": "docker stop platform8.accounts && dotnet build ${workspaceFolder}/services/Accounts/Accounts.sln && docker start platform8.accounts",
+      "type": "shell",
+      "problemMatcher": []
     },
     {
       "label": "build-transactions-service",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/services/Transactions/Transactions.sln",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "command": "docker stop platform8.transactions && dotnet build ${workspaceFolder}/services/Transactions/Transactions.sln && docker start platform8.transactions",
+      "type": "shell",
+      "problemMatcher": []
     },
     {
       "label": "build-budgets-service",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/services/Budgets/Budgets.sln",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "command": "docker stop platform8.budgets && dotnet build ${workspaceFolder}/services/Budgets/Budgets.sln && docker start platform8.budgets",
+      "type": "shell",
+      "problemMatcher": []
     },
     {
       "label": "build-expenses-service",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/services/Expenses/Expenses.sln",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "command": "docker stop platform8.expenses && dotnet build ${workspaceFolder}/services/Expenses/Expenses.sln && docker start platform8.expenses",
+      "type": "shell",
+      "problemMatcher": []
     }
   ]
 }

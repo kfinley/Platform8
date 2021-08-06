@@ -2,27 +2,59 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch User Api",
+      "name": "Attach to Accounts Api",
       "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build-user-service",
-      // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/services/User/Api/bin/Debug/net5.0/User.Api.dll",
-      "args": [],
-      "cwd": "${workspaceFolder}/services/User/Api",
-      "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
-        "uriFormat": "http://localhost:%s/swagger/index.html"
-      },
-      "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.accounts"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Accounts/Api"
       }
     },
     {
-      "name": "Attach to User (Docker)",
+      "name": "Attach to Budgets Api",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.budgets"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Budgets/Api"
+      }
+    },
+    {
+      "name": "Attach to Expenses Api",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.expenses"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Expenses/Api"
+      }
+    },
+    {
+      "name": "Attach to Transactions Api",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "platform8.transactions"],
+        "quoteArgs": false,
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}/services/Transactions/Api"
+      }
+    },
+    {
+      "name": "Attach to User API",
       "type": "coreclr",
       "request": "attach",
       "processId": "${command:pickRemoteProcess}",
@@ -58,52 +90,6 @@
       }
     },
     {
-      "name": "Attach to Accounts (Docker)",
-      "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickRemoteProcess}",
-      "pipeTransport": {
-        "pipeProgram": "docker",
-        "pipeArgs": ["exec", "-i", "platform8.accounts"],
-        "quoteArgs": false,
-        "debuggerPath": "/vsdbg/vsdbg",
-        "pipeCwd": "${workspaceFolder}/services/Accounts/Api"
-      }
-    },
-    {
-      "name": "Launch Transactions Api",
-      "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build-transactions-service",
-      // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/services/Transactions/Api/bin/Debug/net5.0/Transactions.Api.dll",
-      "args": [],
-      "cwd": "${workspaceFolder}/services/Transactions/Api",
-      "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
-        "uriFormat": "http://localhost:%s/swagger/index.html"
-      },
-      "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    {
-      "name": "Attach to Transactions (Docker)",
-      "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickRemoteProcess}",
-      "pipeTransport": {
-        "pipeProgram": "docker",
-        "pipeArgs": ["exec", "-i", "platform8.transactions"],
-        "quoteArgs": false,
-        "debuggerPath": "/vsdbg/vsdbg",
-        "pipeCwd": "${workspaceFolder}/services/Transactions/Api"
-      }
-    },
-    {
       "name": "Launch Budgets Api",
       "type": "coreclr",
       "request": "launch",
@@ -121,19 +107,6 @@
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    {
-      "name": "Attach to Budgets (Docker)",
-      "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickRemoteProcess}",
-      "pipeTransport": {
-        "pipeProgram": "docker",
-        "pipeArgs": ["exec", "-i", "platform8.budgets"],
-        "quoteArgs": false,
-        "debuggerPath": "/vsdbg/vsdbg",
-        "pipeCwd": "${workspaceFolder}/services/Budgets/Api"
       }
     },
     {
@@ -157,16 +130,43 @@
       }
     },
     {
-      "name": "Attach to Expenses (Docker)",
+      "name": "Launch Transactions Api",
       "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickRemoteProcess}",
-      "pipeTransport": {
-        "pipeProgram": "docker",
-        "pipeArgs": ["exec", "-i", "platform8.expenses"],
-        "quoteArgs": false,
-        "debuggerPath": "/vsdbg/vsdbg",
-        "pipeCwd": "${workspaceFolder}/services/Expenses/Api"
+      "request": "launch",
+      "preLaunchTask": "build-transactions-service",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/services/Transactions/Api/bin/Debug/net5.0/Transactions.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/services/Transactions/Api",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
+        "uriFormat": "http://localhost:%s/swagger/index.html"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Launch User Api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-user-service",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/services/User/Api/bin/Debug/net5.0/User.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/services/User/Api",
+      "stopAtEntry": false,
+      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
+        "uriFormat": "http://localhost:%s/swagger/index.html"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   ]
