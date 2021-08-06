@@ -23,17 +23,17 @@
             <div class="col-2" v-if="transactionsState.actionText !== undefined && transaction.hasChanges !== true">
               <action :transaction-id="transaction.id" />
             </div>
-        </div>        
-        <component 
-          v-if="actionIsActive && transactionsState.actionTargetId == transaction.id" 
+        </div>
+        <component
+          v-if="actionIsActive && transactionsState.actionTargetId == transaction.id"
           @cancel="closeActionComponent"
-          :is="transactionsState.actionComponent" 
+          :is="transactionsState.actionComponent"
           category-component="category"
           :transaction-id="transaction.id"
           :amount="transaction.amount"
           :description="transaction.description"
           @saved="actionComponentSaved(transaction.id)"
-           />        
+           />
       </li>
     </ul>
     <template v-slot:footer>
@@ -66,7 +66,7 @@ export default class TransactionList extends Vue {
 
   @Prop()
   accounts!: Account[];
-  
+
   @Prop()
   type: string;
 

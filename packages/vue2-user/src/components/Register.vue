@@ -1,5 +1,5 @@
 <template>
-  <card header-text="Register" :show-close="false" style="height: 90vh">
+  <card header-text="Register" :show-close="false" style="height: 90vh" max-width="600px" padding="2">
     <p v-if="registered">{{ messages.Registration.ThankYouText }}</p>
     <div v-if="notRegistered">
       <ValidationObserver ref="formObserver">

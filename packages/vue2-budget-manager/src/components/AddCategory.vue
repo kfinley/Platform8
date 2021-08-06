@@ -107,7 +107,7 @@ export default class AddCategory extends Vue {
   name = "";
   allocationStart = "";
   allocationEnd = "";
-  
+
   mounted() {
     this.NameElement?.focus();
   }
