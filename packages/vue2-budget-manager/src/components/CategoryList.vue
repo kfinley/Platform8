@@ -96,7 +96,7 @@ export default class CategoryList extends Vue {
 }
 
 // Small devices (landscape phones, 576px and up)
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
  #category-list > li {
     margin: 0px;
     padding: 10px;
@@ -104,7 +104,7 @@ export default class CategoryList extends Vue {
  }
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
   #category-list > li {
     margin-bottom: 5px;
     padding: 0px 4px;
@@ -116,7 +116,7 @@ export default class CategoryList extends Vue {
  }
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   #category-list > li {
     margin-bottom: 10px;
   }

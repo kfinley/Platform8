@@ -1,5 +1,5 @@
 <template>
-  <card header-text="Set Password" :show-close="false" style="height: 90vh">
+  <card header-text="Set Password" :show-close="false" style="height: 90vh" max-width="600px" padding="2">
     <ValidationObserver ref="formObserver">
       <form @submit.prevent="onSubmit" autocomplete="off" role="form text-left">
         <div class="mb-3">
