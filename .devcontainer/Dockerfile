@@ -40,10 +40,6 @@ RUN touch /var/run/docker-host.sock \
     && apt-get update \
     && apt-get -y install socat
 
-# open up docker-host.sock so we can run docker with out sudo
-# This is a dev setup so this is ok... Never do this in production!!
-RUN sudo chmod 777 /var/run/docker-host.sock
-
 # Create docker-init.sh to spin up socat
 RUN echo "#!/bin/sh\n\
     sudoIf() { if [ \"\$(id -u)\" -ne 0 ]; then sudo \"\$@\"; else \"\$@\"; fi }\n\

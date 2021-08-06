@@ -30,6 +30,7 @@ custom:
       convertEmptyValues: true
 
   serverless-offline-sns:
+    host: 0.0.0.0
     accountId: 101010101010
     debug: false
 
