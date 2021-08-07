@@ -1,12 +1,17 @@
 {
   "name": "@platform8/vue2-notify",
   "version": "0.0.1",
+  "description": "Vue2 plugin that provides user feedback features via Bootstrap 5 alerts",
   "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {

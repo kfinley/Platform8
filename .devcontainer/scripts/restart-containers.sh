@@ -7,3 +7,4 @@ docker restart platform8.transactions
 docker restart platform8.user
 docker restart platform8.sls
 docker restart platform8.web
+docker restart platform8.storybooks

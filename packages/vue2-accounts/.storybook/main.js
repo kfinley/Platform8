@@ -17,25 +17,25 @@ module.exports = {
     // add SCSS support for CSS Modules
     config.module.rules.push({
       test: /\.s[a|c]ss$/,
-        exclude: /node_modules/,
-        use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              esModule: false,
-            }
-          },
-          {
-            // https://github.com/storybookjs/storybook/issues/6743
-            loader: 'sass-loader',
-            options: {
-              additionalData: `
+      exclude: /node_modules/,
+      use: [
+        'vue-style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            esModule: false,
+          }
+        },
+        {
+          // https://github.com/storybookjs/storybook/issues/6743
+          loader: 'sass-loader',
+          options: {
+            additionalData: `
                 @import "@platform8/web-ui/src/styles/styles.scss";
               `
-            }
-          },
-        ]
+          }
+        },
+      ]
     });
 
     // config.module.rules.push({
@@ -52,4 +52,3 @@ module.exports = {
     return config;
   },
 };
-

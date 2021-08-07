@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
-import { Category } from "@/components";
+import { CategoryComponent as category } from "@/components";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { store } from './store';
 import { container, injectable } from 'inversify-props';
@@ -29,7 +29,7 @@ class mockApiClient implements ApiClient {
               {
                 id: "",
                 name: "Education"
-              }              
+              }
             ]
           } as any,
           status: 200,
@@ -50,11 +50,11 @@ container.addTransient<ApiClient>(mockApiClient, "ApiClient");
 
 export default {
   title: 'Components/Category',
-  component: Category,
+  component: category,
 };
 
 const DefaultTemplate: Story = (args, { argTypes }) => ({
-  components: { Category, Notify },
+  components: { category, Notify },
   props: Object.keys(args),
   store,
   template: `

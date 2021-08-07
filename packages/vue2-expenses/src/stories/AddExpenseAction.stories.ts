@@ -12,7 +12,7 @@ import { injectable } from 'inversify-props';
 //Kludge....
 import { container } from "../../../vue2-budget-manager/node_modules/inversify-props"
 import { ApiClient, ApiResponse } from "@platform8/api-client/src";
-import Category from "../../../vue2-budget-manager/src/components/Category.vue";
+import Category from "../../../vue2-budget-manager/src/components/CategoryComponent.vue";
 
 @injectable()
 class mockApiClient implements ApiClient {
@@ -37,7 +37,7 @@ class mockApiClient implements ApiClient {
               {
                 id: "",
                 name: "Education"
-              }              
+              }
             ]
           } as any,
           status: 200,
@@ -82,7 +82,7 @@ const DefaultTemplate: Story =(args, { argTypes}) => ({
   <div style="width: 500px;">
     <notify />
     <div style="height: 100px; border: 1px; border-style: dashed;">
-      <add-expense-action v-bind="$props" />      
+      <add-expense-action v-bind="$props" />
     </div>
   </div>`
 });
