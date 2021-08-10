@@ -2,7 +2,11 @@
   "name": "@platform8/aws-commands",
   "version": "0.0.1",
   "description": "",
-  "author": "rkf",
+  "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

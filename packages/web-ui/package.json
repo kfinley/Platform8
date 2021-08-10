@@ -1,10 +1,13 @@
 {
   "name": "@platform8/web-ui",
-  "private": true,
   "version": "0.0.1",
   "description": "Web UI Design System - Style & Component Libary",
+  "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "rkf"
+  }
 }

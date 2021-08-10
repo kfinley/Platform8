@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Core module. Shared FE/BE code. Keep it slim!",
   "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "build": "tsc --build --clean && tsc --build"
   },

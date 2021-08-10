@@ -47,3 +47,6 @@ obj
 .DS_Store
 
 mono_crash.*
+
+packages/*/storybooks
+storybooks/*

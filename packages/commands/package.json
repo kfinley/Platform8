@@ -2,8 +2,12 @@
   "name": "@platform8/commands",
   "version": "0.0.1",
   "description": "",
+  "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "rkf"
+  }
 }

@@ -1,7 +1,12 @@
 {
   "name": "@platform8/vue2-client",
   "version": "0.0.1",
+  "description": "Vue2 client that uses all the @Platform8 Vue plugins as features",
   "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "dev": "vite",
     "dev:docker": "vite --host 0.0.0.0",
@@ -16,8 +21,8 @@
     "@platform8/config": "^0.0.1",
     "@platform8/vue2-accounts": "^0.0.1",
     "@platform8/vue2-budget-manager": "^0.0.1",
-    "@platform8/vue2-expenses": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",
+    "@platform8/vue2-expenses": "^0.0.1",
     "@platform8/vue2-notify": "^0.0.1",
     "@platform8/vue2-transactions": "^0.0.1",
     "@platform8/vue2-user": "^0.0.1",

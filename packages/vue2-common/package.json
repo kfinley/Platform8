@@ -2,13 +2,16 @@
   "name": "@platform8/vue2-common",
   "version": "0.0.1",
   "description": "Vue2 Component Design System",
-  "main": "index.js",
+  "private": true,
+  "author": {
+    "name": "Kyle Finley",
+    "email": "kyle@kylefinley.net"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
   },
-  "author": "rkf",
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@platform8/web-ui": "^0.0.1",

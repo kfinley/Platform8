@@ -208,3 +208,13 @@ services:
     command: sh -c "npm run dev:sls"
     volumes:
       - .:/sls-offline
+
+  platform8.storybooks:
+    container_name: platform8.storybooks
+    image: node:14
+    ports:
+      - "6006:6006"
+    working_dir: /workspace
+    command: sh -c "npm run deploy-storybook:local && npx http-server -p 6006 storybooks"
+    volumes:
+      - .:/workspace
