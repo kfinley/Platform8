@@ -4,7 +4,7 @@ import { createLocalVue } from "@vue/test-utils";
 import { AddCategoryRequest } from "@/models";
 import { initializeModules as notificationInitializeModules } from "@platform8/vue2-notify/src/store";
 import { AddCategoryCommand } from "@/commands";
-import bootstrapper from "@/boot-strapper";
+import bootstrapper from "@/bootstrapper";
 import { BudgetModule } from '@/store/budgetModule';
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
 import { initializeModules } from '@/store';
@@ -125,7 +125,7 @@ describe("BudgetModule.AddCategory - Success", () => {
       expect.any(Function),
       undefined
     );
-    
+
     expect(commit.mock.calls[2][1].toString()).toContain("state.status = _state.BudgetStatus.Loaded");
 
   });

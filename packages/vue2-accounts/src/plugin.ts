@@ -6,7 +6,7 @@ import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
-import bootstrapper from "./boot-strapper";
+import bootstrapper from "./bootstrapper";
 import { AccountsModule } from "./store/store-modules";
 
 export interface AccountsPlugin
