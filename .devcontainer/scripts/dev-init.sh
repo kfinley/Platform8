@@ -30,7 +30,7 @@ if ! [ -d "./node_modules" ]; then
     dotnet build ./services/services.sln
 
     # ensure services, sls, and vite dev client are started
-    npm run docker:services:restart
+    npm run containers:restart
 
 else
     echo "Existing dev container... skipping installs."
