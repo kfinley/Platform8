@@ -1,8 +1,7 @@
 {
   "packages": [
     "packages/*",
-    "services/*",
-    "storybooks"
+    "services/*"
   ],
   "version": "0.0.1"
 }
