@@ -53,7 +53,7 @@ export default class Card extends Vue {
   maxWidth!: string;
 
   @Prop({ default: '1'})
-  padding!: number;
+  padding!: string;
 
   get style() {
     return this.maxWidth ? `max-width: ${this.maxWidth};` : '';
