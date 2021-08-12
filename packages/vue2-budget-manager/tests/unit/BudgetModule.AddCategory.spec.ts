@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 import Vuex from "vuex";
 import { createLocalVue } from "@vue/test-utils";
 import { AddCategoryRequest } from "@/models";
@@ -39,131 +39,128 @@ const testRequest: AddCategoryRequest = {
   }
 };
 
-describe("BudgetModule.AddCategory - Success", () => {
+describe("BudgetModule", () => {
+  describe("AddCategory", () => {
+    describe("Success", () => {
 
-  const commit = jest.fn();
-  const addCategoryRunAsyncMock = jest.fn();
+      const commit = jest.fn();
+      const addCategoryRunAsyncMock = jest.fn();
 
-  beforeAll(async () => {
+      beforeAll(async () => {
 
-    // Arrange
-    const store = storeFactory(commit);
+        // Arrange
+        const store = storeFactory(commit);
 
-    AddCategoryCommand.prototype.runAsync = addCategoryRunAsyncMock;
-    addCategoryRunAsyncMock.mockReturnValue(Promise.resolve({
-      id: '123-123-123',
-      success: true
-    }));
+        AddCategoryCommand.prototype.runAsync = addCategoryRunAsyncMock;
+        addCategoryRunAsyncMock.mockReturnValue(Promise.resolve({
+          id: '123-123-123',
+          success: true
+        }));
 
-    bootstrapper();
+        bootstrapper();
 
-    // Act
-    await store.dispatch("Budget/addCategory", testRequest);
+        // Act
+        await store.dispatch("Budget/addCategory", testRequest);
 
+      });
+
+      it("runs", () => {
+        expect(commit);
+      });
+
+      it("should set the status to Saving", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(2,
+          "Budget/mutate",
+          expect.any(Function),
+          undefined
+        );
+
+        // Check that the function passed to mutate is correct.
+        expect(commit.mock.calls[1][1].toString()).toBe('state => state.status = _state.BudgetStatus.Saving')
+
+      });
+
+      it("should run AddCategoryCommand", () => {
+
+        // Assert
+        expect(addCategoryRunAsyncMock).toHaveBeenCalledWith(testRequest);
+
+      });
+
+      it("should save the new Category in the Budget store", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Budget/mutate",
+          expect.any(Function),
+          undefined
+        );
+
+        expect(commit.mock.calls[2][1].toString()).toContain("state.budget.categories.push({");
+
+      });
+
+      it("should set the Category classifications collection to an empty set in the Budget store", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Budget/mutate",
+          expect.any(Function),
+          undefined
+        );
+
+        expect(commit.mock.calls[2][1].toString()).toContain("classifications: []");
+
+      });
+
+      it("should set status to Loaded", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Budget/mutate",
+          expect.any(Function),
+          undefined
+        );
+
+        expect(commit.mock.calls[2][1].toString()).toContain("state.status = _state.BudgetStatus.Loaded");
+
+      });
+    });
+
+    describe("Failure", () => {
+
+      const commit = jest.fn();
+      const addCategoryRunAsyncMock = jest.fn();
+
+      beforeAll(async () => {
+
+        // Arrange
+        const store = storeFactory(commit);
+
+        AddCategoryCommand.prototype.runAsync = addCategoryRunAsyncMock;
+        addCategoryRunAsyncMock.mockReturnValue(Promise.resolve({
+          success: false,
+          error: 'Error thrown for testing'
+        }));
+
+        bootstrapper();
+
+        // Act
+        await store.dispatch("Budget/addCategory", testRequest);
+      });
+
+      it("should call notificationModule.handleError on fail", () => {
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Notification/handleError",
+          {
+            "error": expect.any(Error),
+            "rethrow": false,
+          }
+        );
+      });
+    });
   });
-
-  it("runs", () => {
-    expect(commit);
-  });
-
-  it("should set the status to Saving", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(2,
-      "Budget/mutate",
-      expect.any(Function),
-      undefined
-    );
-
-    // Check that the function passed to mutate is correct.
-    expect(commit.mock.calls[1][1].toString()).toBe('state => state.status = _state.BudgetStatus.Saving')
-
-  });
-
-  it("should run AddCategoryCommand", () => {
-
-    // Assert
-    expect(addCategoryRunAsyncMock).toHaveBeenCalledWith(testRequest);
-
-  });
-
-  it("should save the new Category in the Budget store", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Budget/mutate",
-      expect.any(Function),
-      undefined
-    );
-
-    expect(commit.mock.calls[2][1].toString()).toContain("state.budget.categories.push({");
-
-  });
-
-  it("should set the Category classifications collection to an empty set in the Budget store", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Budget/mutate",
-      expect.any(Function),
-      undefined
-    );
-
-    expect(commit.mock.calls[2][1].toString()).toContain("classifications: []");
-
-  });
-
-  it("should set status to Loaded", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Budget/mutate",
-      expect.any(Function),
-      undefined
-    );
-
-    expect(commit.mock.calls[2][1].toString()).toContain("state.status = _state.BudgetStatus.Loaded");
-
-  });
-
-});
-
-describe("BudgetModule.AddCategory - Fail", () => {
-
-  const commit = jest.fn();
-  const addCategoryRunAsyncMock = jest.fn();
-
-  beforeAll(async () => {
-
-    // Arrange
-    const store = storeFactory(commit);
-
-    AddCategoryCommand.prototype.runAsync = addCategoryRunAsyncMock;
-    addCategoryRunAsyncMock.mockReturnValue(Promise.resolve({
-      success: false,
-      error: 'Error thrown for testing'
-    }));
-
-    bootstrapper();
-
-    // Act
-    await store.dispatch("Budget/addCategory", testRequest);
-  });
-
-  it("should call notificationModule.handleError on fail", () => {
-    // Assert
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Notification/handleError",
-      {
-        "error": expect.any(Error),
-        "rethrow": false,
-      }
-    );
-
-  });
-
 });

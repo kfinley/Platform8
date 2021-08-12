@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
@@ -11,7 +11,6 @@ describe("Register.vue", () => {
 
     // Arrange
     const component = Factory.create(Components.Register, (store) => {
-      console.log('configuring store');
       setupNotificationModule(store);
       setupModules(store);
     });

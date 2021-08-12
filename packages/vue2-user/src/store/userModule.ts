@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
-import { UserState } from './state';
-import { User, AuthStatus, SetPasswordRequest, LoginRequest, AuthenticationResult } from './../types';
+import { UserState, AuthStatus } from './state';
+import { User, SetPasswordRequest, LoginRequest, AuthenticationResult } from './../types';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { LoginCommand, SetPasswordCommand } from "../commands";
 import { container } from 'inversify-props';

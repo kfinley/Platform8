@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-import { createLocalVue, mount, VueClass } from "@vue/test-utils";
+import { createLocalVue, mount, VueClass, RouterLinkStub } from "@vue/test-utils";
 
 export function create(
   Component: VueClass<Vue>,
@@ -25,6 +25,9 @@ export function create(
   const comp = mount(Component, {
     propsData,
     store,
+    stubs: {
+      RouterLink: RouterLinkStub
+    },
     localVue,
   });
 

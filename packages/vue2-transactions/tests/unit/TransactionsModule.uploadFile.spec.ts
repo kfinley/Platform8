@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 import Vuex from "vuex";
 import { createLocalVue } from "@vue/test-utils";
 import { initializeModules } from "@/store";
@@ -41,132 +41,134 @@ const testFile = {
   type: "text/csv"
 }
 
-describe("TransactionsModule.uploadFile - Success", () => {
+describe("TransactionsModule", () => {
+  describe("uploadFile", () => {
+    describe("Success", () => {
 
-  const commit = jest.fn();
-  const uploadFileRunAsyncMock = jest.fn();
-  const testAccountid = 12345;
+      const commit = jest.fn();
+      const uploadFileRunAsyncMock = jest.fn();
+      const testAccountid = 12345;
 
-  beforeAll(async () => {
+      beforeAll(async () => {
 
-    // Arrange
-    const store = storeFactory(commit);
+        // Arrange
+        const store = storeFactory(commit);
 
-    UploadFileCommand.prototype.runAsync = uploadFileRunAsyncMock;
-    uploadFileRunAsyncMock.mockReturnValue(Promise.resolve({
-      success: true
-    }));
+        UploadFileCommand.prototype.runAsync = uploadFileRunAsyncMock;
+        uploadFileRunAsyncMock.mockReturnValue(Promise.resolve({
+          success: true
+        }));
 
-    bootstrapper();
+        bootstrapper();
 
-    // Act
-    await store.dispatch("Transactions/uploadTransactions",
-      {
-        file: testFile,
-        accountId: testAccountid
+        // Act
+        await store.dispatch("Transactions/uploadTransactions",
+          {
+            file: testFile,
+            accountId: testAccountid
+          });
       });
-  });
 
-  it("should dispatch Transactions/uploadTransactions", () => {
-    expect(commit);
-  });
-
-  it("should set the uploadStatus to Uploading", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(2,
-      "Transactions/mutate",
-      expect.any(Function),
-      undefined
-    );
-
-    // Check that the function passed to mutate is correct.
-    expect(commit.mock.calls[1][1].toString()).toBe('state => state.uploadStatus = _state.UploadStatus.Uploading')
-
-  });
-
-  it("should run UploadFileCommand", () => {
-
-    // Assert
-    expect(uploadFileRunAsyncMock).toHaveBeenCalledWith(
-      {
-        file: testFile,
-        accountId: testAccountid,
-        bucket: 'Transactions-uploads'
+      it("should dispatch Transactions/uploadTransactions", () => {
+        expect(commit);
       });
+
+      it("should set the uploadStatus to Uploading", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(2,
+          "Transactions/mutate",
+          expect.any(Function),
+          undefined
+        );
+
+        // Check that the function passed to mutate is correct.
+        expect(commit.mock.calls[1][1].toString()).toBe('state => state.uploadStatus = _state.UploadStatus.Uploading')
+
+      });
+
+      it("should run UploadFileCommand", () => {
+
+        // Assert
+        expect(uploadFileRunAsyncMock).toHaveBeenCalledWith(
+          {
+            file: testFile,
+            accountId: testAccountid,
+            bucket: 'Transactions-uploads'
+          });
+      });
+
+      it("should set uploadStatus to Success", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Transactions/mutate",
+          expect.any(Function),
+          undefined
+        );
+        expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Success");
+
+      });
+
+      it("should notify success with a message", () => {
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(4,
+          "Notification/add",
+          {
+            header: messages.Transactions.Upload.Success.header,
+            message: messages.Transactions.Upload.Success.message,
+            type: AlertType.success
+          }
+        );
+      });
+
+    });
+
+    describe("Failure", () => {
+
+      const commit = jest.fn();
+      const uploadFileRunAsyncMock = jest.fn();
+
+      beforeAll(async () => {
+
+        // Arrange
+        const store = storeFactory(commit);
+
+        UploadFileCommand.prototype.runAsync = uploadFileRunAsyncMock;
+        uploadFileRunAsyncMock.mockReturnValue(Promise.resolve({
+          success: false,
+          error: 'Error thrown for testing'
+        }));
+
+        bootstrapper();
+
+        // Act
+        await store.dispatch("Transactions/uploadTransactions", { file: testFile });
+      });
+
+      it("should set accountsStatus to Failed on fail", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(3,
+          "Transactions/mutate",
+          expect.any(Function),
+          undefined
+        );
+        expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Failed");
+
+      });
+
+      it("should call notificationModule.handleError on fail", () => {
+
+        // Assert
+        expect(commit).toHaveBeenNthCalledWith(4,
+          "Notification/handleError",
+          {
+            "error": expect.any(Error),
+            "rethrow": false,
+          }
+        );
+      });
+    });
   });
-
-  it("should set uploadStatus to Success", () => {
-
-    // Assert
-    // check that mutate was the second call to commit
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Transactions/mutate",
-      expect.any(Function),
-      undefined
-    );
-    expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Success");
-
-  });
-
-  it("should notify success with a message", () => {
-    // Assert
-    expect(commit).toHaveBeenNthCalledWith(4,
-      "Notification/add",
-      {
-        header: messages.Transactions.Upload.Success.header,
-        message: messages.Transactions.Upload.Success.message,
-        type: AlertType.success
-      }
-    );
-  });
-
-});
-
-describe("TransactionsModule.uploadFile - Fail", () => {
-
-  const commit = jest.fn();
-  const uploadFileRunAsyncMock = jest.fn();
-
-  beforeAll(async () => {
-
-    // Arrange
-    const store = storeFactory(commit);
-
-    UploadFileCommand.prototype.runAsync = uploadFileRunAsyncMock;
-    uploadFileRunAsyncMock.mockReturnValue(Promise.resolve({
-      success: false,
-      error: 'Error thrown for testing'
-    }));
-
-    bootstrapper();
-
-    // Act
-    await store.dispatch("Transactions/uploadTransactions", { file: testFile });
-  });
-
-  it("should set accountsStatus to Failed on fail", () => {
-    // Assert
-    // check that mutate was the third(?) call to commit
-    expect(commit).toHaveBeenNthCalledWith(3,
-      "Transactions/mutate",
-      expect.any(Function),
-      undefined
-    );
-    expect(commit.mock.calls[2][1].toString()).toContain("state.uploadStatus = _state.UploadStatus.Failed");
-
-  });
-
-  it("should call notificationModule.handleError on fail", () => {
-    // Assert
-    expect(commit).toHaveBeenNthCalledWith(4,
-      "Notification/handleError",
-      {
-        "error": expect.any(Error),
-        "rethrow": false,
-      }
-    );
-  });
-
 });

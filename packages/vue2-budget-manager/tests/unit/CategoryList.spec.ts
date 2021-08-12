@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 
 import { setupModules } from '@/plugin';
 

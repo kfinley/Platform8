@@ -1,3 +1,5 @@
+import { AuthStatus } from "../store";
+
 export interface RegisterRequest {
   firstName: string;
   lastName: string;
@@ -41,45 +43,6 @@ export interface SetPasswordResponse {
   error?: string | undefined;
 }
 
-export enum RegistrationStatus {
-  Unknown = 'Unknown',
-  Failed = 'Failed',
-  Registered = 'Registered',
-  Registering = 'Registering',
-  Success = 'Success'
-}
-
-export enum AuthStatus {
-  LoggedOut = 'LoggedOut',
-  LoggingIn = 'LoggingIn',
-  LoggedIn = 'LoggedIn',
-  LoginFailed = 'LoginFailed',
-  NewPasswordRequired = 'NewPasswordRequired',
-  SettingPassword = 'SettingPassword',
-  Refreshing = 'Refreshing',    // ???
-  Registering = 'Registering',  // ???
-  Locked = 'Locked',
-}
-
 export interface User {
   id: string;
 }
-
-export enum AlertType {
-  danger = "danger",
-  dark = "dark",
-  info = "info",
-  light = "light",
-  primary = "primary",
-  secondary = "secondary",
-  success = "success",
-  warning = "warning",
-}
-
-export interface Notification {
-  header?: string;
-  message: string;
-  type: AlertType;
-}
-
-

@@ -1,2 +1,2 @@
-export * from "./store-accessor";
+export * from "./initialize-modules";
 export * from "./state";

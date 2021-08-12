@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { container } from 'inversify-props';
-import { RegistrationState } from './state';
-import { RegistrationStatus, RegisterRequest } from './../types';
+import { RegistrationState, RegistrationStatus } from './state';
+import {RegisterRequest } from './../types';
 import { RegisterCommand } from '../commands';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { AlertType } from "@platform8/vue2-notify/src/types";
