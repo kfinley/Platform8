@@ -53,7 +53,7 @@ export class ExpensesModule extends VuexModule implements ExpensesState {
           state.addActionStatus = ActionStatus.Failed;
         }
       );
-      
+
       notificationModule.handleError({ error, rethrow: false });
     }
   }
@@ -73,7 +73,7 @@ export class ExpensesModule extends VuexModule implements ExpensesState {
   //       throw new Error(response.error);
   //     }
   //     this.context.commit('mutate',
-  //       (state: ExpensesState) => {          
+  //       (state: ExpensesState) => {
   //         state.status = ExpensesStatus.Loaded;
   //       }
   //     );

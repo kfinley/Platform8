@@ -67,10 +67,9 @@
 <script lang="ts">
 import { Component, Vue, Ref, Prop } from "vue-property-decorator";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { userModule, UserState } from "../store";
+import { userModule, UserState, AuthStatus } from "../store";
 import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
-import { AuthStatus } from "../types";
 import { messages } from "../resources/messages";
 
 @Component({

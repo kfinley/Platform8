@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import Login from "@/components/Login.vue";
 import { ApiClient, ApiResponse } from '@platform8/api-client/src';
 import { container, injectable } from 'inversify-props';
-import { AuthStatus } from '@/types';
+import { AuthStatus } from '@/store';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";

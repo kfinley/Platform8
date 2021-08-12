@@ -1,14 +1,14 @@
 import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
-import { initializeModules, UserState } from "./store";
+import { initializeModules, UserState, AuthStatus } from "./store";
 import { RegistrationModule, UserModule } from "./store/store-modules";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
-import { AuthStatus } from "./types";
 import { authHelper } from "@platform8/api-client/src/helpers";
+import bootstrapper from "./bootstrapper";
 
 export interface UserPlugin
   extends PluginObject<UserPluginOptions> {
@@ -25,12 +25,17 @@ export interface UserPluginOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const setupModules = (store: Store<any>): void => {
+  store.registerModule("Registration", RegistrationModule);
+  store.registerModule("User", UserModule);
+
   initializeModules(store);
 };
 
 const UserPlugin = {
   install(vue: typeof Vue, options?: UserPluginOptions) {
     if (options !== undefined && options.store && options.router) {
+
+      bootstrapper();
 
       setupModules(options.store);
 

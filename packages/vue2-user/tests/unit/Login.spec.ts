@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";

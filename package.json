@@ -21,10 +21,11 @@
     "storybook:common": "lerna run storybook --stream --scope=@platform8/vue2-common",
     "deploy-storybook:local": "rm -rf storybooks && storybook-to-ghpages --out=storybooks --packages packages --dry-run && find packages -type f -name storybooks -exec rm -f {} \\;",
 
-    "test": "lerna run --stream test:unit --scope=@platform8/vue2-accounts --scope=@platform8/vue2-transactions --scope=@platform8/transactions  --scope=@platform8/vue2-budget-manager && npm run test:dotnet",
+    "test": "lerna run --stream test:unit --scope=@platform8/vue2-accounts --scope=@platform8/vue2-expenses --scope=@platform8/vue2-transactions --scope=@platform8/transactions  --scope=@platform8/vue2-budget-manager && npm run test:dotnet",
     "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/Accounts/Tests/Accounts.Tests.csproj && npm run test:dotnet:budgets",
     "test:dotnet:budgets": "dotnet test services/Budgets/Tests/Budgets.Tests.csproj",
     "test:accounts": "lerna run --stream test:unit --scope=@platform8/vue2-accounts",
+    "test:expenses": "lerna run --stream test:unit --scope=@platform8/vue2-expenses",
     "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions --scope=@platform8/transactions",
     "test:budgets": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager && npm run test:dotnet:budgets",
     "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",

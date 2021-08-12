@@ -1,7 +1,8 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import SetPassword from "@/components/SetPassword.vue";
-import { AuthStatus, LoginRequest, LoginResponse } from '@/types';
+import { LoginRequest, LoginResponse } from '@/types';
+import { AuthStatus } from '@/store';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";

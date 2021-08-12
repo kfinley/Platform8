@@ -5,12 +5,9 @@ import { RegistrationModule, UserModule }  from "./store-modules";
 let registrationModule: RegistrationModule;
 let userModule: UserModule;
 
-function initializeModules(store: Store<any>): void {
-  store.registerModule("Registration", RegistrationModule);
-  store.registerModule("User", UserModule);
-  
+export function initializeModules(store: Store<any>): void {
   registrationModule = getModule(RegistrationModule, store);
   userModule = getModule(UserModule, store);
 }
 
-export { initializeModules, registrationModule, userModule };
+export { registrationModule, userModule };

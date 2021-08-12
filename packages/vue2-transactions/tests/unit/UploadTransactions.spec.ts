@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 
 import { setupModules } from '@/plugin';
 import { setupModules as setupAccountsModules } from '@platform8/vue2-accounts/src/plugin';

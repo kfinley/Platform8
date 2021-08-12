@@ -1,4 +1,5 @@
-import { AuthStatus, LoginRequest, LoginResponse } from '../types';
+import { LoginRequest, LoginResponse } from '../types';
+import { AuthStatus } from '../store';
 import { Command } from '@platform8/commands/src';
 import { Inject } from 'inversify-props';
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';

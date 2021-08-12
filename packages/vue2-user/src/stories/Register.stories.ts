@@ -2,14 +2,15 @@ import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import Register from "@/components/Register.vue";
 import { container, injectable } from 'inversify-props';
-import { RegisterRequest, RegisterResponse, RegistrationStatus } from '@/types';
+import { RegisterRequest, RegisterResponse } from '@/types';
+import { RegistrationStatus } from '@/store';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
-import { AlertType } from '@/types';
+import { AlertType } from '@platform8/vue2-notify/src/types';
 import { Command } from '@platform8/commands/src';
 import { messages } from '@/resources/messages';
-import { RegisterCommand } from "../commands";
+import { RegisterCommand } from "@/commands";
 
 @injectable()
 class mockRegisterCommand implements Command<RegisterRequest, RegisterResponse> {

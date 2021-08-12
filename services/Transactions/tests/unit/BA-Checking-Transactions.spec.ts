@@ -1,4 +1,4 @@
-import 'reflect-metadata'; // <-- deal with this...
+import 'reflect-metadata';
 
 import { FileParserResponse, ParsedTransactions } from '../../src/models';
 import { BA_Checking_Transactions_File_Parser_Command } from '../../src/commands/file-parsers';
@@ -25,9 +25,9 @@ Date,Description,Amount,Running Bal.
 07/06/2021,"NAVIENT DES:NAVI DEBIT ID:XXXXX314201001F INDN:JOHN P DOE CO ID:XXXXX68598 PPD","-137.06","253.43"
 07/07/2021,"LIBERTY MUTUAL DES:PAYMENT ID:H4728526766987 INDN:DOE JOHN CO ID:XXXXX98745 PPD","-24.75","228.68"`
 ;
-  
+
   beforeAll(async () => {
-    
+
     // Arrange
     const fileParserCommand = new BA_Checking_Transactions_File_Parser_Command();
 
@@ -38,19 +38,19 @@ Date,Description,Amount,Running Bal.
 
   });
 
-  it("should return success", () => 
+  it("should return success", () =>
     expect(response.success).toBeTruthy());
 
-  it("should return start date", () => 
+  it("should return start date", () =>
     expect(response.data.startDate).toEqual(new Date('2021-06-11')));
 
-  it("should return end date", () => 
+  it("should return end date", () =>
     expect(response.data.endDate).toEqual(new Date('2021-07-12')));
-  
-  it("should return beginning balance", () => 
+
+  it("should return beginning balance", () =>
     expect(response.data.beginningBalance).toEqual(106.41));
-  
-  it("should return ending balance", () => 
+
+  it("should return ending balance", () =>
     expect(response.data.endingBalance).toEqual(228.68));
 
   it("should return collection of transactions", () => {
@@ -63,6 +63,6 @@ Date,Description,Amount,Running Bal.
     expect(response.data.transactions[3].sequence).toBe(1);
     expect(response.data.transactions[4].sequence).toBe(2);
     expect(response.data.transactions[5].sequence).toBe(1);
-    
+
   });
 });
