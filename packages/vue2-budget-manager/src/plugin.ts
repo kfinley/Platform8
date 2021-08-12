@@ -6,7 +6,7 @@ import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
-import bootstrapper from "./boot-strapper";
+import bootstrapper from "./bootstrapper";
 import { BudgetModule } from "./store/store-modules";
 import { budgetModule } from "./store";
 import { CategoryComponent } from "./components";
@@ -37,7 +37,7 @@ const BudgetManagementPlugin = {
       bootstrapper();
 
       setupModules(options.store);
-      
+
       if (getModule(NotificationModule, options.store) === undefined) {
         vue.use(NotificationPlugin, {
           router: options.router,
@@ -45,7 +45,7 @@ const BudgetManagementPlugin = {
         });
       }
       options.router.addRoutes(routes);
-      
+
       Vue.component("Category", CategoryComponent);
 
       budgetModule.settings = {

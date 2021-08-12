@@ -64,7 +64,7 @@ const plugin = {
         loadOnChangedValue: AuthStatus.LoggedIn
       });
 
-      vue.use(ExpensesPlugin, { 
+      vue.use(ExpensesPlugin, {
         router: options.router,
         store: options.store,
       });
@@ -74,7 +74,7 @@ const plugin = {
         store: options.store,
         actionText: "Review",
         actionComponent: "add-expense-action",
-        actionFunction: "Expenses/addActionActivated",        
+        actionFunction: "Expenses/addActionActivated",
         loadOnChangedGetter: () => (<AccountsState>options.store.state.Accounts).accounts,
       });
 

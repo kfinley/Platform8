@@ -4,7 +4,7 @@ import { createLocalVue } from "@vue/test-utils";
 import { AddAccountRequest } from "@/models";
 import { initializeModules as notificationInitializeModules } from "@platform8/vue2-notify/src/store";
 import { AddAccountCommand } from "@/commands";
-import bootstrapper from "@/boot-strapper";
+import bootstrapper from "@/bootstrapper";
 import { AccountsModule } from '@/store/accountsModule';
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
 import { initializeModules } from '@/store';
