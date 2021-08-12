@@ -10,6 +10,7 @@ export interface UserState {
   authSession?: string | undefined;
   currentUser: User | undefined;
   authTokens?: AuthenticationResult | undefined;
+  postAuthFunction?: string;
 }
 
 export enum RegistrationStatus {

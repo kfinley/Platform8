@@ -1,16 +1,16 @@
 import 'reflect-metadata';
 
-import Vuex from "vuex";
+import Vuex, { Dispatch, DispatchOptions } from "vuex";
 import { createLocalVue } from "@vue/test-utils";
 import { initializeModules as notificationInitializeModules } from "@platform8/vue2-notify/src/store";
 import bootstrapper from "@/bootstrapper";
 import { UserModule } from '@/store/userModule';
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
-import { initializeModules } from '@/store';
+import { AuthStatus, initializeModules, UserState } from '@/store';
 import { LoginRequest } from '@/types';
 import { LoginCommand } from '@/commands';
 
-export const storeFactory = (commit?: any) => {
+export const storeFactory = (commit?: any, dispatch?: any) => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
 
@@ -28,6 +28,20 @@ export const storeFactory = (commit?: any) => {
   if (commit !== undefined) {
     store.commit = commit;
   }
+  const realDispatch = store.dispatch;
+
+  const testDispatch: Dispatch = function testDispatch(type: string, payload?: any, options?: any) {
+
+    if (type.indexOf("User/") > -1) {
+      return realDispatch(type, payload, options);
+    } else {
+      return dispatch(type, payload, options)
+    }
+  }
+
+  if (dispatch !== undefined) {
+    store.dispatch = testDispatch
+  }
 
   return store;
 };
@@ -42,16 +56,28 @@ describe("UserModule", () => {
     describe("Success", () => {
 
       const commit = jest.fn();
+      const dispatch = jest.fn();
+
       const loginRunAsyncMock = jest.fn();
 
       beforeAll(async () => {
 
         // Arrange
-        const store = storeFactory(commit);
+        const store = storeFactory(commit, dispatch);
+
+        // kinda hacky but ok for now...
+        (<UserState>store.state.User).postAuthFunction = "Module/postAuthFunc";
 
         LoginCommand.prototype.runAsync = loginRunAsyncMock;
         loginRunAsyncMock.mockReturnValue(Promise.resolve({
-
+          status: AuthStatus.LoggedIn,
+          authenticationResult: {
+            accessToken: 'xxx-xxx-xxx-xxx',
+            expiresIn: 10,
+            tokenType: 'jwt',
+            refreshToken: 'yyy-yyy-yyy-yyy',
+            idToken: 'zzz-zzz-zzz-zzz'
+          },
         }));
 
         bootstrapper();
@@ -113,17 +139,22 @@ describe("UserModule", () => {
         expect(commit.mock.calls[2][1].toString()).toContain("state.authSession = response.session")
       });
 
-      // it("should dispatch postAuthentication", () => {
+      it("should dispatch postAuthentication", () => {
 
-      //   console.log(dispatch.mock.calls);
+        // Assert
+        expect(dispatch).toHaveBeenNthCalledWith(1,
+          'Module/postAuthFunc',
+          {
+            accessToken: 'xxx-xxx-xxx-xxx',
+            expiresIn: 10,
+            tokenType: 'jwt',
+            refreshToken: 'yyy-yyy-yyy-yyy',
+            idToken: 'zzz-zzz-zzz-zzz'
+          },
+          undefined // Even though { root: true } is passed as DispatchOptions vuex.common.makeLocalContext removes it when called.
+        );
+      })
 
-      //   // Assert
-      //   expect(dispatch).toHaveBeenNthCalledWith(2,
-      //     "User/postAuthentication",
-      //     undefined,
-      //     undefined
-      //   );
-      // });
     });
 
     describe("Failure", () => {

@@ -55,6 +55,7 @@ const plugin = {
         store: options.store,
         LoginRedirectRouteName: RouteNames.Dashboard,
         DefaultRoute: RouteNames.Home,
+        postAuthFunction: "WebSockets/connect"
       });
 
       vue.use(AccountsPlugin, {

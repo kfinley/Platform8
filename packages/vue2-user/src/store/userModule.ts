@@ -5,12 +5,14 @@ import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { LoginCommand, SetPasswordCommand } from "../commands";
 import { container } from 'inversify-props';
 import { authHelper } from '@platform8/api-client/src/helpers'
+
 @Module({ namespaced: true, name: 'User' })
 export class UserModule extends VuexModule implements UserState {
   authStatus = AuthStatus.LoggedOut;
   authSession = "";
   currentUser!: User;
   authTokens!: AuthenticationResult;
+  postAuthFunction = '';
 
   @Action
   async login(params: LoginRequest) {
@@ -32,6 +34,10 @@ export class UserModule extends VuexModule implements UserState {
           });
 
         authHelper.setTokens(response.authenticationResult as AuthenticationResult);
+
+        if (this.postAuthFunction) {
+          this.context.dispatch(this.postAuthFunction, response.authenticationResult, { root: true });
+        }
 
         if (response.error) {
           throw new Error(response.error);
@@ -70,7 +76,12 @@ export class UserModule extends VuexModule implements UserState {
             state.authTokens = response.authenticationResult as AuthenticationResult;
             state.authSession = undefined;
           });
+
           authHelper.setTokens(response.authenticationResult as AuthenticationResult);
+
+          if (this.postAuthFunction) {
+            this.context.dispatch(this.postAuthFunction, response.authenticationResult, { root: true });
+          }
         }
 
         if (response.error) {

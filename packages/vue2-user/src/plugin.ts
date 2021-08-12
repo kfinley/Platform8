@@ -21,6 +21,7 @@ export interface UserPluginOptions {
   router: router;
   DefaultRoute: string;
   LoginRedirectRouteName: string;
+  postAuthFunction: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,8 @@ const UserPlugin = {
           store: options.store,
         });
       }
+      (<UserState>options.store.state.User).postAuthFunction = options.postAuthFunction;
+
       options.router.addRoutes(routes);
 
       options.router.beforeEach(async (to, from, next) => {
