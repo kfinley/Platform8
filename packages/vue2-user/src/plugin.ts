@@ -46,6 +46,12 @@ const UserPlugin = {
           store: options.store,
         });
       }
+
+      //TODO: change the postAuthFunciton setup to use settings like in the BudgetModule
+      // budgetModule.settings = {
+      //   onCloseRedirectRouteName: options.onCloseRedirectRouteName
+      // };
+
       (<UserState>options.store.state.User).postAuthFunction = options.postAuthFunction;
 
       options.router.addRoutes(routes);
