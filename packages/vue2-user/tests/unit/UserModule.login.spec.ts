@@ -66,10 +66,8 @@ describe("UserModule", () => {
         // Arrange
         const store = storeFactory(commit, dispatch);
         const module = getModule(UserModule, store);
-
-        module.settings = {
-          postAuthFunction: "Module/postAuthFunc"
-        };
+        
+        module.postAuthFunction = "Module/postAuthFunc";
 
         LoginCommand.prototype.runAsync = loginRunAsyncMock;
         loginRunAsyncMock.mockReturnValue(Promise.resolve({

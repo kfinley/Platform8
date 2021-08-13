@@ -1,4 +1,3 @@
-import { AuthTokens } from '../models';
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { WebSocketsState, WebSocketsStatus } from './state';
 import { authHelper } from '@platform8/api-client/src/helpers'

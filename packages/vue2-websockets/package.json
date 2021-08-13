@@ -1,6 +1,7 @@
 {
   "name": "@platform8/vue2-websockets",
   "version": "0.0.1",
+  "description": "Vue2 plugin that provides WebSockets communication",
   "private": true,
   "author": {
     "name": "Kyle Finley",
