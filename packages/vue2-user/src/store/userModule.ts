@@ -8,11 +8,12 @@ import { authHelper } from '@platform8/api-client/src/helpers'
 
 @Module({ namespaced: true, name: 'User' })
 export class UserModule extends VuexModule implements UserState {
+
   authStatus = AuthStatus.LoggedOut;
   authSession = "";
   currentUser!: User;
   authTokens!: AuthenticationResult;
-  postAuthFunction = '';
+  postAuthFunction!: string;
 
   @Action
   async login(params: LoginRequest) {

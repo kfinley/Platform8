@@ -2,6 +2,7 @@ import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
 import { initializeModules, UserState, AuthStatus } from "./store";
 import { RegistrationModule, UserModule } from "./store/store-modules";
+import { userModule } from "./store";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
@@ -46,21 +47,15 @@ const UserPlugin = {
           store: options.store,
         });
       }
-
-      //TODO: change the postAuthFunciton setup to use settings like in the BudgetModule
-      // budgetModule.settings = {
-      //   onCloseRedirectRouteName: options.onCloseRedirectRouteName
-      // };
-
-      (<UserState>options.store.state.User).postAuthFunction = options.postAuthFunction;
-
+      userModule.mutate((state: UserState) => state.postAuthFunction = options.postAuthFunction);
+ 
       options.router.addRoutes(routes);
 
       options.router.beforeEach(async (to, from, next) => {
 
         await (options.store as any).restored;
         if ((options.store.state.User as UserState).authTokens) {
-          getModule(UserModule, options.store)
+          userModule
             .mutate((s) => {
               s.authStatus = AuthStatus.LoggedIn;
             });

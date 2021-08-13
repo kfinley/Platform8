@@ -7,14 +7,13 @@ import router from "vue-router";
 import VuexPersist from "vuex-persist";
 import { getModule } from 'vuex-module-decorators';
 import { extend } from 'vee-validate';
-
 import { RouteNames } from "../router";
-
 import { setupValidation } from '@platform8/vue2-common/src/validation';
 import { NotificationPlugin } from "@platform8/vue2-notify/src";
+import { WebSocketsPlugin } from "@platform8/vue2-websockets/src";
+import { WebSocketsModule } from '@platform8/vue2-websockets/src/store/webSocketsModule';
 import { AccountsPlugin } from "@platform8/vue2-accounts/src";
 import { UserPlugin } from "@platform8/vue2-user/src";
-import userBootStrapper from "@platform8/vue2-user/src/bootstrapper";
 import { RegistrationModule, UserModule } from '@platform8/vue2-user/src/store/store-modules';
 import { NotificationState } from '@platform8/vue2-notify/src/store';
 import { AccountsState } from '@platform8/vue2-accounts/src/store';
@@ -23,7 +22,8 @@ import { AuthStatus } from '@platform8/vue2-user/src/store';
 import { TransactionsPlugin } from "@platform8/vue2-transactions/src";
 import { BudgetPlugin } from "@platform8/vue2-budget-manager/src";
 import { ExpensesPlugin } from "@platform8/vue2-expenses/src";
-import { ExpensesModule }  from "@platform8/vue2-expenses/src/store/expensesModule";
+import { ExpensesModule } from "@platform8/vue2-expenses/src/store/expensesModule";
+import { BudgetModule } from "@platform8/vue2-budget-manager/src/store/budgetModule";
 
 import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap-icons/font/bootstrap-icons.css";
@@ -58,6 +58,11 @@ const plugin = {
         postAuthFunction: "WebSockets/connect"
       });
 
+      vue.use(WebSocketsPlugin, {
+        router: options.router,
+        store: options.store
+      });
+
       vue.use(AccountsPlugin, {
         router: options.router,
         store: options.store,
@@ -87,14 +92,13 @@ const plugin = {
         onCloseRedirectRouteName: RouteNames.Dashboard
       })
 
-      //TODO: Fix this. Move it into the UserPlugin install like AccountsPlugin
-      userBootStrapper();
-
       //HACK: Calls to Vuex.registerModule inside plugins will wipe out the store getters.
       //      so we must call getModule for any module that got wiped out.
       //      https://github.com/vuejs/vuex/blob/d65d14276e87aca17cfbd3fbf4af9e8dbb808f24/src/store.js#L265
       //      https://github.com/championswimmer/vuex-module-decorators/issues/250
       //
+      getModule(WebSocketsModule, options.store);
+      getModule(BudgetModule, options.store);
       getModule(UserModule, options.store);
       getModule(RegistrationModule, options.store);
       getModule(ExpensesModule, options.store);

@@ -26,6 +26,7 @@
     "@platform8/vue2-notify": "^0.0.1",
     "@platform8/vue2-transactions": "^0.0.1",
     "@platform8/vue2-user": "^0.0.1",
+    "@platform8/vue2-websockets": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",

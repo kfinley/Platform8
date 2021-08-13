@@ -1,5 +1,5 @@
 import { Store } from "vuex";
-import { WebSocketsModule }  from "./websocketsModule";
+import { WebSocketsModule }  from "./webSocketsModule";
 import { getModule } from "vuex-module-decorators";
 
 let webSocketsModule: WebSocketsModule;

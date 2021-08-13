@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import Vuex, { Dispatch, DispatchOptions } from "vuex";
+import Vuex, { Dispatch } from "vuex";
 import { createLocalVue } from "@vue/test-utils";
 import { initializeModules as notificationInitializeModules } from "@platform8/vue2-notify/src/store";
 import bootstrapper from "@/bootstrapper";
@@ -9,6 +9,7 @@ import NotificationModule from '@platform8/vue2-notify/src/store/notificationMod
 import { AuthStatus, initializeModules, UserState } from '@/store';
 import { LoginRequest } from '@/types';
 import { LoginCommand } from '@/commands';
+import { getModule } from 'vuex-module-decorators';
 
 export const storeFactory = (commit?: any, dispatch?: any) => {
   const localVue = createLocalVue();
@@ -64,9 +65,11 @@ describe("UserModule", () => {
 
         // Arrange
         const store = storeFactory(commit, dispatch);
+        const module = getModule(UserModule, store);
 
-        // kinda hacky but ok for now...
-        (<UserState>store.state.User).postAuthFunction = "Module/postAuthFunc";
+        module.settings = {
+          postAuthFunction: "Module/postAuthFunc"
+        };
 
         LoginCommand.prototype.runAsync = loginRunAsyncMock;
         loginRunAsyncMock.mockReturnValue(Promise.resolve({

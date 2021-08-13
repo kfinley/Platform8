@@ -6,7 +6,7 @@ import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import router from "vue-router";
 import { getModule } from "vuex-module-decorators";
 import bootstrapper from "./bootstrapper";
-import { WebSocketsModule } from "./store/websocketsModule";
+import { WebSocketsModule } from "./store/webSocketsModule";
 
 export interface WebSocketsPlugin
   extends PluginObject<WebSocketsPluginOptions> {
