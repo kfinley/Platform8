@@ -17,6 +17,8 @@ export interface WebSocketsPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
+  connectOnChangedGetter: () => any;
+  connectOnChangedValue: any;
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -38,6 +40,15 @@ const WebSocketsPlugin = {
           store: options.store,
         });
       }
+
+      options.store.watch(
+        options.connectOnChangedGetter,
+        (newValue) => {
+          if (newValue === options.connectOnChangedValue) {
+            getModule(WebSocketsModule, options.store).connect();
+          }
+        },
+      );
     }
   },
 };

@@ -10,6 +10,7 @@ import { AuthStatus, initializeModules, UserState } from '@/store';
 import { LoginRequest } from '@/types';
 import { LoginCommand } from '@/commands';
 import { getModule } from 'vuex-module-decorators';
+import { GetUserDetailsCommand } from '@/commands/getUserDetails';
 
 export const storeFactory = (commit?: any, dispatch?: any) => {
   const localVue = createLocalVue();
@@ -60,13 +61,14 @@ describe("UserModule", () => {
       const dispatch = jest.fn();
 
       const loginRunAsyncMock = jest.fn();
+      const getUserDtailsRunAsyncMock = jest.fn();
 
       beforeAll(async () => {
 
         // Arrange
         const store = storeFactory(commit, dispatch);
         const module = getModule(UserModule, store);
-        
+
         module.postAuthFunction = "Module/postAuthFunc";
 
         LoginCommand.prototype.runAsync = loginRunAsyncMock;
@@ -79,6 +81,14 @@ describe("UserModule", () => {
             refreshToken: 'yyy-yyy-yyy-yyy',
             idToken: 'zzz-zzz-zzz-zzz'
           },
+        }));
+
+        GetUserDetailsCommand.prototype.runAsync = getUserDtailsRunAsyncMock;
+        getUserDtailsRunAsyncMock.mockReturnValue(Promise.resolve({
+          username: 'fb6a8285-0f80-4f5c-a586-6a70c94b7f09',
+          email: 'bob@jones.com',
+          firstName: 'Bob',
+          lastName: 'Jones'
         }));
 
         bootstrapper();
@@ -110,34 +120,24 @@ describe("UserModule", () => {
 
         // Assert
         expect(loginRunAsyncMock).toHaveBeenCalledWith(testRequest);
-
       });
 
-      it("should set authTokens", () => {
+      it("should run GetUserDetailsCommand", () => {
 
         // Assert
-        // check that mutate was the third call to commit
-        expect(commit).toHaveBeenNthCalledWith(3,
-          "User/mutate",
-          expect.any(Function),
-          undefined
-        );
-
-        // Check that the function passed to mutate is correct.
-        expect(commit.mock.calls[2][1].toString()).toContain("state.authTokens = response.authenticationResult")
-
+        expect(loginRunAsyncMock).toHaveBeenCalledWith(testRequest);
       });
 
-      it("should set status", () => {
+      it("should set the currentUser from get user details response", () => {
 
         // Assert
-        expect(commit.mock.calls[2][1].toString()).toContain("state.authStatus = response.status")
+        expect(commit.mock.calls[2][1].toString()).toContain("state.currentUser = { ...userDetails,");
       });
 
-      it("should set session", () => {
+      it("should set authTokens from login response", () => {
 
         // Assert
-        expect(commit.mock.calls[2][1].toString()).toContain("state.authSession = response.session")
+        expect(commit.mock.calls[2][1].toString()).toContain("state.authTokens = login.authenticationResult");
       });
 
       it("should dispatch postAuthentication", () => {
@@ -154,8 +154,19 @@ describe("UserModule", () => {
           },
           undefined // Even though { root: true } is passed as DispatchOptions vuex.common.makeLocalContext removes it when called.
         );
-      })
+      });
 
+      it("should set authStatus from login response", () => {
+
+        // Assert
+        expect(commit.mock.calls[3][1].toString()).toContain("state.authStatus = login.status");
+      });
+
+      it("should set session from login response", () => {
+
+        // Assert
+        expect(commit.mock.calls[3][1].toString()).toContain("state.authSession = login.session");
+      });
     });
 
     describe("Failure", () => {

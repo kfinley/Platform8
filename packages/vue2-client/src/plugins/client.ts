@@ -54,13 +54,14 @@ const plugin = {
         router: options.router,
         store: options.store,
         LoginRedirectRouteName: RouteNames.Dashboard,
-        DefaultRoute: RouteNames.Home,
-        postAuthFunction: "WebSockets/connect"
+        DefaultRoute: RouteNames.Home
       });
 
       vue.use(WebSocketsPlugin, {
         router: options.router,
-        store: options.store
+        store: options.store,
+        connectOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
+        connectOnChangedValue: AuthStatus.LoggedIn
       });
 
       vue.use(AccountsPlugin, {
@@ -119,7 +120,8 @@ const plugin = {
           // Notification: state.Notification,
           // Registration: state.Registration,
           User: {
-            authTokens: state.User.authTokens
+            authTokens: state.User.authTokens,
+            currentUser: state.User.currentUser
           }
         }),
         // Function that passes a mutation and lets you decide if it should update the state in localStorage.

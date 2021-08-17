@@ -48,7 +48,7 @@ const UserPlugin = {
         });
       }
       userModule.mutate((state: UserState) => state.postAuthFunction = options.postAuthFunction);
- 
+
       options.router.addRoutes(routes);
 
       options.router.beforeEach(async (to, from, next) => {
@@ -60,12 +60,16 @@ const UserPlugin = {
               s.authStatus = AuthStatus.LoggedIn;
             });
 
+          //TODO: deal with this stuff....
           authHelper.authToken = () => {
             return (options.store.state.User as UserState).authTokens?.accessToken as string;
           };
           authHelper.refreshToken = () => {
-            return (options.store.state as UserState).authTokens?.refreshToken as string;
+            return (options.store.state.User as UserState).authTokens?.refreshToken as string;
           };
+          authHelper.username = () => {
+            return (options.store.state.User as UserState).currentUser?.username as string;
+          }
         }
 
         const authStatus = (<UserState>options.store.state.User).authStatus;
