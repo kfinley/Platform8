@@ -1,23 +1,16 @@
 import { AttributeValue } from "@aws-sdk/client-dynamodb";
+import { SaveConnectionRequest } from "./saveConnection";
 
-export function convertRequestToItem(ownerId: string, connectionId: string, token: string) : {
+export function convertRequestToItem(request: SaveConnectionRequest): {
   [key: string]: AttributeValue;
 } | undefined {
-  const date = new Date().toISOString();
 
   return {
-    PK: {
-      S: `OWNER#${ownerId}`
-    },
-    SK: {
-      S: `TOKEN#${token}DATE#${date}`
+    userId: {
+      S: request.userId
     },
     connectionId: {
-      S: connectionId
-    },
-    date: {
-      S: date
+      S: request.connectionId
     }
-
   }
 }

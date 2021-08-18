@@ -4,28 +4,29 @@ import { Command } from '@platform8/commands/src';
 import { Inject } from 'inversify-props';
 import { convertRequestToItem } from './helpers';
 
+const CONNECTION_TABLE = process.env.WEBSOCKETS_CONNECTION_TABLE as string;
+
 export interface SaveConnectionRequest {
-  connectionId: string | undefined
+  userId: string;
+  connectionId: string;
 }
 
 export interface SaveConnectionResponse {
   success: boolean
 }
 
-export class SaveConnection implements Command<SaveConnectionRequest, SaveConnectionResponse> {
+export class SaveConnectionCommand implements Command<SaveConnectionRequest, SaveConnectionResponse> {
 
   @Inject("DynamoDBClient")
   private ddbClient!: DynamoDBClient;
 
   async runAsync(params: SaveConnectionRequest): Promise<SaveConnectionResponse> {
 
-    const ownerId = '';
-    const token = '';
+    const Item = convertRequestToItem(params);
 
-    const Item = convertRequestToItem(params.connectionId as string, ownerId, token);
 
     var response = await this.ddbClient.send(new PutItemCommand({
-      TableName: 'Users', //TODO: deal with this...
+      TableName: CONNECTION_TABLE,
       Item
     }));
 

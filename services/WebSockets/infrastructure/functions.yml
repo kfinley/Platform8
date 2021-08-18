@@ -14,17 +14,17 @@ disconnect:
         route: $disconnect
   handler: disconnect/function.handler
 
-default:
-  events:
-    - websocket:
-        route: $default
-  handler: default/function.handler
+# default:
+#   events:
+#     - websocket:
+#         route: $default
+#   handler: default/function.handler
 
-broadcast:
-  events:
-    - websocket:
-        route: broadcast
-  handler: broadcast/function.handler
+# broadcast:
+#   events:
+#     - websocket:
+#         route: broadcast
+#   handler: broadcast/function.handler
 
 auth:
   handler: auth/function.handler

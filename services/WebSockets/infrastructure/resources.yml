@@ -1,13 +1,17 @@
-ConnectionsTable:
+${self:service}ConnectionsTable:
   Type: AWS::DynamoDB::Table
   Properties:
     TableName: ${self:service}-connections
+    KeySchema:
+      - AttributeName: userId
+        KeyType: HASH
+      - AttributeName: connectionId
+        KeyType: RANGE
     AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
       - AttributeName: connectionId
         AttributeType: S
-    KeySchema:
-      - AttributeName: connectionId
-        KeyType: HASH
     ProvisionedThroughput:
       ReadCapacityUnits: 1
       WriteCapacityUnits: 1

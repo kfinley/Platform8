@@ -8,8 +8,25 @@ import {
   StartStepFunctionCommand,
   GetStoredObjectCommand
 } from "./index";
+import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
+import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
+import { AuthorizeCommand } from './authorize';
 
 export default function bootstrapper() {
+
+  if (!container.isBound("CognitoIdentityClient")) {
+    container.bind<CognitoIdentityClient>("CognitoIdentityClient")
+      .toDynamicValue(() => new CognitoIdentityClient({
+        endpoint: "http://platform8.cognito:9229"
+      }));
+  }
+
+  if (!container.isBound("CognitoIdentityProvider")) {
+    container.bind<CognitoIdentityProvider>("CognitoIdentityProvider")
+      .toDynamicValue(() => new CognitoIdentityProvider({
+        endpoint: "http://platform8.cognito:9229"
+      }));
+  }
 
   if (!container.isBound("SNSClient")) {
     container.bind<SNSClient>("SNSClient")
@@ -42,7 +59,7 @@ export default function bootstrapper() {
   addTransientIfNeeded<PublishMessageCommand>(PublishMessageCommand, "PublishMessageCommand", container);
   addTransientIfNeeded<StartStepFunctionCommand>(StartStepFunctionCommand, "StartStepFunctionCommand", container);
   addTransientIfNeeded<GetStoredObjectCommand>(GetStoredObjectCommand, "GetStoredObjectCommand", container);
-
+  addTransientIfNeeded<AuthorizeCommand>(AuthorizeCommand, "AuthorizeCommand", container);
 }
 
 function addTransientIfNeeded<T>(constructor: any, id: string, container: Container) {

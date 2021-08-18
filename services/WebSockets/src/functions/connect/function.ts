@@ -7,32 +7,45 @@ import {
 } from 'aws-lambda';
 import 'source-map-support/register';
 import { container } from 'inversify-props';
-import bootstrapper from '@/bootstrapper';
-import { SaveConnection } from '@/commands';
+import bootstrapper from '../../bootstrapper';
+import { SaveConnectionCommand } from '../../commands';
 
-import { handler as authorizer } from '@/functions/auth/function';
+import { handler as auth } from '../auth/function';
 
 bootstrapper();
 
 export const handler: APIGatewayProxyHandler = async (event, context, callback) => {
 
   try {
-    console.log(event);
-    if (event.requestContext.authorizer === undefined) {
-      const authorizerResponse = await (authorizer(event, context, callback) as unknown) as APIGatewayAuthorizerResult;
 
-      if (authorizerResponse.policyDocument !== undefined) {
-        return authorizerResponse as unknown as APIGatewayProxyResult;
+    let { authorizer } = event.requestContext
+
+    if (authorizer === undefined) {
+
+      authorizer = await (auth(event, context, callback) as unknown) as APIGatewayAuthorizerResult;
+
+      if (authorizer.policyDocument === undefined) {
+        return {
+          statusCode: 401,
+          body: 'Unauthorized'
+        };
       }
-      return {
-        statusCode: 500,
-        body: 'ERROR!! \n authorizerResponse empty'
-      };
     }
 
-    const saveConnection = await container.get<SaveConnection>("SaveConnection").runAsync({
-      connectionId: event.requestContext.connectionId
-    });
+    if (authorizer !== null && authorizer.policyDocument.Statement[0].Effect == "Allow") {
+
+      console.log('authorized!');
+      await container.get<SaveConnectionCommand>("SaveConnectionCommand").runAsync({
+        userId: authorizer.principalId,
+        connectionId: event.requestContext.connectionId as string
+      });
+    } else {
+      console.log('unauthorized');
+      return {
+        statusCode: 401,
+        body: 'Unauthorized'
+      };
+    }
 
     return {
       statusCode: 200,
