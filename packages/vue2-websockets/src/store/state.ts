@@ -1,5 +1,8 @@
+import { Socket } from "../models";
+
 export interface WebSocketsState {
-  status: WebSocketsStatus
+  status: WebSocketsStatus;
+  socket?: Socket;
 }
 
 export enum WebSocketsStatus {

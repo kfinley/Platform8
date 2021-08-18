@@ -29,10 +29,8 @@ const generatePolicy = (principalId: any, effect: any, resource: any) => {
 
 const generateAllow = (principalId: string, resource: string) => generatePolicy(principalId, 'Allow', resource);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const generateDeny = (principalId: string, resource: string) => generatePolicy(principalId, 'Deny', resource);
 
-// eslint-disable-next-line consistent-return
 export const handler: APIGatewayProxyHandler = async (event) => {
 
   const { Authorization } = event.headers;
@@ -44,15 +42,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     };
   }
 
-  // 'Basic dGVzdDpwYXNzd29yZA=='
-  const idAndToken = Buffer.from(Authorization.split(' ')[1], 'base64').toString()
-  const [id, token] = idAndToken.split(':');
+  const authResult = await container.get<AuthorizeCommand>("AuthorizeCommand")
+                                    .runAsync({ authHeader: Authorization });
 
-  const authResult = await container.get<AuthorizeCommand>("AuthorizeCommand").runAsync({ token });
-
-  if (authResult.success) {
-    return generateAllow(id, event.resource == undefined ? '$connect' : event.resource);
+  if (authResult.authorized) {
+    return generateAllow(authResult.username, event.resource == undefined ? '$connect' : event.resource);
   } else {
-    return generateDeny(id, event.resource == undefined ? '$connect' : event.resource);
+    return generateDeny(authResult.username, event.resource == undefined ? '$connect' : event.resource);
   }
 };

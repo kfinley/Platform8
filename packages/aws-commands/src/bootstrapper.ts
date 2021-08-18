@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { S3Client } from '@aws-sdk/client-s3';
 import { SNSClient, } from "@aws-sdk/client-sns";
 import { SFNClient } from "@aws-sdk/client-sfn";
-import { Container, container } from 'inversify-props';
+import { Container } from 'inversify-props';
 import {
   PublishMessageCommand,
   StartStepFunctionCommand,
@@ -12,7 +12,7 @@ import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider';
 import { AuthorizeCommand } from './authorize';
 
-export default function bootstrapper() {
+export default function bootstrapper(container: Container) {
 
   if (!container.isBound("CognitoIdentityClient")) {
     container.bind<CognitoIdentityClient>("CognitoIdentityClient")

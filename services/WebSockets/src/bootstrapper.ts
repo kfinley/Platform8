@@ -6,7 +6,7 @@ import { DeleteConnectionCommand, SaveConnectionCommand } from './commands';
 
 export default function bootstrapper() {
 
-  awsCommandsBootstrapper();
+  awsCommandsBootstrapper(container);
 
   if (!container.isBound("DynamoDBClient")) {
     container.bind<DynamoDBClient>("DynamoDBClient")

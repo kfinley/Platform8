@@ -19,6 +19,7 @@ export interface WebSocketsPluginOptions {
   router: router;
   connectOnChangedGetter: () => any;
   connectOnChangedValue: any;
+  url: string;
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -45,7 +46,7 @@ const WebSocketsPlugin = {
         options.connectOnChangedGetter,
         (newValue) => {
           if (newValue === options.connectOnChangedValue) {
-            getModule(WebSocketsModule, options.store).connect();
+            getModule(WebSocketsModule, options.store).connect(options.url);
           }
         },
       );

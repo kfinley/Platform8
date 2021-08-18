@@ -6,12 +6,10 @@
   "author": "rkf",
   "scripts": {
     "clean": "lerna clean --yes",
-
     "dev:init": "./.devcontainer/scripts/dev-init.sh",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
     "dev:client:docker": "lerna run dev:docker --stream --scope=@platform8/vue2-client",
     "dev:sls": "sls offline start",
-
     "storybook:vue2-notify": "lerna run storybook --stream --scope=@platform8/vue2-notify",
     "storybook:user": "lerna run storybook --stream --scope=@platform8/vue2-user",
     "storybook:accounts": "lerna run storybook --stream --scope=@platform8/vue2-accounts",
@@ -20,7 +18,6 @@
     "storybook:budgets": "lerna run storybook --stream --scope=@platform8/vue2-budget-manager",
     "storybook:common": "lerna run storybook --stream --scope=@platform8/vue2-common",
     "deploy-storybook:local": "rm -rf storybooks && storybook-to-ghpages --out=storybooks --packages packages --dry-run && find packages -type f -name storybooks -exec rm -f {} \\;",
-
     "test": "lerna run --stream test:unit --scope=@platform8/vue2-accounts --scope=@platform8/vue2-expenses --scope=@platform8/vue2-transactions --scope=@platform8/transactions  --scope=@platform8/vue2-budget-manager --scope=@platform8/vue2-user && npm run test:dotnet",
     "test:dotnet": "dotnet test services/User/Tests/User.Tests.csproj && dotnet test services/Accounts/Tests/Accounts.Tests.csproj && npm run test:dotnet:budgets",
     "test:dotnet:budgets": "dotnet test services/Budgets/Tests/Budgets.Tests.csproj",
@@ -29,15 +26,11 @@
     "test:transactions": "lerna run --stream test:unit --scope=@platform8/vue2-transactions --scope=@platform8/transactions",
     "test:budgets": "lerna run --stream test:unit --scope=@platform8/vue2-budget-manager && npm run test:dotnet:budgets",
     "test:user": "lerna run --stream test:unit --scope=@platform8/vue2-user",
-
     "containers:restart": "./.devcontainer/scripts/local-containers.sh restart",
     "containers:start": "./.devcontainer/scripts/local-containers.sh start",
     "containers:stop": "./.devcontainer/scripts/local-containers.sh stop",
-
     "dotnet:package:accounts": "PATH=$PATH:/home/vscode/.dotnet/tools && cd ./services/Accounts && ./package.sh",
-
     "ddb:migrate": "serverless dynamodb migrate",
-
     "init-auth": "./.devcontainer/scripts/init-auth.sh"
   },
   "engines": {
@@ -53,6 +46,7 @@
     "@aws-sdk/util-dynamodb": "^3.21.0",
     "@serverless/typescript": "^2.23.0",
     "@storybook/storybook-deployer": "^2.8.10",
+    "@types/jest": "^27.0.1",
     "@types/node": "^14.14.25",
     "http-server": "^13.0.0",
     "inversify-props": "^2.2.6",

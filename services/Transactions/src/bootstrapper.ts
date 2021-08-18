@@ -18,8 +18,8 @@ import { BA_Checking_Transactions_File_Parser_Command } from './commands/file-pa
 
 export default function bootstrapper() {
 
-  awsCommandsBootstrapper();
-  
+  awsCommandsBootstrapper(container);
+
   if (!container.isBound("DynamoDBClient")) {
     container.bind<DynamoDBClient>("DynamoDBClient")
       .toDynamicValue(() => new DynamoDBClient({

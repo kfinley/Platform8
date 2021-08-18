@@ -24,6 +24,7 @@ import { BudgetPlugin } from "@platform8/vue2-budget-manager/src";
 import { ExpensesPlugin } from "@platform8/vue2-expenses/src";
 import { ExpensesModule } from "@platform8/vue2-expenses/src/store/expensesModule";
 import { BudgetModule } from "@platform8/vue2-budget-manager/src/store/budgetModule";
+import { config } from '@platform8/config/src';
 
 import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap-icons/font/bootstrap-icons.css";
@@ -61,7 +62,8 @@ const plugin = {
         router: options.router,
         store: options.store,
         connectOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
-        connectOnChangedValue: AuthStatus.LoggedIn
+        connectOnChangedValue: AuthStatus.LoggedIn,
+        url: `${config.WebSocket}:${config.WebSocketPort}`
       });
 
       vue.use(AccountsPlugin, {

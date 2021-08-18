@@ -5,6 +5,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "types": [
