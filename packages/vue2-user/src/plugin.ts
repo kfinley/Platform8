@@ -2,6 +2,7 @@ import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
 import { initializeModules, UserState, AuthStatus } from "./store";
 import { RegistrationModule, UserModule } from "./store/store-modules";
+import { userModule } from "./store";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes, RouteNames } from "./router";
@@ -21,6 +22,7 @@ export interface UserPluginOptions {
   router: router;
   DefaultRoute: string;
   LoginRedirectRouteName: string;
+  postAuthFunction: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,23 +47,29 @@ const UserPlugin = {
           store: options.store,
         });
       }
+      userModule.mutate((state: UserState) => state.postAuthFunction = options.postAuthFunction);
+
       options.router.addRoutes(routes);
 
       options.router.beforeEach(async (to, from, next) => {
 
         await (options.store as any).restored;
         if ((options.store.state.User as UserState).authTokens) {
-          getModule(UserModule, options.store)
+          userModule
             .mutate((s) => {
               s.authStatus = AuthStatus.LoggedIn;
             });
 
+          //TODO: deal with this stuff....
           authHelper.authToken = () => {
             return (options.store.state.User as UserState).authTokens?.accessToken as string;
           };
           authHelper.refreshToken = () => {
-            return (options.store.state as UserState).authTokens?.refreshToken as string;
+            return (options.store.state.User as UserState).authTokens?.refreshToken as string;
           };
+          authHelper.username = () => {
+            return (options.store.state.User as UserState).currentUser?.username as string;
+          }
         }
 
         const authStatus = (<UserState>options.store.state.User).authStatus;

@@ -8,3 +8,5 @@ config.ApiPorts = import.meta.env.VITE_APP_API_PORTS as string | undefined;
 config.ServiceWorkerPath = import.meta.env.VITE_APP_SERVICE_WORKER_PATH as string;
 config.Host = import.meta.env.VITE_APP_HOST as string;
 config.Agent = import.meta.env.VITE_APP_AGENT as string;
+config.WebSocket = import.meta.env.VITE_APP_WEBSOCKET as string;
+config.WebSocketPort = import.meta.env.VITE_APP_WEBSOCKET_PORT as string;

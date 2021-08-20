@@ -41,7 +41,7 @@ const testRequest: AddExpenseRequest = {
 
 describe("ExpensesModule", () => {
   describe("AddExpense", () => {
-    describe("Succes", () => {
+    describe("Success", () => {
 
       const commit = jest.fn();
       const addExpenseRunAsyncMock = jest.fn();

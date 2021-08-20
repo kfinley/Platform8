@@ -5,12 +5,16 @@ import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { LoginCommand, SetPasswordCommand } from "../commands";
 import { container } from 'inversify-props';
 import { authHelper } from '@platform8/api-client/src/helpers'
+import { GetUserDetailsCommand } from '@/commands/getUserDetails';
+
 @Module({ namespaced: true, name: 'User' })
 export class UserModule extends VuexModule implements UserState {
+
   authStatus = AuthStatus.LoggedOut;
   authSession = "";
   currentUser!: User;
   authTokens!: AuthenticationResult;
+  postAuthFunction!: string;
 
   @Action
   async login(params: LoginRequest) {
@@ -20,21 +24,41 @@ export class UserModule extends VuexModule implements UserState {
       (state: UserState) => state.authStatus = AuthStatus.LoggingIn);
 
     try {
-      const cmd = container.get<LoginCommand>("LoginCommand");
-      const response = await cmd.runAsync(params);
+      const login = await container.get<LoginCommand>("LoginCommand").runAsync(params);
 
-      if (response) {
+      if (login) {
+
+        authHelper.setTokens(login.authenticationResult as AuthenticationResult);
+
+        if (login.status == AuthStatus.LoggedIn) {
+
+          const userDetails = await container.get<GetUserDetailsCommand>("GetUserDetailsCommand").runAsync({
+            accessToken: login.authenticationResult?.accessToken as string
+          });
+          authHelper.username = () => userDetails.username;
+
+          this.context.commit('mutate',
+            (state: UserState) => {
+              state.authTokens = login.authenticationResult;
+              state.currentUser = {
+                ...userDetails,
+                fullName: `${userDetails.firstName} ${userDetails.lastName}`
+              }
+            });
+
+          if (this.postAuthFunction) {
+            this.context.dispatch(this.postAuthFunction, login.authenticationResult, { root: true });
+          }
+        }
+
         this.context.commit('mutate',
           (state: UserState) => {
-            state.authTokens = response.authenticationResult;
-            state.authStatus = response.status;
-            state.authSession = response.session;
+            state.authStatus = login.status;
+            state.authSession = login.session;
           });
 
-        authHelper.setTokens(response.authenticationResult as AuthenticationResult);
-
-        if (response.error) {
-          throw new Error(response.error);
+        if (login.error) {
+          throw new Error(login.error);
         }
       } else {
         throw new Error('No response');
@@ -70,7 +94,12 @@ export class UserModule extends VuexModule implements UserState {
             state.authTokens = response.authenticationResult as AuthenticationResult;
             state.authSession = undefined;
           });
+
           authHelper.setTokens(response.authenticationResult as AuthenticationResult);
+
+          if (this.postAuthFunction) {
+            this.context.dispatch(this.postAuthFunction, response.authenticationResult, { root: true });
+          }
         }
 
         if (response.error) {

@@ -37,6 +37,7 @@ export interface AuthenticationResult {
   refreshToken?: string;
   idToken?: string;
 }
+
 export interface SetPasswordResponse {
   success: boolean;
   authenticationResult?: AuthenticationResult;
@@ -44,5 +45,20 @@ export interface SetPasswordResponse {
 }
 
 export interface User {
-  id: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+}
+
+export interface GetUserDetailsRequest {
+  accessToken: string
+}
+
+export interface GetUserDetailsResponse {
+  username: string,
+  firstName: string,
+  lastName: string,
+  email: string
 }

@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": [
+      "jest"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"]
+}

@@ -3,7 +3,7 @@ import { Command } from '@platform8/commands/src';
 import { Inject } from 'inversify-props';
 import { Transaction } from "../models";
 import { GetTransactionCommand } from "./getTransaction";
-import { convertItemToTransaction, convertTransactionToItem } from "./helpers";
+import { convertTransactionToItem } from "./helpers";
 import * as uuid from "uuid";
 
 export interface SaveTransactionRequest {
