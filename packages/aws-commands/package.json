@@ -19,7 +19,6 @@
     "@aws-sdk/client-sns": "^3.21.0",
     "@aws-sdk/util-dynamodb": "^3.21.0",
     "@platform8/commands": "^0.0.1",
-    "@types/jwk-to-pem": "^2.0.1",
     "inversify-props": "^2.2.6"
   }
 }

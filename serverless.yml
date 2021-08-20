@@ -35,7 +35,6 @@ custom:
     debug: false
 
   serverless-offline:
-    address: 0.0.0.0
     host: platform8.sls
     dotnetRunnerScript: ./scripts/invoke.ps1
 

@@ -17,7 +17,6 @@ export class WebSocketsModule extends VuexModule implements WebSocketsState {
 
     console.log(`conncting to socket: ${wsUrl}`);
 
-    // const socket = new WebSocket(wsUrl, authHelper.authToken());
     this.context.commit('mutate', (state: WebSocketsState) => {
       state.socket = new Sockette(wsUrl, {
         protocols: authHelper.authToken()
