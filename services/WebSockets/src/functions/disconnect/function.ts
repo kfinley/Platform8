@@ -2,6 +2,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DeleteConnectionCommand } from '../../commands';
 import { container } from 'inversify-props';
 import bootstrapper from '../../bootstrapper';
+import { createResponse } from '../../models';
 
 // TODO: move to config
 const CONNECTION_DB_TABLE = process.env.WEBSOCKETS_CONNECTION_DB_TABLE as string;
@@ -16,22 +17,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     });
 
     if (response.success) {
-      return {
-        statusCode: 200,
-        body: 'Success'
-      };
+      return createResponse(event, 200, 'Success');
     } else {
-      return {
-        statusCode: 500,
-        body: 'Failed to delete connection.'
-      };
+      return createResponse(event, 500, 'Failed to delete connection');
     }
 
   } catch (error) {
     console.log(error);
-    return {
-      statusCode: 500,
-      body: error
-    }
+    return createResponse(event, 500, error);
   }
 };
