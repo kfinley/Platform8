@@ -9,6 +9,8 @@ import { TransactionsModule } from '@/store/store-modules';
 import NotificationModule from '@platform8/vue2-notify/src/store/notificationModule';
 import { TransactionStatus } from '@/models';
 import { testAccountsState, testTransactionsState } from "@/stories/data";
+import { initializeModules as accountsInitializeModules } from '@platform8/vue2-accounts/src/store';
+import { AccountsModule } from '@platform8/vue2-accounts/src/store/accountsModule';
 
 export const storeFactory = (commit?: any) => {
   const localVue = createLocalVue();
@@ -17,9 +19,11 @@ export const storeFactory = (commit?: any) => {
   const store = new Vuex.Store({
     plugins: [
       initializeModules,
-      notificationInitializeModules
+      notificationInitializeModules,
+      accountsInitializeModules
     ],
     modules: {
+      "Accounts": AccountsModule,
       "Transactions": TransactionsModule,
       "Notification": NotificationModule,
     }
@@ -43,7 +47,7 @@ describe("TransactionsModule", () => {
 
         // Arrange
         const store = storeFactory(commit);
-
+        
         LoadTransactionsCommand.prototype.runAsync = loadTransactionsRunAsyncMock;
         loadTransactionsRunAsyncMock.mockReturnValue(Promise.resolve({
           transactions: testTransactionsState.transactions

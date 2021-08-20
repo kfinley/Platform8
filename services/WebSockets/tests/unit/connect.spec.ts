@@ -1,10 +1,8 @@
 import 'reflect-metadata';
 
-import { APIGatewayEventRequestContextWithAuthorizer, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyResult } from 'aws-lambda';
 import bootstrapper from "../../src/bootstrapper";
-
 import { handler as connect } from '../../src/functions/connect/function';
-import { AuthorizeCommand } from '@platform8/aws-commands/src';
 import { SaveConnectionCommand } from '../../src/commands';
 
 import event from '../data/connect-event.json';
@@ -31,17 +29,9 @@ describe("connect", () => {
   describe("Success", () => {
 
     let result: APIGatewayProxyResult | undefined = undefined;
-    const authorizeRunAsyncMock = jest.fn();
     const saveConnectionRunAsyncMock = jest.fn();
 
     beforeAll(async () => {
-
-      AuthorizeCommand.prototype.runAsync = authorizeRunAsyncMock;
-      authorizeRunAsyncMock.mockReturnValue(Promise.resolve({
-        username: '90662ced-a485-4a71-b3e2-5b11bea678c9',
-        attributes: { 'username': '90662ced-a485-4a71-b3e2-5b11bea678c9' },
-        authorized: true,
-      }));
 
       SaveConnectionCommand.prototype.runAsync = saveConnectionRunAsyncMock;
       saveConnectionRunAsyncMock.mockReturnValue(Promise.resolve({
@@ -50,11 +40,24 @@ describe("connect", () => {
 
       bootstrapper();
 
+      (event as any).requestContext.authorizer = {
+        principalId: 'f0c15c35-f292-4ba6-95a9-e7042faab771',
+        policyDocument: {
+          Version: '2012-10-17',
+          Statement: [
+            {
+              Action: 'execute-api:Invoke',
+              Effect: 'Allow',
+              Resource: '$connect'
+            }
+          ]
+        }
+      };
+
       result = await connect(event, context, () => { }) as APIGatewayProxyResult;
     });
 
     it("should run", () => {
-
       expect(result?.statusCode).toEqual(200);
     });
   });
@@ -62,17 +65,12 @@ describe("connect", () => {
   describe("Unauthenticated", () => {
 
     let result: APIGatewayProxyResult | undefined = undefined;
-    const authorizeRunAsyncMock = jest.fn();
 
     beforeAll(async () => {
 
-      AuthorizeCommand.prototype.runAsync = authorizeRunAsyncMock;
-      authorizeRunAsyncMock.mockReturnValue(Promise.resolve({
-        username: '90662ced-a485-4a71-b3e2-5b11bea678c9',
-        authorized: false,
-      }));
-
       bootstrapper();
+
+      event.requestContext.authorizer = null;
 
       result = await connect(event, context, () => { }) as APIGatewayProxyResult;
     });
