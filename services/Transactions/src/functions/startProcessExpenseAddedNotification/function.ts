@@ -12,12 +12,12 @@ export const handler = async (event: SNSEvent, context: Context) => {
 
     const cmd = container.get<StartStepFunctionCommand>("StartStepFunctionCommand");
     const response = await cmd.runAsync({
-      input: event.Records[0].Sns.Message, 
+      input: event.Records[0].Sns.Message,
       stateMachineName: 'Transactions-ProcessExpenseAddedNotification'
     });
 
     return {
-      status_code: 200
+      status_code: response.statusCode
     };
 
   } catch (error) {

@@ -1,20 +1,8 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
+export interface DeleteConnectionRequest {
+  userId?: string;
+  connectionId?: string;
+}
 
-export function createResponse(event: APIGatewayProxyEvent, statusCode: number, body: string) {
-  // console.log(`WebSocket Response: ${statusCode} : ${body}`);
-
-  let response = {
-    statusCode,
-    body
-  };
-
-  if (event.requestContext.eventType === 'CONNECT') {
-    return {
-      ...response,
-      headers: {
-        'Sec-WebSocket-Protocol': event.headers['Sec-WebSocket-Protocol'] as string
-      }
-    }
-  }
-  return response;
-};
+export interface DeleteConnectionResponse {
+  success: boolean;
+}

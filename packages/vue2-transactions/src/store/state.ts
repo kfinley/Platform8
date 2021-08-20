@@ -1,3 +1,5 @@
+import { Account } from "@platform8/vue2-accounts/src/models";
+import { AccountsState } from "@platform8/vue2-accounts/src/store";
 import { Transaction } from "../models";
 
 export interface TransactionsState {
@@ -9,6 +11,7 @@ export interface TransactionsState {
   actionComponent?: string;
   actionFunction?: string; // (transactionId: string) => void;
   actionTargetId?: string;
+  accounts?: Account[];
 }
 
 export enum ActionStatus {
@@ -30,3 +33,8 @@ export enum TransactionsStatus {
   Uploading = "Uploading",
   Failed = "Failed"
 }
+
+export interface StoreModuleStates {
+  AccountsState: AccountsState,
+}
+

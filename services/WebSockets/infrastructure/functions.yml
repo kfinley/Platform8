@@ -8,7 +8,7 @@ connect:
     - websocket:
         route: $connect
         authorizer:
-          name: ${self:service}-auth
+          name: ${self:service}-auth #TODO: fix loadFunctions.js to handle this...
   handler: connect/function.handler
 
 disconnect:
@@ -17,6 +17,18 @@ disconnect:
         route: $disconnect
   handler: disconnect/function.handler
 
+StartSendMessageNotification:
+  handler: startSendMessageNotification/function.handler
+  events:
+    - sns:
+        arn: arn:aws:sns:us-west-1:101010101010:TransactionsProcessedTopic
+
+GetConnection:
+  handler: getConnection/function.handler
+
+SendMessage:
+  handler: sendMessage/function.handler
+  
 # default:
 #   events:
 #     - websocket:

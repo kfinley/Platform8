@@ -51,13 +51,16 @@ custom:
     port: 8083
     region: us-west-1
     functions:
+      AccountBalanceNotification: Accounts-AccountBalanceNotification
       ProcessTransactions: Transactions-ProcessTransactions
       GetFileProcessor: Transactions-GetFileProcessor
       PublishTransactionProcessingResults: Transactions-PublishTransactionProcessingResults
-      AccountBalanceNotification: Accounts-AccountBalanceNotification
-      Transactions-ProcessMessage: Transactions-ProcessMessage
-      Transactions-AddLinkedItem: Transactions-AddLinkedItem
-      Transactions-PublishAddLinkedItemResults: Transactions-PublishAddLinkedItemResults
+      ProcessMessage: Transactions-ProcessMessage
+      AddLinkedItem: Transactions-AddLinkedItem
+      PublishAddLinkedItemResults: Transactions-PublishAddLinkedItemResults
+      GetConnection: WebSockets-GetConnection
+      SendMessage: WebSockets-SendMessage
+      # StateMachineStateName: Lambda function name (service-function)
 
 provider:
   name: aws

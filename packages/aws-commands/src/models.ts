@@ -18,11 +18,12 @@ export interface PublishMessageResponse {
 }
 
 export interface StartStepFunctionRequest {
-  stateMachineArn?: string, 
-  stateMachineName?: string, 
+  stateMachineArn?: string,
+  stateMachineName?: string,
   input: string
 }
 
 export interface StartStepFunctionResponse {
-
+  statusCode?: number;
+  executionArn?: string;
 }

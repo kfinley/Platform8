@@ -1,6 +1,6 @@
-ProcessAccountBalanceNotification:
+${self:service}-ProcessAccountBalanceNotification:
   definition:
-    Comment: Process AccountBalanceTopic 
+    Comment: Process AccountBalanceTopic
     StartAt: AccountBalanceNotification
     States:
       AccountBalanceNotification:

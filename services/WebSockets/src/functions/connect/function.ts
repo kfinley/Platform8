@@ -6,7 +6,7 @@ import 'source-map-support/register';
 import { container } from 'inversify-props';
 import bootstrapper from '../../bootstrapper';
 import { SaveConnectionCommand } from '../../commands';
-import { createResponse } from '../../models';
+import { createResponse } from '../../createResponse';
 
 bootstrapper();
 

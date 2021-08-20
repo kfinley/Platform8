@@ -1,18 +1,10 @@
 
-import { DynamoDBClient, DeleteItemCommand, ScanCommand, AttributeValue } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, DeleteItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
 import { Command } from '@platform8/commands/src';
 import { Inject } from 'inversify-props';
+import { DeleteConnectionRequest, DeleteConnectionResponse } from '../models';
 
 const CONNECTION_TABLE = process.env.WEBSOCKETS_CONNECTION_TABLE as string;
-
-export interface DeleteConnectionRequest {
-  userId?: string;
-  connectionId?: string;
-}
-
-export interface DeleteConnectionResponse {
-  success: boolean
-}
 
 export class DeleteConnectionCommand implements Command<DeleteConnectionRequest, DeleteConnectionResponse> {
 
