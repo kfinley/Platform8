@@ -1,5 +1,5 @@
 
-import { DynamoDBClient, DeleteItemCommand } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, DeleteItemCommand, ScanCommand, AttributeValue } from '@aws-sdk/client-dynamodb';
 import { Command } from '@platform8/commands/src';
 import { Inject } from 'inversify-props';
 
@@ -21,20 +21,40 @@ export class DeleteConnectionCommand implements Command<DeleteConnectionRequest,
 
   async runAsync(params: DeleteConnectionRequest): Promise<DeleteConnectionResponse> {
 
-    /*
+    let { userId, connectionId } = params;
 
-    //TODO: fix this... it's not going to work as is... just getting compiled and running
+    if (!userId || !connectionId) {
+      const response = await this.ddbClient.send(new ScanCommand({
+        TableName: CONNECTION_TABLE,
+        ExpressionAttributeValues: {
+          ':connectionId': { S: params.connectionId as string }
+        },
+        ProjectionExpression: 'userId, connectionId',
+        FilterExpression: 'connectionId = :connectionId'
+      }));
+      if (response.$metadata.httpStatusCode !== 200) {
+        throw new Error("Unexpected response in DeleteConnection");
+      }
 
-    If userId is passed in lookup by key.
-    If connectionid is passed in then find the connection and delete it.
-
-    */
+      if (response.Items) {
+        const item = response.Items[0]
+        userId = item.userId.S;
+        connectionId = item.connectionId.S;
+      } else {
+        return {
+          success: false
+        };
+      }
+    }
 
     var response = await this.ddbClient.send(new DeleteItemCommand({
       TableName: CONNECTION_TABLE,
       Key: {
         userId: {
-          S: params.userId as string
+          S: userId as string
+        },
+        connectionId: {
+          S: connectionId as string
         }
       }
     }));
@@ -43,8 +63,10 @@ export class DeleteConnectionCommand implements Command<DeleteConnectionRequest,
       throw new Error("Unexpected response in DeleteConnection");
     }
 
+    console.log('deleted websocket connection');
+
     return {
       success: true
-    }
+    };
   }
 }

@@ -24,7 +24,6 @@ export class SaveConnectionCommand implements Command<SaveConnectionRequest, Sav
 
     const Item = convertRequestToItem(params);
 
-
     var response = await this.ddbClient.send(new PutItemCommand({
       TableName: CONNECTION_TABLE,
       Item

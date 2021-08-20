@@ -1,11 +1,14 @@
+auth:
+  handler: auth/function.handler
+  # cors:
+  #   origin: ${self:custom.corsOrigin}
+
 connect:
   events:
     - websocket:
         route: $connect
         authorizer:
-            name: auth
-            identitySource:
-              - route.request.header.Auth
+          name: ${self:service}-auth
   handler: connect/function.handler
 
 disconnect:
@@ -25,8 +28,3 @@ disconnect:
 #     - websocket:
 #         route: broadcast
 #   handler: broadcast/function.handler
-
-auth:
-  handler: auth/function.handler
-  # cors:
-  #   origin: ${self:custom.corsOrigin}
