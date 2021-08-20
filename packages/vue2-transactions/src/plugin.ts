@@ -46,17 +46,16 @@ const TransactionsPlugin = {
       }
       options.router.addRoutes(routes);
 
-      (<TransactionsState>options.store.state.Transactions).actionFunction = options.actionFunction;      
+      (<TransactionsState>options.store.state.Transactions).actionFunction = options.actionFunction;
       (<TransactionsState>options.store.state.Transactions).actionText = options.actionText;
       (<TransactionsState>options.store.state.Transactions).actionComponent = options.actionComponent;
 
       options.store.watch(
         options.loadOnChangedGetter,
         (newValue) => {
-          if (newValue.length > 0) {
+          if (newValue.length > 0) {            
             getModule(TransactionsModule, options.store).loadTransactions({
-              status: TransactionStatus.Unreviewed,
-              accounts: newValue
+              status: TransactionStatus.Unreviewed
             });
           }
         },

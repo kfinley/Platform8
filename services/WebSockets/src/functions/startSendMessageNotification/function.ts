@@ -8,12 +8,16 @@ bootstrapper();
 export const handler = async (event: SNSEvent, context: Context) => {
 
   try {
-    console.log(`Processing Transactions via SNS Event. Count: ${event.Records.length}`);
+
+    console.log(`Send client message via SNS Event. Count: ${event.Records.length}`);
 
     const cmd = container.get<StartStepFunctionCommand>("StartStepFunctionCommand");
     const response = await cmd.runAsync({
-      input: event.Records[0].Sns.Message, // S3 sourced messages will have an S3Event as the Message
-      stateMachineName: 'Transactions-ProcessUploadedTransactions'
+      input: JSON.stringify({
+        subject: event.Records[0].Sns.Subject,
+        message: event.Records[0].Sns.Message
+      }),
+      stateMachineName: 'WebSockets-SendMessage'
     });
 
     return {

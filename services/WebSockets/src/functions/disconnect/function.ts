@@ -2,7 +2,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DeleteConnectionCommand } from '../../commands';
 import { container } from 'inversify-props';
 import bootstrapper from '../../bootstrapper';
-import { createResponse } from '../../models';
+import { createResponse } from '../../createResponse';
 
 // TODO: move to config
 const CONNECTION_DB_TABLE = process.env.WEBSOCKETS_CONNECTION_DB_TABLE as string;

@@ -1,4 +1,4 @@
-ProcessUploadedTransactions:
+${self:service}-ProcessUploadedTransactions:
   definition:
     Comment: Process Transactions step function
     StartAt: GetFileProcessor
@@ -22,20 +22,20 @@ ProcessUploadedTransactions:
 ${self:service}-ProcessExpenseAddedNotification:
   definition:
     Comment: Add expense as a LinkedItem to Transaction step function
-    StartAt: ${self:service}-ProcessMessage
+    StartAt: ProcessMessage
     States:
-      ${self:service}-ProcessMessage:
+      ProcessMessage:
         Type: Task
         Resource:
-          Fn::GetAtt: [${self:service}-ProcessMessage, Arn]
-        Next: ${self:service}-AddLinkedItem
-      ${self:service}-AddLinkedItem:
+          Fn::GetAtt: [ProcessMessage, Arn]
+        Next: AddLinkedItem
+      AddLinkedItem:
         Type: Task
         Resource:
-          Fn::GetAtt: [${self:service}-AddLinkedItem, Arn]
-        Next: ${self:service}-PublishAddLinkedItemResults
-      ${self:service}-PublishAddLinkedItemResults:
+          Fn::GetAtt: [AddLinkedItem, Arn]
+        Next: PublishAddLinkedItemResults
+      PublishAddLinkedItemResults:
         Type: Task
         Resource:
-          Fn::GetAtt [${self:service}-PublishAddLinkedItemResults, Arn]
+          Fn::GetAtt [PublishAddLinkedItemResults, Arn]
         End: true

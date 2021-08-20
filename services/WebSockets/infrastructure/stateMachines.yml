@@ -1,0 +1,25 @@
+${self:service}-SendMessage:
+  definition:
+    Comment: Send SNS message to client via APIGateway hosted WebSocket
+    StartAt: GetConnection
+    States:
+      GetConnection:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [GetConnection, Arn]
+        Next: IsConnected
+      IsConnected:
+        Type: Choice
+        Choices:
+          - Variable: $.connectionId
+            StringGreaterThan: ""
+            Next: SendMessage
+        Default: Done
+      SendMessage:
+        Type: Task
+        Resource:
+          Fn::GetAtt: [SendMessage, Arn]
+        End: true
+      Done:
+          Type: Pass
+          End: true

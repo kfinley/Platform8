@@ -6,8 +6,9 @@ import { getModule } from "vuex-module-decorators";
 import { LoadTransactionsCommand, UploadFileCommand } from '@/commands';
 import { messages } from "../resources/messages";
 import { AlertType } from '@platform8/vue2-notify/src/types';
-import { Account } from '@platform8/vue2-accounts/src/models';
-import { Transaction, TransactionStatus } from '@/models';
+import { Transaction, TransactionStatus } from '../models';
+import { AccountsState } from '@platform8/vue2-accounts/src/store';
+import { stateGetter } from './helpers';
 
 @Module({ namespaced: true, name: 'Transactions' })
 export class TransactionsModule extends VuexModule implements TransactionsState {
@@ -63,7 +64,12 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
   }
 
   @Action
-  async loadTransactions(params: { status: TransactionStatus, accounts: Account[] }) {
+  async loadTransactions(params: { status: TransactionStatus }) {
+
+    if (!stateGetter<AccountsState>(this, s => s.Accounts).accounts) {
+      throw new Error("Must set accounts first");
+    }
+
     this.context.commit('mutate',
       (state: TransactionsState) => state.transactionsStatus = TransactionsStatus.Loading);
 
@@ -83,7 +89,7 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
           state.transactions = response.transactions.map(t => {
             return {
               ...t,
-              account: params.accounts.find(a => a.id == t.accountId)?.name
+              account: stateGetter<AccountsState>(this, s => s.Accounts).accounts.find(a => a.id == t.accountId)?.name
             }
           });
           state.transactionsStatus = TransactionsStatus.Loaded;
@@ -122,6 +128,27 @@ export class TransactionsModule extends VuexModule implements TransactionsState 
       });
 
     this.context.dispatch(this.actionFunction, transactionId, { root: true });
+  }
+
+  @Action
+  processed(params: { accountId: string, count: number, saved: number }) {
+    notificationModule.dismissAll();
+
+    notificationModule.add({
+      header: messages.Transactions.Processed.Success.header,
+      message: messages.Transactions.Processed.Success.message({ count: params.count, saved: params.saved }),
+      type: AlertType.success
+    });
+
+    if (params.saved == 0) {
+      this.context.commit('mutate',
+        (state: TransactionsState) => {
+          state.transactionsStatus = TransactionsStatus.Loaded;
+        }
+      );
+    } else {
+      this.context.dispatch('loadTransactions', { status: TransactionStatus.Unreviewed });
+    }
   }
 
   @Mutation

@@ -2,7 +2,6 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { ActionStatus, ExpensesState, ExpensesStatus } from './state';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { container } from 'inversify-props';
-// import { LoadExpensesCommand } from '@/commands';
 import { AlertType } from '@platform8/vue2-notify/src/types';
 import { AddExpenseRequest, AddExpenseResponse } from '@/models';
 import { AddExpenseCommand } from '@/commands/AddExpense';

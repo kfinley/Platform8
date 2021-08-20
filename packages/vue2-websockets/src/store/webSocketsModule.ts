@@ -11,6 +11,22 @@ export class WebSocketsModule extends VuexModule implements WebSocketsState {
   socket!: Socket;
 
   @Action
+  handleSocketMessage(ev: MessageEvent) {
+
+    const { subject, message } = JSON.parse(ev.data);
+    const [module, action] = subject.split('-');
+
+    const toCamelCase = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
+
+    this.context.dispatch(`${module}/${toCamelCase(action)}`, message, { root: true });
+  };
+
+  @Action
+  handleSocketClose(ev: CloseEvent) {
+    console.log('handleSocketClose', ev);
+  }
+
+  @Action
   connect(url: string) {
 
     const wsUrl = `ws://${url}`;
@@ -19,7 +35,12 @@ export class WebSocketsModule extends VuexModule implements WebSocketsState {
 
     this.context.commit('mutate', (state: WebSocketsState) => {
       state.socket = new Sockette(wsUrl, {
-        protocols: authHelper.authToken()
+        protocols: authHelper.authToken(),
+        onmessage: this.handleSocketMessage,
+        // onreconnect?: (this: Sockette, ev: Event | CloseEvent) => any;
+        // onmaximum?: (this: Sockette, ev: CloseEvent) => any;
+        onclose: this.handleSocketClose,
+        //  onerror?: (this: Sockette, ev: Event) => any;
       })
     });
   }

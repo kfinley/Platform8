@@ -13,7 +13,7 @@ export const handler = async (event: any, context: Context) => {
     await container.get<PublishMessageCommand>("PublishMessageCommand").runAsync({
       topic: 'AccountBalanceTopic',
       message: JSON.stringify({
-        userId: event.userId,
+        userId: event.ownerId,
         accountId: event.accountId,
         date: event.balance.date,
         amount: event.balance.amount
@@ -22,9 +22,10 @@ export const handler = async (event: any, context: Context) => {
 
     await container.get<PublishMessageCommand>("PublishMessageCommand").runAsync({
       topic: 'TransactionsProcessedTopic',
+      subject: 'Transactions-Processed',
       message: JSON.stringify({
         accountId: event.accountId,
-        userId: event.userId,
+        userId: event.ownerId,
         count: event.count,
         saved: event.saved
       }),
