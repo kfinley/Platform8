@@ -1,4 +1,3 @@
-
 import { Command } from '@platform8/commands/src';
 import { Transaction, ParsedTransactions, FileParserRequest, FileParserResponse } from "../../models";
 
@@ -25,11 +24,11 @@ export class BA_Checking_Transactions_File_Parser_Command implements Command<Fil
       // Skip any empty rows
       if (transactionRow.length == 4) {
         const hasSequence = transactionRow[1].indexOf('POSTING SEQ 0');
-        
+
         data.transactions.push({
           date: new Date(transactionRow[0]),
           sequence: hasSequence > -1
-            ? Number.parseInt(transactionRow[1].substring(hasSequence + 12)) 
+            ? Number.parseInt(transactionRow[1].substring(hasSequence + 12))
             : 1,
           description: transactionRow[1].replace(/"/g, ''),
           amount: Number.parseFloat(transactionRow[2].replace(/"/g, ''))

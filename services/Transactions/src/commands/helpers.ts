@@ -17,9 +17,71 @@ export function convertItemToTransaction(item: Record<string, AttributeValue> | 
   }
 }
 
+export function convertTransactionOptionalAttributesToItem(transaction: Transaction) {
+  let attributes: Record<string, AttributeValue> = {};
+
+  if (transaction.extendedDetails) {
+    attributes['extendedDetails'] = {
+      S: transaction.extendedDetails
+    }
+  }
+  if (transaction.appearsOnStatementAs) {
+    attributes['appearsOnStatementAs'] = {
+      S: transaction.appearsOnStatementAs
+    }
+  }
+
+  if (transaction.address) {
+    attributes['address'] = {
+      S: transaction.address
+    }
+  }
+
+  if (transaction.city) {
+    attributes['city'] = {
+      S: transaction.city
+    }
+  }
+
+  if (transaction.state) {
+    attributes['state'] = {
+      S: transaction.state
+    }
+  }
+
+  if (transaction.postalCode) {
+    attributes['postalCode'] = {
+      S: transaction.postalCode
+    }
+  }
+
+  if (transaction.country) {
+    attributes['country'] = {
+      S: transaction.country
+    }
+  }
+
+  if (transaction.reference) {
+    attributes['reference'] = {
+      S: transaction.reference
+    }
+  }
+
+  if (transaction.category) {
+    attributes['category'] = {
+      S: transaction.category
+    }
+  }
+
+  return attributes;
+}
+
 export function convertTransactionToItem(ownerId: string, accountId: string, transaction: Transaction): {
   [key: string]: AttributeValue;
 } | undefined {
+
+  const optionalAttributes = convertTransactionOptionalAttributesToItem(transaction);
+
   return {
     PK: {
       S: `OWNER#${ownerId}`
@@ -50,7 +112,8 @@ export function convertTransactionToItem(ownerId: string, accountId: string, tra
     },
     sequence: {
       N: transaction.sequence.toString()
-    }
+    },
+    ...optionalAttributes
   }
 }
 
@@ -82,7 +145,7 @@ export function convertLinkedItemToItem(ownerId: string, transaction: Transactio
   const toCamelCase = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
 
   Object.keys(linkedItem.attributes).forEach((key) => {
-    attributes[toCamelCase(key)] = convertLinkedItemAttributeToItemAttribute(key,linkedItem)
+    attributes[toCamelCase(key)] = convertLinkedItemAttributeToItemAttribute(key, linkedItem)
   });
 
   let item = {

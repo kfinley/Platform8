@@ -2,8 +2,8 @@
 import { Command } from '@platform8/commands/src';
 import { FileProcessors, ParsedTransactions, ProcessFileRequest, ProcessFileResponse } from "../models";
 import { container } from 'inversify-props';
-import { BA_Checking_Transactions_File_Parser_Command } from '../commands/file-parsers';
-import { GetStoredObjectCommand } from '../commands';
+import { AmericanExpress_CC_Transactions_File_Parser_Command, BA_Checking_Transactions_File_Parser_Command } from '../commands/file-parsers';
+import { GetStoredObjectCommand } from '@platform8/aws-commands/src';
 
 export class ProcessFileCommand implements Command<ProcessFileRequest, ProcessFileResponse<ParsedTransactions>> {
 
@@ -20,13 +20,24 @@ export class ProcessFileCommand implements Command<ProcessFileRequest, ProcessFi
     switch (params.processor) {
       case FileProcessors.BankOfAmericaCheckingTransactions:
 
-        const cmd = container.get<BA_Checking_Transactions_File_Parser_Command>(FileProcessors.BankOfAmericaCheckingTransactions);
-        const response = await cmd.runAsync({
-          text: fileObject.body
-        });
-        data = response.data;
-        break;
+        data = (
+          await container
+            .get<BA_Checking_Transactions_File_Parser_Command>(FileProcessors.BankOfAmericaCheckingTransactions)
+            .runAsync({
+              text: fileObject.body
+            })).data;
 
+        break;
+      case FileProcessors.AmericanExpressCreditCardActivity:
+
+        data = (
+          await container
+            .get<AmericanExpress_CC_Transactions_File_Parser_Command>(FileProcessors.AmericanExpressCreditCardActivity)
+            .runAsync({
+              text: fileObject.body
+            })).data;
+
+        break;
       default:
         throw new Error(`Unhandled processor. ${params.processor}`);
     }
