@@ -11,7 +11,20 @@ export class GetFileProcessorCommand implements Command<GetFileProcessorRequest,
       params.text.includes("Beginning balance as of") &&
       params.text.includes("Ending balance as of") &&
       params.text.includes("Running Bal.")) {
-      processor = FileProcessors.BankOfAmericaCheckingTransactions
+      return {
+        processor: FileProcessors.BankOfAmericaCheckingTransactions
+      }
+    }
+
+    if (params.text.includes('Extended Details') &&
+      params.text.includes('Appears On Your Statement As') &&
+      params.text.includes('Address') &&
+      params.text.includes('City/State') &&
+      params.text.includes('Reference') &&
+      params.text.includes('Category')) {
+      return {
+        processor: FileProcessors.AmericanExpressCreditCardActivity
+      }
     }
 
     return {

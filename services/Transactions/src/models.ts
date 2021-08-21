@@ -4,6 +4,15 @@ export interface Transaction {
   sequence: number;
   description: string;
   amount: number;
+  extendedDetails?: string;
+  appearsOnStatementAs?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+  reference?: string;
+  category?: string;
   accountId?: string;
   linkedItems?: LinkedItem[];
 }
@@ -23,7 +32,8 @@ export interface GetFileProcessorResponse {
 
 export enum FileProcessors {
   Unknown = "Unknown",
-  BankOfAmericaCheckingTransactions = "BankOfAmericaCheckingTransactions"
+  BankOfAmericaCheckingTransactions = "BankOfAmericaCheckingTransactions",
+  AmericanExpressCreditCardActivity = "AmericanExpressCreditCardActivity"
 }
 
 export interface ProcessFileRequest {
@@ -42,8 +52,8 @@ export interface FileParserRequest {
 }
 
 export interface ParsedTransactions {
-  beginningBalance: number;
-  endingBalance: number;
+  beginningBalance?: number;
+  endingBalance?: number;
   startDate: Date;
   endDate: Date;
   transactions: Array<Transaction>;
@@ -75,5 +85,5 @@ export interface GetTransactionRequest {
 
 export interface GetTransactionResponse {
   id?: string;
-  data?: Transaction;  
+  data?: Transaction;
 }

@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { FileParserResponse, ParsedTransactions } from '../../src/models';
 import { BA_Checking_Transactions_File_Parser_Command } from '../../src/commands/file-parsers';
 
-describe("Bank of America Checking Transaction File Parser - Success", () => {
+describe("Bank of America Checking Transactions File Parser - Success", () => {
 
 
   let response: FileParserResponse<ParsedTransactions>;
