@@ -63,7 +63,7 @@ namespace Platform8.Accounts.Api
         )
         .AddContinuousMigrations<AccountsDataContext>()
 
-        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
 
         .AddMediatR(Accounts.Commands.CommandsAssembly.Value);
 

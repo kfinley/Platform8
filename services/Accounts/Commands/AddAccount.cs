@@ -12,21 +12,18 @@ namespace Platform8.Accounts.Commands
 {
   public class AddAccountHandler : IRequestHandler<AddAccountRequest, AddAccountResponse>
   {
-    private readonly IAsyncRepository<AccountsDataContext, Models.Account> accounts;
-    private readonly IAsyncRepository<AccountsDataContext, Models.Balance> balances;
+    private readonly IAsyncRepository<AccountsDataContext> repository;
 
     public AddAccountHandler(
-      IAsyncRepository<AccountsDataContext, Models.Account> accounts,
-      IAsyncRepository<AccountsDataContext, Models.Balance> balances
+      IAsyncRepository<AccountsDataContext> repository
       )
     {
-      this.accounts = accounts;
-      this.balances = balances;
+      this.repository = repository;
     }
 
     public async Task<AddAccountResponse> Handle(AddAccountRequest request, CancellationToken cancellationToken)
     {
-      var account = await this.accounts.SaveAsync(new Models.Account
+      var account = await this.repository.SaveAsync(new Models.Account
       {
         OwnerId = request.OwnerId.Value,
         Name = request.Name,
@@ -36,7 +33,7 @@ namespace Platform8.Accounts.Commands
 
       if (request.StartingBalance.HasValue)
       {
-        var balance = await this.balances.SaveAsync(new Models.Balance
+        var balance = await this.repository.SaveAsync(new Models.Balance
         {
           Account = account,
           Amount = request.StartingBalance.Value

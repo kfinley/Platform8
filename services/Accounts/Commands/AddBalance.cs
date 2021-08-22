@@ -18,18 +18,15 @@ namespace Platform8.Accounts.Commands
   {
     private readonly ILogger<AddBalanceHandler> logger;
     private readonly IMediator mediator;
-    private readonly IAsyncRepository<AccountsDataContext, Models.Balance> balances;
-    private readonly IAsyncRepository<AccountsDataContext, Models.Account> accounts;
+    private readonly IAsyncRepository<AccountsDataContext> repository;
 
-    public AddBalanceHandler(IAsyncRepository<AccountsDataContext, Models.Balance> balances,
-                              IAsyncRepository<AccountsDataContext, Models.Account> accounts,
+    public AddBalanceHandler(IAsyncRepository<AccountsDataContext> repository,
                               IMediator mediator,
                               ILogger<AddBalanceHandler> logger)
     {
       this.logger = logger;
       this.mediator = mediator;
-      this.balances = balances;
-      this.accounts = accounts;
+      this.repository = repository;
     }
 
     public async Task<AddBalanceResponse> Handle(AddBalanceRequest request, CancellationToken cancellationToken)
@@ -37,15 +34,15 @@ namespace Platform8.Accounts.Commands
 
       this.logger.LogInformation($"Processing AddBalanceRequest for accountId: {request.AccountId}");
 
-      if ((await this.balances.FirstOrDefaultAsync(b => b.Date >= request.Date && b.Amount == request.Amount && b.Account.Id == request.AccountId)).HasValue())
+      if ((await this.repository.FirstOrDefaultAsync<Models.Balance>(b => b.Date >= request.Date && b.Amount == request.Amount && b.Account.Id == request.AccountId)).HasValue())
       {
         this.logger.LogInformation($"Balance exists for accountId: {request.AccountId}");
       }
       else
       {
-        var account = await this.accounts.GetAsync(request.AccountId);
+        var account = await this.repository.GetAsync<Models.Account>(request.AccountId);
 
-        var balance = await this.balances.SaveAsync(new Models.Balance
+        var balance = await this.repository.SaveAsync(new Models.Balance
         {
           Account = account,
           Date = request.Date,

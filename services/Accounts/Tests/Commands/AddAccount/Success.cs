@@ -47,7 +47,7 @@ namespace Platform8.Accounts.Tests
 
       var newAccountId = Guid.NewGuid();
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Account>, Models.Account>(r => r.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()))
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Account>(r => r.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(new Models.Account {
           Id = newAccountId,
           Name = Request.Name,
@@ -58,7 +58,7 @@ namespace Platform8.Accounts.Tests
           Status = EntityStatus.Active
         });
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Balance>, Models.Balance>(r => r.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()))
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Balance>(r => r.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(new Models.Balance {
           Id = Guid.NewGuid(),
           Account = Argument.Is<Account>(a => a.Id == newAccountId),
@@ -84,7 +84,7 @@ namespace Platform8.Accounts.Tests
     [Fact]
     public void It_should_save_a_new_Account_to_the_Data_Repository() => should_save_a_new_User_to_the_Data_Repository();
     It should_save_a_new_User_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<AccountsDataContext, Models.Account>>(p => p.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()), Times.Once());
+        Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
@@ -96,7 +96,7 @@ namespace Platform8.Accounts.Tests
     [Fact]
     public void It_should_save_a_new_Balance_to_the_Data_Repository() => should_save_a_new_Balance_to_the_Data_Repository();
     It should_save_a_new_Balance_to_the_Data_Repository = () => {
-      Sut.Verify<IAsyncRepository<AccountsDataContext, Models.Balance>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
   }
 }

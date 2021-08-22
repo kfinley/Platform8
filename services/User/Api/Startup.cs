@@ -1,22 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using Amazon.CognitoIdentityProvider;
-using Amazon.Runtime;
 using Amazon.SimpleEmail;
 
 using ContinuousMigrations;
@@ -59,7 +54,7 @@ namespace Platform8.User.Api
                            x => x.MigrationsAssembly("User.Api")))
         .AddContinuousMigrations<UserDataContext>()
 
-        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
 
         .AddMediatR(Commands.CommandsAssembly.Value);
 

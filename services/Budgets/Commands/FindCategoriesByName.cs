@@ -12,12 +12,12 @@ namespace Platform8.Budgets.Commands
 {
   public class FindCategoriesByNameHandler : IRequestHandler<CategoryByNameRequest, CategoryByNameResponse>
   {
-    private readonly IAsyncRepository<BudgetsDataContext, Data.Category> categories;
+    private readonly IAsyncRepository<BudgetsDataContext> repository;
     private readonly IMapper mapper;
 
-    public FindCategoriesByNameHandler(IAsyncRepository<BudgetsDataContext, Data.Category> categories, IMapper mapper)
+    public FindCategoriesByNameHandler(IAsyncRepository<BudgetsDataContext> repository, IMapper mapper)
     {
-      this.categories = categories;
+      this.repository = repository;
       this.mapper = mapper;
     }
 
@@ -26,13 +26,13 @@ namespace Platform8.Budgets.Commands
       var querySpec = new QuerySpec<Data.Category, Models.Category>
       {
         Where = (c => c.Budget.OwnerId == request.OwnerId && c.Name.StartsWith(request.Name)),
-        OrderBy = (c => c.Name),       
+        OrderBy = (c => c.Name),
         Take = 10,
         Selector = c => this.mapper.Map<Models.Category>(c)
       };
       querySpec.AddInclude(c => c.Budget);
 
-      var list = await this.categories.ListAsync(querySpec);
+      var list = await this.repository.ListAsync(querySpec);
 
       return new CategoryByNameResponse {
         Categories = list

@@ -55,10 +55,10 @@ namespace Platform8.Accounts.Tests
         Date = DateTime.Parse("2021-02-15")
       };
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Account>, Models.Account>(r => r.GetAsync(Argument.Is<Guid>(x => x == testAccount.Id), Argument.IsAny<CancellationToken>()))
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Account>(r => r.GetAsync<Models.Account>(Argument.Is<Guid>(x => x == testAccount.Id), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(testAccount);
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Balance>, Models.Balance>(r => r.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()))
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Balance>(r => r.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(new Models.Balance
         {
           Id = Guid.NewGuid(),
@@ -85,7 +85,7 @@ namespace Platform8.Accounts.Tests
     public void It_should_save_a_new_Balance_to_the_Data_Repository() => should_save_a_new_Balance_to_the_Data_Repository();
     It should_save_a_new_Balance_to_the_Data_Repository = () =>
     {
-      Sut.Verify<IAsyncRepository<AccountsDataContext, Models.Balance>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
