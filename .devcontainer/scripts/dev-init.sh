@@ -20,18 +20,19 @@ if ! [ -d "./node_modules" ]; then
 
     # Install addition .net tools (ef, lambda, etc.)
     ./.devcontainer/scripts/install-dotnet-tools.sh
-
-    # build .net bits
-    # Important to build lambda packages first b/c they use 3.1.
-    # If done after building the solution then 3.1 dlls will be left
-    # in some locations used by 5.0 services.
-    npm run dotnet:package:accounts
-
-    dotnet build ./services/services.sln
-
-    # ensure services, sls, and vite dev client are started
-    npm run containers:restart
-
 else
     echo "Existing dev container... skipping installs."
 fi
+
+echo "Building lambda packages and dotnet projects..."
+# build .net bits
+# Important to build lambda packages first b/c they use 3.1.
+# If done after building the solution then 3.1 dlls will be left
+# in some locations used by 5.0 services.
+npm run dotnet:package:accounts
+
+dotnet build ./services/services.sln
+
+echo "Restarting containers..."
+# ensure services, sls, and vite dev client are started
+npm run containers:restart
