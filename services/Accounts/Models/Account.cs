@@ -9,7 +9,7 @@ namespace Platform8.Accounts.Models
     public string Name { get; set; }
     public string FinancialInstitution { get; set; }
     public string AccountType { get; set; }
-    public decimal StartingBalance { get; set; }
+    public decimal? StartingBalance { get; set; }
 
     public Guid OwnerId { get; set; }
     public IList<Balance> Balances { get; set; }
@@ -18,6 +18,6 @@ namespace Platform8.Accounts.Models
   public class AccountInList {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public decimal Balance { get; set; }
+    public decimal? Balance { get; set; }
   }
 }

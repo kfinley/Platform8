@@ -10,6 +10,11 @@ export const handler = async (event: SNSEvent, context: Context) => {
   try {
 
     console.log(`Send client message via SNS Event. Count: ${event.Records.length}`);
+    const { userId } = JSON.parse(event.Records[0].Sns.Message);
+
+    if (!userId) {
+      throw new Error('userId must be provided in Message in order to send to client.');
+    }
 
     const cmd = container.get<StartStepFunctionCommand>("StartStepFunctionCommand");
     const response = await cmd.runAsync({
@@ -23,8 +28,12 @@ export const handler = async (event: SNSEvent, context: Context) => {
     return {
       status_code: response.statusCode
     };
-
+    
   } catch (error) {
     console.log(error);
+    return {
+      status_code: 500,
+      body: error
+    }
   }
 };

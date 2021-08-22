@@ -1,6 +1,4 @@
 using AutoMapper;
-using Platform8.Budgets.Data;
-using Platform8.Budgets.Models;
 
 namespace Platform8.Budgets.Commands {
   public class MappingProfile : Profile {

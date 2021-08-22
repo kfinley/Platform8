@@ -74,6 +74,19 @@ export class AccountsModule extends VuexModule implements AccountsState {
     }
   }
 
+  @Action
+  async newBalance(params: { accountId: string, date: Date, amount: number }) {
+    this.context.commit('mutate',
+      (state: AccountsState) => {
+        let account = state.accounts.find(a => a.id == params.accountId);
+        if (account) {
+          account.balance = params.amount;
+        } else {
+          notificationModule.handleError({ error: 'Recieved new balance but the account was not found', rethrow: false });
+        }
+      });
+  }
+
   @Mutation
   mutate(mutation: (state: AccountsState) => void) {
     mutation(this);

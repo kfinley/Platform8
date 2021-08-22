@@ -53,7 +53,7 @@ namespace Platform8.Accounts.Tests
           Name = Request.Name,
           AccountType = Request.AccountType,
           FinancialInstitution = Request.FinancialInstitution,
-          StartingBalance = Request.StartingBalance,
+          StartingBalance = Request.StartingBalance.Value,
           DateCreated = SystemTime.UtcNow,
           Status = EntityStatus.Active
         });
@@ -62,7 +62,7 @@ namespace Platform8.Accounts.Tests
         .ReturnsAsync(new Models.Balance {
           Id = Guid.NewGuid(),
           Account = Argument.Is<Account>(a => a.Id == newAccountId),
-          Amount = Request.StartingBalance,
+          Amount = Request.StartingBalance.Value,
           Date = SystemTime.UtcNow,
           DateCreated = SystemTime.UtcNow,
           Status = EntityStatus.Active

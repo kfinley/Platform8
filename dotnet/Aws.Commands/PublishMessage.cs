@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -38,7 +37,7 @@ namespace Platform8.Aws.Commands
 
       var result = await this.snsService.PublishAsync(publishRequest);
 
-      this.logger.LogInformation($"Published TopicArn/MessageId: {publishRequest.TopicArn}/{result.MessageId}");      
+      this.logger.LogInformation($"Published TopicArn/MessageId: {publishRequest.TopicArn}/{result.MessageId}");
     }
   }
 }

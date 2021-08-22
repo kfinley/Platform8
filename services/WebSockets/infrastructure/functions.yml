@@ -22,13 +22,15 @@ StartSendMessageNotification:
   events:
     - sns:
         arn: arn:aws:sns:us-west-1:101010101010:TransactionsProcessedTopic
+    - sns:
+        arn: arn:aws:sns:us-west-1:101010101010:AccountBalanceAddedTopic
 
 GetConnection:
   handler: getConnection/function.handler
 
 SendMessage:
   handler: sendMessage/function.handler
-  
+
 # default:
 #   events:
 #     - websocket:

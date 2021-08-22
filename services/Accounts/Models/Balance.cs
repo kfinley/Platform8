@@ -6,7 +6,7 @@ namespace Platform8.Accounts.Models
 {
   public class Balance : BaseEntity
   {
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
     public Account Account { get; set; }
     public decimal Amount { get; set; }
   }

@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,6 +15,7 @@
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\Data\Accounts.Data.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\Aws.Commands\Aws.Commands.csproj" />
   </ItemGroup>
 
 </Project>
