@@ -26,7 +26,7 @@
         <div class="mb-3">
           <ValidationProvider
             name="allocationStart"
-            rules="required|positive"
+            rules="positive"
             mode="passive"
             v-slot="{ errors }"
           >
@@ -47,7 +47,7 @@
           <ValidationProvider
             name="allocationEnd"
             type="text"
-            rules="required|positive|gt:@allocationStart"
+            rules="positive|gt:@allocationStart"
             mode="passive"
             v-slot="{ errors }"
           >
