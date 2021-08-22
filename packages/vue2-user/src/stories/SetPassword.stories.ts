@@ -7,10 +7,9 @@ import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { Command } from '@platform8/commands/src';
-import { container, injectable } from 'inversify-props';
+import { container } from 'inversify-props';
 import { LoginCommand } from "../commands";
 
-@injectable()
 class mockLoginCommand implements Command<LoginRequest, LoginResponse> {
   public async runAsync(login: LoginRequest): Promise<LoginResponse> {
     return new Promise(resolve => {
@@ -29,7 +28,7 @@ setupNotificationModule(store);
 setupModules(store);
 
 export default {
-  title: 'Components/SetPassword',
+  title: 'Components/User/SetPassword',
   component: SetPassword,
 };
 

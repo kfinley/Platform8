@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import Register from "@/components/Register.vue";
-import { container, injectable } from 'inversify-props';
+import { container } from 'inversify-props';
 import { RegisterRequest, RegisterResponse } from '@/types';
 import { RegistrationStatus } from '@/store';
 import { setupModules } from '@/plugin';
@@ -12,7 +12,6 @@ import { Command } from '@platform8/commands/src';
 import { messages } from '@/resources/messages';
 import { RegisterCommand } from "@/commands";
 
-@injectable()
 class mockRegisterCommand implements Command<RegisterRequest, RegisterResponse> {
   public async runAsync(login: RegisterRequest): Promise<RegisterResponse> {
     // Quick sleep to simulate api call
@@ -33,7 +32,7 @@ setupNotificationModule(store);
 setupModules(store);
 
 export default {
-  title: 'Components/Register',
+  title: 'Components/User/Register',
   component: Register,
 };
 

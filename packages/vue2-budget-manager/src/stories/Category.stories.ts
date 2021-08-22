@@ -1,12 +1,10 @@
-import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import { CategoryComponent as category } from "@/components";
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { store } from './store';
-import { container, injectable } from 'inversify-props';
+import { container } from 'inversify-props';
 import { ApiClient, ApiResponse } from "@platform8/api-client/src";
 
-@injectable()
 class mockApiClient implements ApiClient {
   getAsync<T>(url: string): Promise<ApiResponse<T>> {
     return new Promise<ApiResponse<T>>((resolve, reject) => {
@@ -49,7 +47,7 @@ class mockApiClient implements ApiClient {
 container.addTransient<ApiClient>(mockApiClient, "ApiClient");
 
 export default {
-  title: 'Components/Category',
+  title: 'Components/Budget/Category',
   component: category,
 };
 

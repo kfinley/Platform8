@@ -3,13 +3,12 @@ import { Story } from '@storybook/vue/types-6-0';
 import { action } from '@storybook/addon-actions';
 import Login from "@/components/Login.vue";
 import { ApiClient, ApiResponse } from '@platform8/api-client/src';
-import { container, injectable } from 'inversify-props';
+import { container } from 'inversify-props';
 import { AuthStatus } from '@/store';
 import { setupModules } from '@/plugin';
 import { setupModules as setupNotificationModule } from "@platform8/vue2-notify/src/plugin";
 import { Notify } from "@platform8/vue2-notify/src/components";
 
-@injectable()
 class mockApiClient implements ApiClient {
   getWithAsync<T>(url: string, params: any): Promise<ApiResponse<T>> {
     throw new Error('Method not implemented.');
@@ -52,7 +51,7 @@ setupNotificationModule(store);
 setupModules(store);
 
 export default {
-  title: 'Components/Login',
+  title: 'Components/User/Login',
   component: Login,
 };
 

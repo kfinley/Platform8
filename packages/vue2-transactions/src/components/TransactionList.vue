@@ -84,7 +84,6 @@ import {
   TransactionsStatus,
   ActionStatus,
 } from "../store";
-import { Account } from "@platform8/vue2-accounts/src/models";
 
 @Component({
   components: {
@@ -94,9 +93,6 @@ import { Account } from "@platform8/vue2-accounts/src/models";
 })
 export default class TransactionList extends Vue {
   @State("Transactions") transactionsState!: TransactionsState;
-
-  @Prop()
-  accounts!: Account[];
 
   @Prop()
   type: string;
@@ -138,7 +134,11 @@ export default class TransactionList extends Vue {
   }
 
   headerText() {
-    return `${this.type} Transactions`;
+    if (this.type) {
+      return `${this.type} Transactions`;
+    } else {
+      return 'Transactions';
+    }
   }
 }
 </script>

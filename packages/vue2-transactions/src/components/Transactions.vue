@@ -9,8 +9,7 @@
     </div>
     <transaction-list
       v-else-if="showList"
-      type="Unreviewed"
-      :accounts="accountsState.accounts" />
+      type="Unreviewed"/>
     <upload-transactions
       v-else
       :accounts="accountsState.accounts" />

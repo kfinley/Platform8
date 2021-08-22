@@ -30,6 +30,48 @@
       "command": "docker stop platform8.expenses && dotnet build ${workspaceFolder}/services/Expenses/Expenses.sln && docker start platform8.expenses",
       "type": "shell",
       "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-accounts",
+      "command": "npm run storybook:accounts",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-budget-manager",
+      "command": "npm run storybook:budgets",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-common",
+      "command": "npm run storybook:common",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-expenses",
+      "command": "npm run storybook:expenses",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-notify",
+      "command": "npm run storybook:notify",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-transactions",
+      "command": "npm run storybook:transactions",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "start-storybook: vue2-user",
+      "command": "npm run storybook:user",
+      "type": "shell",
+      "problemMatcher": []
     }
   ]
 }

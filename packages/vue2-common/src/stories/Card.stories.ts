@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 const cancel = () => action('cancel');
 
 export default {
-  title: 'Components/Card',
+  title: 'Components/Common/Card',
   component: Card,
 };
 

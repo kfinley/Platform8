@@ -67,9 +67,6 @@ const DefaultTemplate: Story = (args, { argTypes }) => ({
 });
 
 export const Default = DefaultTemplate.bind({});
-Default.args = {
-  accounts: testAccountsState.accounts
-};
 
 const WithActionTemplate: Story = (args, { argTypes }) => ({
   components: { TransactionList, Notify },
@@ -102,6 +99,3 @@ const WithActionTemplate: Story = (args, { argTypes }) => ({
 });
 
 export const WithAction = WithActionTemplate.bind({});
-WithAction.args = {
-  accounts: testAccountsState.accounts
-};

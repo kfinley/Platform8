@@ -22,7 +22,6 @@ let store = new Vuex.Store({
   }
 });
 
-@injectable()
 class mockAddAccountCommand implements Command<AddAccountRequest, AddAccountResponse> {
   public async runAsync(login: AddAccountRequest): Promise<AddAccountResponse> {
     // Quick sleep to simulate api call
@@ -39,7 +38,7 @@ class mockAddAccountCommand implements Command<AddAccountRequest, AddAccountResp
 container.addTransient<AddAccountCommand>(mockAddAccountCommand, "AddAccountCommand");
 
 export default {
-  title: 'Components/Accounts',
+  title: 'Components/Accounts/Accounts',
   component: Accounts,
 };
 
