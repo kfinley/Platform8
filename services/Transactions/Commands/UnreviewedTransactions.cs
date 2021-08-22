@@ -46,14 +46,14 @@ namespace Platform8.Transactions.Commands
           // If it's a Transaction then add it. If not then bail.
           if (i.GetValueOrDefault("type")?.S == "Transaction")
           {
-            list.Add(ConvertItemToTransaction(new DynamoItem(i)));
+            list.Add(DynamoItemConverters.ConvertItemToTransaction(new DynamoItem(i)));
           }
         }
         // Look ahead one and see if the current transaction has any items.. (if the next item is a Transaction then it has no items...)
         else if (i.GetValueOrDefault("type")?.S == "Transaction" &&
                 data.Items[index + 1].GetValueOrDefault("type")?.S == "Transaction")
         {
-          list.Add(ConvertItemToTransaction(new DynamoItem(i)));
+          list.Add(DynamoItemConverters.ConvertItemToTransaction(new DynamoItem(i)));
         } else {
           // TODO: implement this...
           // Check if the linked item is 100% of the transaction.
@@ -63,19 +63,6 @@ namespace Platform8.Transactions.Commands
       });
 
       return new UnreviewedTransactionsResponse(list);
-    }
-
-    private Transaction ConvertItemToTransaction(DynamoItem item)
-    {
-      var result = new Transaction()
-      {
-        Id = item.GetGuid("id"),
-        Date = item.GetDate("date"),
-        Amount = item.GetDecimal("amount"),
-        AccountId = item.GetGuid("accountId"),
-        Description = item.GetString("description")
-      };
-      return result;
     }
   }
 }

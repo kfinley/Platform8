@@ -36,23 +36,9 @@ namespace Platform8.Transactions.Commands
 
       var list = new List<Transaction>();
 
-      data.Items.ForEach(i => list.Add(ConvertItemToTransaction(new DynamoItem(i))));
+      data.Items.ForEach(i => list.Add(DynamoItemConverters.ConvertItemToTransaction(new DynamoItem(i))));
 
       return new ListTransactionsResponse(list);
-    }
-
-    private Transaction ConvertItemToTransaction(DynamoItem item)
-    {
-      var result = new Transaction()
-      {
-        Id = item.GetGuid("id"),
-        Date = item.GetDate("date"),
-        Sequence = item.GetInt32("sequence"),
-        Amount = item.GetDecimal("amount"),
-        AccountId = item.GetGuid("accountId"),
-        Description = item.GetString("description")
-      };
-      return result;
     }
   }
 }
