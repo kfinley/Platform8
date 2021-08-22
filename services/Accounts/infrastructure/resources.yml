@@ -1,0 +1,4 @@
+AccountBalanceAddedTopic:
+  Type: "AWS::SNS::Topic"
+  Properties:
+    DisplayName: AccountBalanceAddedNotification

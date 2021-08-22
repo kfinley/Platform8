@@ -4,7 +4,7 @@ using Platform8.Accounts.Models;
 
 namespace Platform8.Accounts.Functions
 {
-  public class AccountBalanceNotification : DataContextFunction
+  public class AccountBalanceNotification : BaseFunction
   {
     public async Task Handler(AddBalanceRequest @event, ILambdaContext context) => await base.Mediator.Send(@event);
   }

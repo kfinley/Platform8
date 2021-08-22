@@ -18,29 +18,35 @@ namespace Platform8.Accounts.Commands
     public AddAccountHandler(
       IAsyncRepository<AccountsDataContext, Models.Account> accounts,
       IAsyncRepository<AccountsDataContext, Models.Balance> balances
-      ) {
+      )
+    {
       this.accounts = accounts;
       this.balances = balances;
     }
 
     public async Task<AddAccountResponse> Handle(AddAccountRequest request, CancellationToken cancellationToken)
     {
-      var account = await this.accounts.SaveAsync(new Models.Account {
+      var account = await this.accounts.SaveAsync(new Models.Account
+      {
         OwnerId = request.OwnerId.Value,
         Name = request.Name,
         FinancialInstitution = request.FinancialInstitution,
         AccountType = request.AccountType
       });
 
-      var balance = await this.balances.SaveAsync(new Models.Balance {
-        Account = account,
-        Date = SystemTime.UtcNow,
-        Amount = request.StartingBalance
-      });
+      if (request.StartingBalance.HasValue)
+      {
+        var balance = await this.balances.SaveAsync(new Models.Balance
+        {
+          Account = account,
+          Amount = request.StartingBalance.Value
+        });
+      }
 
-      return new AddAccountResponse {
+      return new AddAccountResponse
+      {
         Id = account.Id,
-        Success = account.HasValue() && balance.HasValue()
+        Success = account.HasValue()
       };
     }
   }

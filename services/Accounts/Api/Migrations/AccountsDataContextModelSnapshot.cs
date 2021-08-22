@@ -37,7 +37,7 @@ namespace Accounts.Api.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("char(36)");
 
-                    b.Property<decimal>("StartingBalance")
+                    b.Property<decimal?>("StartingBalance")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("Status")
@@ -61,7 +61,7 @@ namespace Accounts.Api.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DateCreated")

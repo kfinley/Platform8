@@ -72,7 +72,6 @@
         <ValidationProvider
           name="startingBalance"
           type="number"
-          rules="required"
           mode="passive"
           v-slot="{ errors }"
         >
