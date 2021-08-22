@@ -15,7 +15,7 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@aws-sdk/client-cognito-identity-provider": "^3.19.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.27.0",
     "@babel/core": "^7.14.6",
     "@platform8/api-client": "^0.0.1",
     "@platform8/commands": "^0.0.1",
