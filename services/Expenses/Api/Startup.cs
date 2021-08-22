@@ -66,11 +66,11 @@ namespace Platform8.Expenses.Api
         )
         .AddContinuousMigrations<DataContext>()
 
-        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
         .AddMediatR(Aws.Commands.CommandsAssembly.Value)
         .AddMediatR(Expenses.Commands.CommandsAssembly.Value)
         .AddAutoMapper(Expenses.Commands.CommandsAssembly.Value);
-        
+
       services
         .AddAuthentication(options =>
         {
@@ -115,7 +115,7 @@ namespace Platform8.Expenses.Api
             ValidateAudience = false   // TODO: check this...
           };
         });
-      
+
       //
       // *****************************
 

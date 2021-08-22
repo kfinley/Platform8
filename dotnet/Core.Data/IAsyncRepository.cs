@@ -7,17 +7,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Platform8.Core.Data
 {
-    public interface IAsyncRepository<TContext, TEntity>
-      where TEntity: IEntity
+    public interface IAsyncRepository<TContext>
       where TContext: DbContext
     {
-      Task<TEntity> GetAsync(Guid id, CancellationToken cancellationToken = default);
-      Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default);
-      Task<TEntity> FirstOrDefaultAsync<TProperty>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TProperty>> include, CancellationToken cancellationToken = default);
-      Task<TEntity> FirstOrDefaultAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default);
-      Task<TEntity> SaveAsync(TEntity entity, CancellationToken cancellationToken = default);
-      Task<IReadOnlyList<TEntity>> ListAllAsync(CancellationToken cancellationToken = default);
-      Task<IReadOnlyList<TResult>> ListAsync<TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default);
-      Task<IReadOnlyList<TEntity>> ListAsync(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default);
+      Task<TEntity> GetAsync<TEntity>(Guid id, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<TEntity> FirstOrDefaultAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<TEntity> FirstOrDefaultAsync<TEntity, TProperty>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TProperty>> include, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<TEntity> FirstOrDefaultAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<TEntity> SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<IReadOnlyList<TEntity>> ListAllAsync<TEntity>(CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<IReadOnlyList<TResult>> ListAsync<TEntity, TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
+      Task<IReadOnlyList<TEntity>> ListAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
+        where TEntity: class, IEntity;
     }
 }

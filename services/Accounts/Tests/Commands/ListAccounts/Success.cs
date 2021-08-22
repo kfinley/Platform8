@@ -38,8 +38,8 @@ namespace Platform8.Accounts.Tests
     {
       Request = new ListAccountsRequest();
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Account>, IReadOnlyList<Models.AccountInList>>(r
-        => r.ListAsync<AccountInList>(
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, IReadOnlyList<Models.AccountInList>>(r
+        => r.ListAsync<Models.Account, AccountInList>(
             Argument.IsAny<IQuerySpec<Models.Account, Models.AccountInList>>(),
             Argument.IsAny<CancellationToken>())
         )

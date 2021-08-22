@@ -19,24 +19,24 @@ namespace Platform8.Expenses.Commands
     private readonly IMediator mediator;
     private readonly ILogger<AddExpenseHandler> logger;
     private readonly IMapper mapper;
-    private readonly IAsyncRepository<DataContext, Data.Expense> expenses;
+    private readonly IAsyncRepository<DataContext> repository;
 
     public AddExpenseHandler(
       IMediator mediator,
       IMapper mapper,
       ILogger<AddExpenseHandler> logger,
-      IAsyncRepository<DataContext, Data.Expense> expenses
+      IAsyncRepository<DataContext> repository
     )
     {
       this.mediator = mediator;
       this.mapper = mapper;
       this.logger = logger;
-      this.expenses = expenses;
+      this.repository = repository;
     }
 
     public async Task<AddExpenseResponse> Handle(AddExpenseRequest request, CancellationToken cancellationToken) {
 
-      var expense = await this.expenses.SaveAsync(new Data.Expense {
+      var expense = await this.repository.SaveAsync(new Data.Expense {
         OwnerId = request.OwnerId,
         Description = request.Description,
         Amount = request.Amount,
@@ -45,7 +45,7 @@ namespace Platform8.Expenses.Commands
         TransactionId = request.TransactionId
       });
 
-      await this.mediator.Publish(new PublishMessageRequest {        
+      await this.mediator.Publish(new PublishMessageRequest {
         Topic = "ExpenseAddedTopic",
         // To avoid dealing with mapping and setting naming option to camel case
         // just new up the message with camel casing.

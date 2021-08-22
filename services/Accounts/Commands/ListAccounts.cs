@@ -12,9 +12,9 @@ namespace Platform8.Accounts.Commands
 {
   public class ListAccountsHandler : IRequestHandler<ListAccountsRequest, ListAccountsResponse>
   {
-    private readonly IAsyncRepository<AccountsDataContext, Models.Account> repository;
+    private readonly IAsyncRepository<AccountsDataContext> repository;
 
-    public ListAccountsHandler(IAsyncRepository<AccountsDataContext, Models.Account> repository)
+    public ListAccountsHandler(IAsyncRepository<AccountsDataContext> repository)
     {
       this.repository = repository;
     }
@@ -37,7 +37,7 @@ namespace Platform8.Accounts.Commands
 
       querySpec.AddInclude(a => a.Balances);
 
-      var list = await this.repository.ListAsync<AccountInList>(querySpec);
+      var list = await this.repository.ListAsync(querySpec);
 
       return new ListAccountsResponse(list);
     }

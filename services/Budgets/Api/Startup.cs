@@ -63,7 +63,7 @@ namespace Platform8.Budgets.Api
         )
         .AddContinuousMigrations<BudgetsDataContext>()
 
-        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
         .AddMediatR(Budgets.Commands.CommandsAssembly.Value)
         .AddAutoMapper(Budgets.Commands.CommandsAssembly.Value);
 

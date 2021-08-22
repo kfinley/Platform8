@@ -13,9 +13,9 @@ namespace Platform8.User.Commands
   public class SaveUserHandler : IRequestHandler<SaveUserRequest, SaveUserResponse>
   {
 
-    private readonly IAsyncRepository<UserDataContext, Models.User> repository;
+    private readonly IAsyncRepository<UserDataContext> repository;
 
-    public SaveUserHandler(IAsyncRepository<UserDataContext, Models.User> repository)
+    public SaveUserHandler(IAsyncRepository<UserDataContext> repository)
     {
       this.repository = repository;
     }

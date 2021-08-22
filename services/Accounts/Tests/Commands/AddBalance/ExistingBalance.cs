@@ -17,7 +17,6 @@ using Platform8.Accounts.Commands;
 using Platform8.Accounts.Models;
 using Platform8.Core.Data;
 using Platform8.Accounts.Data;
-using Platform8.Core;
 
 namespace Platform8.Accounts.Tests
 {
@@ -57,7 +56,7 @@ namespace Platform8.Accounts.Tests
         Date = DateTime.Parse("2021-02-15")
       };
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, Models.Balance>, Models.Balance>(r =>
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Balance>(r =>
           r.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(testBalance);
     };
@@ -77,14 +76,14 @@ namespace Platform8.Accounts.Tests
     public void It_should_not_save_the_Balance_to_the_Data_Repository() => should_not_save_the_Balance_to_the_Data_Repository();
     It should_not_save_the_Balance_to_the_Data_Repository = () =>
     {
-      Sut.Verify<IAsyncRepository<AccountsDataContext, Models.Balance>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Never());
+      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Never());
     };
 
     [Fact]
     public void It_should_get_an_existing_Balance_from_the_Data_Repository() => should_get_an_existing_Balance_from_the_Data_Repository();
     It should_get_an_existing_Balance_from_the_Data_Repository = () =>
     {
-      Sut.Verify<IAsyncRepository<AccountsDataContext, Models.Balance>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
