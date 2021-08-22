@@ -18,14 +18,11 @@ using Platform8.Core.Data;
 using Platform8.Accounts.Data;
 using Platform8.Core;
 
-namespace Platform8.Accounts.Tests
-{
+namespace Platform8.Accounts.Tests {
   [Subject("Add Account")]
-  public class When_AddAccount_Requested : SpecBase
-  {
+  public class When_AddAccount_Requested : SpecBase {
     public When_AddAccount_Requested(MSpecFixture fixture)
-      : base(fixture)
-    {
+      : base(fixture) {
       Setup(this, context, of);
     }
 
@@ -34,10 +31,8 @@ namespace Platform8.Accounts.Tests
     static AddAccountRequest Request;
     static AddAccountResponse Result;
 
-    Establish context = () =>
-    {
-      Request = new AddAccountRequest
-      {
+    Establish context = () => {
+      Request = new AddAccountRequest {
         OwnerId = Guid.NewGuid(),
         Name = "Test",
         FinancialInstitution = "Chase",
@@ -71,8 +66,7 @@ namespace Platform8.Accounts.Tests
 
     Because of = async () => Result = await Sut.Target.Handle(Request, new CancellationTokenSource().Token);
 
-    It should_return_a_successful_result = () =>
-    {
+    It should_return_a_successful_result = () => {
       Result.Should().NotBeNull();
       Result.Success.Should().BeTrue();
     };
@@ -84,7 +78,7 @@ namespace Platform8.Accounts.Tests
     [Fact]
     public void It_should_save_a_new_Account_to_the_Data_Repository() => should_save_a_new_User_to_the_Data_Repository();
     It should_save_a_new_User_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Account>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]

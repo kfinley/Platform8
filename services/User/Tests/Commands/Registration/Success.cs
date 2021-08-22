@@ -75,19 +75,19 @@ namespace Platform8.User.Tests {
     [Fact]
     public void It_should_create_a_new_Cognito_account() => should_create_a_new_Cognito_account();
     It should_create_a_new_Cognito_account = () => {
-        Sut.Verify<IMediator>(p => p.Send(Argument.IsAny<CreateCognitoUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IMediator>(p => p.Send(Argument.IsAny<CreateCognitoUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
     public void It_should_create_a_new_User_in_the_Data_Store() => should_create_a_new_User_in_the_Data_Store();
     It should_create_a_new_User_in_the_Data_Store = () => {
-        Sut.Verify<IMediator>(p => p.Send(Argument.IsAny<SaveUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IMediator>(p => p.Send(Argument.IsAny<SaveUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
     public void It_should_publish_Send_Registration_Confirmation_message() => should_publish_Send_Registration_Confirmation_message();
     It should_publish_Send_Registration_Confirmation_message = () => {
-        Sut.Verify<IMediator>(p => p.Publish(Argument.IsAny<SendRegistrationConfirmationRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IMediator>(p => p.Publish(Argument.IsAny<SendRegistrationConfirmationRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
   }
 }

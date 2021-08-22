@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -14,8 +14,8 @@ namespace Platform8.User.Commands {
     private readonly ILogger<RegistrationHandler> logger;
 
     public RegistrationHandler(IMediator mediator, ILogger<RegistrationHandler> logger) {
-        this.mediator = mediator;
-        this.logger = logger;
+      this.mediator = mediator;
+      this.logger = logger;
     }
 
     public async Task<RegistrationResponse> Handle(RegistrationRequest request, CancellationToken cancellationToken) {

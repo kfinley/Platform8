@@ -13,15 +13,12 @@ using MediatR;
 
 using Platform8.User.Models;
 
-namespace Platform8.User.Commands
-{
-  public class SendRegistrationConfirmationHandler : INotificationHandler<SendRegistrationConfirmationRequest>
-  {
+namespace Platform8.User.Commands {
+  public class SendRegistrationConfirmationHandler : INotificationHandler<SendRegistrationConfirmationRequest> {
     private readonly ContactOptions contactOptions;
     private readonly SiteOptions siteOptions;
     private readonly IAmazonSimpleEmailService emailService;
-    public SendRegistrationConfirmationHandler(IOptions<SiteOptions> siteOptions, IOptions<ContactOptions> contactOptions, IAmazonSimpleEmailService emailService)
-    {
+    public SendRegistrationConfirmationHandler(IOptions<SiteOptions> siteOptions, IOptions<ContactOptions> contactOptions, IAmazonSimpleEmailService emailService) {
       this.contactOptions = contactOptions.Value;
       this.siteOptions = siteOptions.Value;
       this.emailService = emailService;
@@ -30,8 +27,7 @@ namespace Platform8.User.Commands
     private static string GenerateUrl(string baseUri, string userId, string password) =>
             $"{baseUri}/set-password?regCode={userId}{Uri.EscapeDataString("|" + password)}";
 
-    public async Task Handle(SendRegistrationConfirmationRequest request, CancellationToken cancellationToken)
-    {
+    public async Task Handle(SendRegistrationConfirmationRequest request, CancellationToken cancellationToken) {
 
       var templateData = new Dictionary<string, object>
       {
@@ -39,12 +35,10 @@ namespace Platform8.User.Commands
           {"Url", GenerateUrl(this.siteOptions.Url, request.UserId.ToString(), request.TempPassword)}
       };
 
-      var emailRequest = new SendTemplatedEmailRequest
-      {
+      var emailRequest = new SendTemplatedEmailRequest {
         Source = this.contactOptions.SenderEmail,
         Template = EmailTEmplates.ConfirmRegistration.ToString(),
-        Destination = new Destination
-        {
+        Destination = new Destination {
           ToAddresses = new List<string> { request.Email }
         },
         TemplateData = JsonSerializer.Serialize(templateData)
@@ -52,8 +46,7 @@ namespace Platform8.User.Commands
 
       var result = await this.emailService.SendTemplatedEmailAsync(emailRequest);
 
-      if (!result.IsSuccess())
-      {
+      if (!result.IsSuccess()) {
         throw new Exception("Failed to send registration confirmation message.");
       }
     }

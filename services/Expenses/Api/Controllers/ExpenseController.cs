@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,8 +19,7 @@ namespace Platform8.Expenses.Api.Controllers {
     private readonly ILogger<ExpenseController> logger;
     private readonly IMediator mediator;
 
-    public ExpenseController(IMediator mediator, ILogger<ExpenseController> logger)
-    {
+    public ExpenseController(IMediator mediator, ILogger<ExpenseController> logger) {
       this.mediator = mediator;
       this.logger = logger;
     }

@@ -3,19 +3,15 @@ using System.Collections.Generic;
 
 using Amazon.DynamoDBv2.Model;
 
-namespace Platform8.Transactions.Commands
-{
-  public class DynamoItem
-  {
+namespace Platform8.Transactions.Commands {
+  public class DynamoItem {
     private Dictionary<string, AttributeValue> item = new Dictionary<string, AttributeValue>();
 
-    internal DynamoItem(Dictionary<string, AttributeValue> item)
-    {
+    internal DynamoItem(Dictionary<string, AttributeValue> item) {
       this.item = item;
     }
 
-    public string GetString(string key)
-    {
+    public string GetString(string key) {
       return item.GetValueOrDefault(key)?.S;
     }
 
@@ -27,13 +23,11 @@ namespace Platform8.Transactions.Commands
       return Guid.Parse(item.GetValueOrDefault(key)?.S);
     }
 
-    public int GetInt32(string key)
-    {
+    public int GetInt32(string key) {
       return Convert.ToInt32(item.GetValueOrDefault(key)?.N);
     }
 
-    public double GetDouble(string key)
-    {
+    public double GetDouble(string key) {
       return Convert.ToDouble(item.GetValueOrDefault(key)?.N);
     }
 

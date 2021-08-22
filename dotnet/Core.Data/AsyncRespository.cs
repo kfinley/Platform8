@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Platform8.Core.Data
-{
+namespace Platform8.Core.Data {
   public class AsyncRepository<TContext> : IAsyncRepository<TContext>
-    where TContext : DbContext
-  {
+    where TContext : DbContext {
 
     private ILogger logger;
 
@@ -24,25 +22,23 @@ namespace Platform8.Core.Data
     public DbContext Context { get; set; }
 
     public async Task<TEntity> GetAsync<TEntity>(Guid id, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       return await this.Context.Set<TEntity>().FindAsync(id);
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
-      return await FirstOrDefaultAsync(new QuerySpec<TEntity>
-      {
+      return await FirstOrDefaultAsync(new QuerySpec<TEntity> {
         Where = where
       }, cancellationToken);
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity, TProperty>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TProperty>> include, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
-      var querySpec = new QuerySpec<TEntity>
-      {
+      var querySpec = new QuerySpec<TEntity> {
         Where = where
       };
       querySpec.AddInclude(include);
@@ -51,37 +47,36 @@ namespace Platform8.Core.Data
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       return await spec.Apply(this.Context).FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAllAsync<TEntity>(CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       return await this.Context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
     public Task<IReadOnlyList<TResult>> ListAsync<TEntity, TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       return Task.FromResult<IReadOnlyList<TResult>>(spec.Apply(this.Context).Select(spec.Selector).ToList());
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       return await spec.Apply(this.Context).ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
-      where TEntity: class, IEntity {
+      where TEntity : class, IEntity {
 
       var savedEntity = this.Context.Add(entity);
       var result = await this.Context.SaveChangesAsync();
 
-      if (result > 0)
-      {
+      if (result > 0) {
         return (TEntity)savedEntity.Entity;
       }
 

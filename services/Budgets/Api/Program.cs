@@ -7,28 +7,22 @@ using Microsoft.Extensions.Hosting;
 
 using Platform8.Core;
 
-namespace Platform8.Budgets.Api
-{
-  public class Program
-  {
-    public static void Main(string[] args)
-    {
+namespace Platform8.Budgets.Api {
+  public class Program {
+    public static void Main(string[] args) {
       CreateHostBuilder(args).Build().Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-          webBuilder.ConfigureAppConfiguration(cb =>
-          {
+        .ConfigureWebHostDefaults(webBuilder => {
+          webBuilder.ConfigureAppConfiguration(cb => {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             cb.SetBasePath(Directory.GetCurrentDirectory());
             cb.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            if (env.HasValue())
-            {
+            if (env.HasValue()) {
               cb.AddJsonFile($"appsettings.{env}.json", optional: true);
             }
 

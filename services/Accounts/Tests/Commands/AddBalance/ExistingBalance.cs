@@ -18,14 +18,11 @@ using Platform8.Accounts.Models;
 using Platform8.Core.Data;
 using Platform8.Accounts.Data;
 
-namespace Platform8.Accounts.Tests
-{
+namespace Platform8.Accounts.Tests {
   [Subject("Add Existing Account Balance")]
-  public class When_AddBalance_Requested_with_existing_balance : SpecBase
-  {
+  public class When_AddBalance_Requested_with_existing_balance : SpecBase {
     public When_AddBalance_Requested_with_existing_balance(MSpecFixture fixture)
-      : base(fixture)
-    {
+      : base(fixture) {
       Setup(this, context, of);
     }
 
@@ -34,11 +31,9 @@ namespace Platform8.Accounts.Tests
     static AddBalanceRequest Request;
     static AddBalanceResponse Result;
 
-    Establish context = () =>
-    {
+    Establish context = () => {
       var testAccountId = Guid.NewGuid();
-      var testBalance = new Models.Balance
-      {
+      var testBalance = new Models.Balance {
         Id = Guid.NewGuid(),
         Account = new Models.Account {
           Id = testAccountId,
@@ -49,8 +44,7 @@ namespace Platform8.Accounts.Tests
         Status = EntityStatus.Active
       };
 
-      Request = new AddBalanceRequest
-      {
+      Request = new AddBalanceRequest {
         AccountId = testAccountId,
         Amount = 234.43m,
         Date = DateTime.Parse("2021-02-15")
@@ -65,8 +59,7 @@ namespace Platform8.Accounts.Tests
 
     [Fact]
     public void It_should_return_a_successful_result() => should_return_a_successful_result();
-    It should_return_a_successful_result = () =>
-    {
+    It should_return_a_successful_result = () => {
       Result.Should().NotBeNull();
       Result.Success.Should().BeTrue();
     };
@@ -74,22 +67,19 @@ namespace Platform8.Accounts.Tests
 
     [Fact]
     public void It_should_not_save_the_Balance_to_the_Data_Repository() => should_not_save_the_Balance_to_the_Data_Repository();
-    It should_not_save_the_Balance_to_the_Data_Repository = () =>
-    {
+    It should_not_save_the_Balance_to_the_Data_Repository = () => {
       Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Never());
     };
 
     [Fact]
     public void It_should_get_an_existing_Balance_from_the_Data_Repository() => should_get_an_existing_Balance_from_the_Data_Repository();
-    It should_get_an_existing_Balance_from_the_Data_Repository = () =>
-    {
+    It should_get_an_existing_Balance_from_the_Data_Repository = () => {
       Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
     public void It_should_not_return_the_id_of_the_added_balance() => should_return_the_id_of_the_added_balance();
-    It should_return_the_id_of_the_added_balance = () =>
-    {
+    It should_return_the_id_of_the_added_balance = () => {
       Result.Id.Should().BeEmpty();
     };
   }

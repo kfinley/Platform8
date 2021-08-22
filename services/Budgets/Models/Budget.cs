@@ -5,19 +5,17 @@ using MediatR;
 
 using Platform8.Core;
 
-namespace Platform8.Budgets.Models
-{
+namespace Platform8.Budgets.Models {
   public class Budget {
     public Guid Id { get; set; }
     public IList<Models.Category> Categories { get; set; }
   }
 
-  public class GetBudgetRequest : IRequest<GetBudgetResponse>
-  {
+  public class GetBudgetRequest : IRequest<GetBudgetResponse> {
     public Guid OwnerId { get; set; }
   }
 
-  public class GetBudgetResponse{
+  public class GetBudgetResponse {
     public Budget Budget { get; set; }
     public string Error { get; set; }
   }

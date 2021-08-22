@@ -8,23 +8,18 @@ using Platform8.Core.Data;
 using Platform8.Budgets.Data;
 using Platform8.Budgets.Models;
 
-namespace Platform8.Budgets.Commands
-{
-  public class FindCategoriesByNameHandler : IRequestHandler<CategoryByNameRequest, CategoryByNameResponse>
-  {
+namespace Platform8.Budgets.Commands {
+  public class FindCategoriesByNameHandler : IRequestHandler<CategoryByNameRequest, CategoryByNameResponse> {
     private readonly IAsyncRepository<BudgetsDataContext> repository;
     private readonly IMapper mapper;
 
-    public FindCategoriesByNameHandler(IAsyncRepository<BudgetsDataContext> repository, IMapper mapper)
-    {
+    public FindCategoriesByNameHandler(IAsyncRepository<BudgetsDataContext> repository, IMapper mapper) {
       this.repository = repository;
       this.mapper = mapper;
     }
 
-    public async Task<CategoryByNameResponse> Handle(CategoryByNameRequest request, CancellationToken cancellationToken)
-    {
-      var querySpec = new QuerySpec<Data.Category, Models.Category>
-      {
+    public async Task<CategoryByNameResponse> Handle(CategoryByNameRequest request, CancellationToken cancellationToken) {
+      var querySpec = new QuerySpec<Data.Category, Models.Category> {
         Where = (c => c.Budget.OwnerId == request.OwnerId && c.Name.StartsWith(request.Name)),
         OrderBy = (c => c.Name),
         Take = 10,

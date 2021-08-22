@@ -48,10 +48,9 @@ namespace Platform8.User.Tests {
           HttpStatusCode = HttpStatusCode.OK,
         });
 
-        Sut.Setup<IOptions<CognitoOptions>, CognitoOptions>(o => o.Value).Returns(new CognitoOptions
-        {
-            UserPoolId = "test-user-pool-id"
-        });
+      Sut.Setup<IOptions<CognitoOptions>, CognitoOptions>(o => o.Value).Returns(new CognitoOptions {
+        UserPoolId = "test-user-pool-id"
+      });
 
     };
 
@@ -69,7 +68,7 @@ namespace Platform8.User.Tests {
     [Fact]
     public void It_should_create_a_new_Cognito_account() => should_create_a_new_Cognito_account();
     It should_create_a_new_Cognito_account = () => {
-        Sut.Verify<IAmazonCognitoIdentityProvider>(p => p.AdminCreateUserAsync(Argument.IsAny<AdminCreateUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAmazonCognitoIdentityProvider>(p => p.AdminCreateUserAsync(Argument.IsAny<AdminCreateUserRequest>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
   }

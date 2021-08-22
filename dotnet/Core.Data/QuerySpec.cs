@@ -5,17 +5,14 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Platform8.Core.Data
-{
+namespace Platform8.Core.Data {
   public class QuerySpec<TEntity, TResult> : QuerySpec<TEntity>, IQuerySpec<TEntity, TResult>
-    where TEntity : class
-  {
+    where TEntity : class {
     public Func<TEntity, TResult> Selector { get; set; }
   }
 
   public class QuerySpec<TEntity> : IQuerySpec<TEntity>
-    where TEntity : class
-  {
+    where TEntity : class {
 
     public int? Take { get; set; }
     public int? Skip { get; set; }
@@ -24,20 +21,19 @@ namespace Platform8.Core.Data
     public Expression<Func<TEntity, object>> OrderBy { get; set; }
 
     public void AddInclude<TProperty>(Expression<Func<TEntity, TProperty>> include) {
-        this.Includes.Add(Tuple.Create((Expression)include, (Expression)null));
+      this.Includes.Add(Tuple.Create((Expression)include, (Expression)null));
     }
 
     public void AddInclude<TProperty, TPropertyProperty>(Expression<Func<TEntity, TProperty>> include, Expression<Func<TProperty, TPropertyProperty>> thenInclude) {
-        this.Includes.Add(Tuple.Create((Expression)include, (Expression)thenInclude));
+      this.Includes.Add(Tuple.Create((Expression)include, (Expression)thenInclude));
     }
 
-    public IQueryable<TEntity> Apply(DbContext context)
-    {
+    public IQueryable<TEntity> Apply(DbContext context) {
       return this.GetQuery(context.Set<TEntity>().AsQueryable());
     }
 
     public virtual IQueryable<TEntity> GetQuery(IQueryable<TEntity> query) {
-      foreach(var include in this.Includes) {
+      foreach (var include in this.Includes) {
         query = query.Include(include);
       }
 
