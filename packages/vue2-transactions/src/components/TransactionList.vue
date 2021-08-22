@@ -36,6 +36,7 @@
           v-if="
             actionIsActive &&
             transactionsState.actionTargetId == transaction.id &&
+            transaction.extendedDetails &&
             transaction.description !== transaction.extendedDetails
           "
           v-html="display(transaction.extendedDetails)"
@@ -106,10 +107,8 @@ export default class TransactionList extends Vue {
     }).format(number);
   }
 
-  display(str?: string) {
-    if (str) {
-      return str.replace("\n", "<br/>");
-    }
+  display(str: string) {
+    return str.replace('\n', '<br/>');
   }
 
   get actionIsActive() {
