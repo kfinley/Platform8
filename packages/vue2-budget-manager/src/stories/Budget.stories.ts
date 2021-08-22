@@ -6,7 +6,7 @@ import { BudgetStatus } from '@/store';
 import { testCategories } from 'tests/unit/data';
 
 export default {
-  title: 'Components/Budget',
+  title: 'Components/Budget/Budget',
   component: Budget,
 };
 
@@ -32,7 +32,7 @@ const DefaultTemplate: Story = (args, { argTypes }) => ({
   template: '<div><notify /><budget /></div>'
 });
 
-export const Detault = DefaultTemplate.bind({});
+export const Default = DefaultTemplate.bind({});
 
 const WithDataTemplate: Story = (args, { argTypes }) => ({
   components: { Budget, Notify },

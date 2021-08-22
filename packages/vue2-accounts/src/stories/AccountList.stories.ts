@@ -20,7 +20,7 @@ let store = new Vuex.Store({
 });
 
 export default {
-  title: 'Components/AccountList',
+  title: 'Components/Accounts/Account List',
   component: AccountList,
 };
 

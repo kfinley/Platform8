@@ -7,7 +7,7 @@ import { BudgetStatus } from '@/store';
 import { testCategories } from './../../tests/unit/data';
 
 export default {
-  title: 'Components/CategoryList',
+  title: 'Components/Budget/Category List',
   component: CategoryList,
 };
 

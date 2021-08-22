@@ -4,13 +4,12 @@ import { TransactionList } from "@/components";
 import { TransactionsStatus, UploadStatus } from '@/store';
 import { Notify } from "@platform8/vue2-notify/src/components";
 import { AccountsStatus } from "@platform8/vue2-accounts/src/store";
-import { container, injectable } from 'inversify-props';
+import { container } from 'inversify-props';
 import { Command } from '@platform8/commands/src';
 import { LoadTransactionsRequest, LoadTransactionsResponse } from '@/models';
 import { LoadTransactionsCommand } from '@/commands';
 import { testAccountsState, testTransactionsState } from './data';
 
-@injectable()
 class mockLoadTransactionsCommand implements Command<LoadTransactionsRequest, LoadTransactionsResponse> {
   public async runAsync(params: LoadTransactionsRequest): Promise<LoadTransactionsResponse> {
     return new Promise(resolve => {
@@ -21,7 +20,8 @@ class mockLoadTransactionsCommand implements Command<LoadTransactionsRequest, Lo
             accountId: '123-123-123',
             amount: 23.43,
             description: 'Transaction 1',
-            date: new Date('05/11/2021')
+            date: new Date('05/11/2021'),
+            hasChanges: false
           }
         ]
       })
@@ -34,7 +34,7 @@ if (container.isBound("LoadTransactionsCommand")) {
 }
 
 export default {
-  title: 'Components/TransactionList',
+  title: 'Components/Transactions/Transaction List',
   component: TransactionList,
 };
 
