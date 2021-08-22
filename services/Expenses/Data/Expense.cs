@@ -1,11 +1,9 @@
-﻿using System;
+using System;
 
 using Platform8.Core.Data;
 
-namespace Platform8.Expenses.Data
-{
-  public class Expense : BaseEntity
-  {
+namespace Platform8.Expenses.Data {
+  public class Expense : BaseEntity {
     public Guid OwnerId { get; set; }
     public string Description { get; set; }
     public decimal Amount { get; set; }

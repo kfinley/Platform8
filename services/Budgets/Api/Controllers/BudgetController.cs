@@ -10,18 +10,15 @@ using MediatR;
 
 using Platform8.Budgets.Models;
 
-namespace Platform8.Budgets.Api.Controllers
-{
+namespace Platform8.Budgets.Api.Controllers {
   [Authorize]
   [ApiController]
-  public class BudgetController : ControllerBase
-  {
+  public class BudgetController : ControllerBase {
 
     private readonly ILogger<BudgetController> logger;
     private readonly IMediator mediator;
 
-    public BudgetController(IMediator mediator, ILogger<BudgetController> logger)
-    {
+    public BudgetController(IMediator mediator, ILogger<BudgetController> logger) {
       this.mediator = mediator;
       this.logger = logger;
     }

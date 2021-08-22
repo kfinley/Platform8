@@ -10,17 +10,14 @@ using MediatR;
 
 using Platform8.Accounts.Models;
 
-namespace Platform8.Accounts.Api.Controllers
-{
+namespace Platform8.Accounts.Api.Controllers {
 
   [Authorize]
   [ApiController]
-  public class AccountsController : ControllerBase
-  {
+  public class AccountsController : ControllerBase {
     private readonly ILogger<AccountsController> logger;
     private readonly IMediator mediator;
-    public AccountsController(IMediator mediator, ILogger<AccountsController> logger)
-    {
+    public AccountsController(IMediator mediator, ILogger<AccountsController> logger) {
       this.mediator = mediator;
       this.logger = logger;
     }

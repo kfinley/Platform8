@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using MediatR;
 
 using Platform8.Core;
 
-namespace Platform8.Budgets.Models
-{
+namespace Platform8.Budgets.Models {
   public class Category {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -13,8 +12,7 @@ namespace Platform8.Budgets.Models
     public Models.Budget Budget { get; set; }
   }
 
-  public class AddCategoryRequest : IRequest<AddCategoryResponse>
-  {
+  public class AddCategoryRequest : IRequest<AddCategoryResponse> {
     public Guid OwnerId { get; set; }
     public string Name { get; set; }
     public NumberRange Allocation { get; set; }

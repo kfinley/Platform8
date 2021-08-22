@@ -61,7 +61,7 @@ namespace Platform8.User.Tests {
     [Fact]
     public void It_should_save_a_new_User_to_the_Data_Repository() => should_save_a_new_User_to_the_Data_Repository();
     It should_save_a_new_User_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<UserDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<UserDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
   }
 

@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -10,10 +10,8 @@ using Platform8.Core.Data;
 using Platform8.Budgets.Data;
 using Platform8.Budgets.Models;
 
-namespace Platform8.Budgets.Commands
-{
-  public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategoryResponse>
-  {
+namespace Platform8.Budgets.Commands {
+  public class AddCategoryHandler : IRequestHandler<AddCategoryRequest, AddCategoryResponse> {
     private readonly ILogger<AddCategoryHandler> logger;
     private readonly IAsyncRepository<BudgetsDataContext> repository;
     private readonly IMapper mapper;
@@ -22,15 +20,13 @@ namespace Platform8.Budgets.Commands
       IMapper mapper,
       ILogger<AddCategoryHandler> logger,
       IAsyncRepository<BudgetsDataContext> repository
-      )
-    {
+      ) {
       this.mapper = mapper;
       this.logger = logger;
       this.repository = repository;
     }
 
-    public async Task<AddCategoryResponse> Handle(AddCategoryRequest request, CancellationToken cancellationToken)
-    {
+    public async Task<AddCategoryResponse> Handle(AddCategoryRequest request, CancellationToken cancellationToken) {
       var budget = await this.repository.FirstOrDefaultAsync<Data.Budget>(b => b.OwnerId == request.OwnerId);
 
       if (budget == null) {
@@ -45,8 +41,7 @@ namespace Platform8.Budgets.Commands
         Budget = budget
       });
 
-      return new AddCategoryResponse
-      {
+      return new AddCategoryResponse {
         Id = category.Id,
         BudgetId = budget.Id,
         Success = true

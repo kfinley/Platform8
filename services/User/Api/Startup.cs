@@ -22,20 +22,16 @@ using Platform8.Core.Data;
 using Platform8.User.Data;
 using Platform8.User.Models;
 
-namespace Platform8.User.Api
-{
-  public class Startup
-  {
-    public Startup(IConfiguration configuration)
-    {
+namespace Platform8.User.Api {
+  public class Startup {
+    public Startup(IConfiguration configuration) {
       Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
+    public void ConfigureServices(IServiceCollection services) {
 
       // User Service Specific setup
       //
@@ -62,24 +58,20 @@ namespace Platform8.User.Api
       // *****************************
 
       services
-        .AddAuthentication(options =>
-        {
+        .AddAuthentication(options => {
           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(options =>
-        {
+        .AddJwtBearer(options => {
           // Validate using issuer public keys
           var serviceURL = Configuration.GetValue<string>("Service:Cognito:ServiceURL");
           var poolId = Configuration.GetValue<string>("Service:Cognito:PoolId");
           var clientId = Configuration.GetValue<string>("Service:Cognito:ClientId");
 
-          options.TokenValidationParameters = new TokenValidationParameters
-          {
+          options.TokenValidationParameters = new TokenValidationParameters {
             // https://stackoverflow.com/a/53244447
             ValidateIssuerSigningKey = true,
-            IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) =>
-            {
+            IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) => {
               // get JsonWebKeySet from AWS
               var json = new System.Net.WebClient().DownloadString(parameters.ValidIssuer + "/.well-known/jwks.json");
 
@@ -109,17 +101,14 @@ namespace Platform8.User.Api
 
       services.AddControllers();
       services.AddCors();
-      services.AddSwaggerGen(c =>
-      {
+      services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Platform8 User Api", Version = "v1" });
       });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+      if (env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Platform8 User Api v1"));
@@ -137,8 +126,7 @@ namespace Platform8.User.Api
 
       app.UseAuthorization();
 
-      app.UseEndpoints(endpoints =>
-      {
+      app.UseEndpoints(endpoints => {
         endpoints.MapControllers();
       });
     }

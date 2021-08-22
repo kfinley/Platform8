@@ -19,14 +19,11 @@ using Platform8.Core.Data;
 using Platform8.Budgets.Data;
 using Platform8.Core;
 
-namespace Platform8.Budgets.Tests
-{
+namespace Platform8.Budgets.Tests {
   [Subject("Add Category")]
-  public class When_AddCategory_Requested : SpecBase
-  {
+  public class When_AddCategory_Requested : SpecBase {
     public When_AddCategory_Requested(MSpecFixture fixture)
-      : base(fixture)
-    {
+      : base(fixture) {
       Setup(this, context, of);
     }
 
@@ -35,22 +32,18 @@ namespace Platform8.Budgets.Tests
     static AddCategoryRequest Request;
     static AddCategoryResponse Result;
 
-    Establish context = () =>
-    {
+    Establish context = () => {
       var testUserId = Guid.NewGuid();
 
-      var testBudget = new Data.Budget
-      {
+      var testBudget = new Data.Budget {
         Id = Guid.NewGuid(),
         OwnerId = testUserId
       };
 
-      Request = new AddCategoryRequest
-      {
+      Request = new AddCategoryRequest {
         OwnerId = testUserId,
         Name = "Test",
-        Allocation = new NumberRange
-        {
+        Allocation = new NumberRange {
           Start = 10,
           End = 15
         }
@@ -75,23 +68,21 @@ namespace Platform8.Budgets.Tests
 
     [Fact]
     public void It_should_return_a_successful_result() => should_return_a_successful_result();
-    It should_return_a_successful_result = () =>
-    {
+    It should_return_a_successful_result = () => {
       Result.Should().NotBeNull();
       Result.Success.Should().BeTrue();
     };
 
     [Fact]
     public void It_should_get_the_Budget_the_user() => should_get_the_Budget_the_user();
-    It should_get_the_Budget_the_user = () =>
-    {
+    It should_get_the_Budget_the_user = () => {
       Sut.Verify<IAsyncRepository<BudgetsDataContext>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Data.Budget, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]
     public void It_should_save_a_new_Category_to_the_Data_Repository() => should_save_a_new_Category_to_the_Data_Repository();
     It should_save_a_new_Category_to_the_Data_Repository = () => {
-        Sut.Verify<IAsyncRepository<BudgetsDataContext>>(p => p.SaveAsync(Argument.IsAny<Data.Category>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<BudgetsDataContext>>(p => p.SaveAsync(Argument.IsAny<Data.Category>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]

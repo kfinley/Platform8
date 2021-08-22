@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,10 +12,8 @@ using Platform8.Core.Data;
 using Platform8.Expenses.Data;
 using Platform8.Expenses.Models;
 
-namespace Platform8.Expenses.Commands
-{
-  public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, AddExpenseResponse>
-  {
+namespace Platform8.Expenses.Commands {
+  public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, AddExpenseResponse> {
     private readonly IMediator mediator;
     private readonly ILogger<AddExpenseHandler> logger;
     private readonly IMapper mapper;
@@ -26,8 +24,7 @@ namespace Platform8.Expenses.Commands
       IMapper mapper,
       ILogger<AddExpenseHandler> logger,
       IAsyncRepository<DataContext> repository
-    )
-    {
+    ) {
       this.mediator = mediator;
       this.mapper = mapper;
       this.logger = logger;
@@ -41,7 +38,7 @@ namespace Platform8.Expenses.Commands
         Description = request.Description,
         Amount = request.Amount,
         CategoryId = request.CategoryId,
-        IsFullTransaction  = request.IsFullTransaction,
+        IsFullTransaction = request.IsFullTransaction,
         TransactionId = request.TransactionId
       });
 
@@ -49,7 +46,7 @@ namespace Platform8.Expenses.Commands
         Topic = "ExpenseAddedTopic",
         // To avoid dealing with mapping and setting naming option to camel case
         // just new up the message with camel casing.
-        Message = JsonSerializer.Serialize( new {
+        Message = JsonSerializer.Serialize(new {
           ownerId = request.OwnerId,
           expenseId = expense.Id,
           transactionId = request.TransactionId,

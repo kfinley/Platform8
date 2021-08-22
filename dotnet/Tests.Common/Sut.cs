@@ -12,159 +12,159 @@ using Moq.Language.Flow;
 
 namespace Platform8.Tests.Common {
 
-    public class Sut<T, TData> : Sut<T>
-        where T : class {
+  public class Sut<T, TData> : Sut<T>
+      where T : class {
 
-        public void Run(Action<T> setup) {
-            setup(Target);
-        }
-
-        public TData Result { get; set; }
-
-        public void SetResult(Func<T, TData> getResult) {
-            Result = getResult(Target);
-        }
+    public void Run(Action<T> setup) {
+      setup(Target);
     }
 
-    public class Sut<T> where T : class {
+    public TData Result { get; set; }
 
-        private T target;
+    public void SetResult(Func<T, TData> getResult) {
+      Result = getResult(Target);
+    }
+  }
 
-        private Dictionary<Type, object> reals = new Dictionary<Type, object>();
+  public class Sut<T> where T : class {
 
-        public AutoMocker Mocker;
+    private T target;
 
-        public Sut(params Mock[] args) {
+    private Dictionary<Type, object> reals = new Dictionary<Type, object>();
 
-            Setup(new List<Mock>(args));
-        }
+    public AutoMocker Mocker;
 
-        /// <summary>
-        /// Create an instance of a Sut<T>.
-        /// </summary>
-        public Sut(Action<T> setterAction, params Mock[] args) {
+    public Sut(params Mock[] args) {
 
-            Setup(new List<Mock>(args));
-            this.PostInitializeSetterAction = setterAction;
-        }
+      Setup(new List<Mock>(args));
+    }
 
-        private void Setup(List<Mock> args) {
+    /// <summary>
+    /// Create an instance of a Sut<T>.
+    /// </summary>
+    public Sut(Action<T> setterAction, params Mock[] args) {
 
-            this.Mocker = new AutoMocker(MockBehavior.Loose);
+      Setup(new List<Mock>(args));
+      this.PostInitializeSetterAction = setterAction;
+    }
 
-            this.ServiceCollection = new ServiceCollection();
+    private void Setup(List<Mock> args) {
 
-            ServiceCollection.AddLogging(config => config.AddConsole());
+      this.Mocker = new AutoMocker(MockBehavior.Loose);
 
-            args.ForEach(m => {
-                Mocker.Use(m);
-            });
-        }
+      this.ServiceCollection = new ServiceCollection();
 
-        private void Initialize() {
+      ServiceCollection.AddLogging(config => config.AddConsole());
 
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+      args.ForEach(m => {
+        Mocker.Use(m);
+      });
+    }
 
-            target = Mocker.CreateInstance<T>();
+    private void Initialize() {
 
-            this.PostInitializeSetterAction?.Invoke(target);
-        }
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
 
-        public ServiceCollection ServiceCollection;
+      target = Mocker.CreateInstance<T>();
 
-        public T Target {
-            get {
-                if (target == null)
-                    Initialize();
-                return target;
-            }
-        }
+      this.PostInitializeSetterAction?.Invoke(target);
+    }
 
-        public Action<T> PostInitializeSetterAction { get; set; }
+    public ServiceCollection ServiceCollection;
 
-        public void Use<TParam>(TParam paramInstance)
-            where TParam : class {
+    public T Target {
+      get {
+        if (target == null)
+          Initialize();
+        return target;
+      }
+    }
 
-            ServiceCollection.AddTransient<TParam>(x => paramInstance);
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
-            Mocker.Use<TParam>(paramInstance);
-        }
+    public Action<T> PostInitializeSetterAction { get; set; }
 
-        public void Use<TService>(Expression<Func<TService, bool>> setup) where TService : class {
+    public void Use<TParam>(TParam paramInstance)
+        where TParam : class {
 
-            Mocker.Use<TService>(setup);
+      ServiceCollection.AddTransient<TParam>(x => paramInstance);
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+      Mocker.Use<TParam>(paramInstance);
+    }
 
-            ServiceCollection.AddTransient<TService>(x => Mocker.Get<TService>());
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+    public void Use<TService>(Expression<Func<TService, bool>> setup) where TService : class {
 
-        }
+      Mocker.Use<TService>(setup);
 
-        public void Use<TService, TImplementation>() where TService : class where TImplementation : class, TService {
+      ServiceCollection.AddTransient<TService>(x => Mocker.Get<TService>());
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
 
-            ServiceCollection.AddTransient<TService, TImplementation>();
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+    }
 
-            Mocker.Use<TService>(Mocker.CreateInstance<TImplementation>());
-        }
+    public void Use<TService, TImplementation>() where TService : class where TImplementation : class, TService {
 
-        public void Use<TService>() where TService : class {
+      ServiceCollection.AddTransient<TService, TImplementation>();
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
 
-            ServiceCollection.AddTransient<TService, TService>();
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+      Mocker.Use<TService>(Mocker.CreateInstance<TImplementation>());
+    }
 
-            Mocker.Use<TService>(Mocker.CreateInstance<TService>());
-        }
+    public void Use<TService>() where TService : class {
 
-        public void Use(Type type) {
+      ServiceCollection.AddTransient<TService, TService>();
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
 
-            ServiceCollection.AddTransient(type, type);
-            Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
-            Mocker.Use(type, Mocker.CreateInstance(type));
-        }
+      Mocker.Use<TService>(Mocker.CreateInstance<TService>());
+    }
 
-        public ISetup<TMock, Task> Setup<TMock>(Expression<Func<TMock, Task>> expression)
-            where TMock : class {
+    public void Use(Type type) {
 
-            return Mocker.Setup(expression);
-        }
+      ServiceCollection.AddTransient(type, type);
+      Mocker.Use<IServiceProvider>(ServiceCollection.BuildServiceProvider());
+      Mocker.Use(type, Mocker.CreateInstance(type));
+    }
 
-        public ISetup<TMock, TMockResult> Setup<TMock, TMockResult>(Expression<Func<TMock, TMockResult>> expression)
-            where TMock : class {
+    public ISetup<TMock, Task> Setup<TMock>(Expression<Func<TMock, Task>> expression)
+        where TMock : class {
 
-            return Mocker.Setup<TMock, TMockResult>(expression);
-        }
+      return Mocker.Setup(expression);
+    }
 
-        public ISetup<TMock> Setup<TMock>(Expression<Action<TMock>> expression)
-            where TMock : class {
+    public ISetup<TMock, TMockResult> Setup<TMock, TMockResult>(Expression<Func<TMock, TMockResult>> expression)
+        where TMock : class {
 
-            return Mocker.Setup(expression);
-        }
+      return Mocker.Setup<TMock, TMockResult>(expression);
+    }
 
-        public TService Get<TService>()
-          where TService: class {
-            return reals.ContainsKey(typeof(TService)) ? (TService)reals[typeof(TService)] : Mocker.Get<TService>();
-        }
+    public ISetup<TMock> Setup<TMock>(Expression<Action<TMock>> expression)
+        where TMock : class {
 
-        public ISetup<TMock, Task> SetupAsync<TMock>(Expression<Func<TMock, Task>> expression)
-            where TMock : class {
-            return Mocker.Setup(expression);
-        }
+      return Mocker.Setup(expression);
+    }
 
-        public ISetup<TMock, Task<TMockResult>> SetupAsync<TMock, TMockResult>(Expression<Func<TMock, Task<TMockResult>>> expression)
-            where TMock : class {
-            var setup = Mocker.Setup(expression);
-            return setup;
-        }
+    public TService Get<TService>()
+      where TService : class {
+      return reals.ContainsKey(typeof(TService)) ? (TService)reals[typeof(TService)] : Mocker.Get<TService>();
+    }
 
-        public void Verify<TMock>(Expression<Action<TMock>> expression, Times times)
-            where TMock : class {
-            Mocker.Verify(expression, times);
-        }
+    public ISetup<TMock, Task> SetupAsync<TMock>(Expression<Func<TMock, Task>> expression)
+        where TMock : class {
+      return Mocker.Setup(expression);
+    }
 
-        public void VerifyAll() {
-            Mocker.VerifyAll();
-        }
+    public ISetup<TMock, Task<TMockResult>> SetupAsync<TMock, TMockResult>(Expression<Func<TMock, Task<TMockResult>>> expression)
+        where TMock : class {
+      var setup = Mocker.Setup(expression);
+      return setup;
+    }
 
-   }
+    public void Verify<TMock>(Expression<Action<TMock>> expression, Times times)
+        where TMock : class {
+      Mocker.Verify(expression, times);
+    }
+
+    public void VerifyAll() {
+      Mocker.VerifyAll();
+    }
+
+  }
 
 }

@@ -6,10 +6,8 @@ using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Platform8.Core.Data
-{
-  public static class EFExtensions
-  {
+namespace Platform8.Core.Data {
+  public static class EFExtensions {
 
     public static IQueryable<T> Include<T>(this IQueryable<T> query, Tuple<Expression, Expression> include) {
       CreateItemTypeAndProperty(include.Item1, out Type itemType, out PropertyInfo itemProperty);
@@ -54,8 +52,7 @@ namespace Platform8.Core.Data
     }
 
 
-    private static void CreateItemTypeAndProperty(object item, out Type itemType, out PropertyInfo itemProperty)
-    {
+    private static void CreateItemTypeAndProperty(object item, out Type itemType, out PropertyInfo itemProperty) {
       itemType = item.GetType().GenericTypeArguments[0].GenericTypeArguments[0];
       var itemPropertyName = ((PropertyInfo)((MemberExpression)((LambdaExpression)(item)).Body).Member).Name;
 

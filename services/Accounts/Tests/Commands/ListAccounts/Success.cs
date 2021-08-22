@@ -18,14 +18,11 @@ using Platform8.Accounts.Models;
 using Platform8.Core.Data;
 using Platform8.Accounts.Data;
 
-namespace Platform8.Accounts.Tests
-{
+namespace Platform8.Accounts.Tests {
   [Subject("List Accounts")]
-  public class When_ListAccounts_Requested : SpecBase
-  {
+  public class When_ListAccounts_Requested : SpecBase {
     public When_ListAccounts_Requested(MSpecFixture fixture)
-      : base(fixture)
-    {
+      : base(fixture) {
       Setup(this, context, of);
     }
 
@@ -34,8 +31,7 @@ namespace Platform8.Accounts.Tests
     static ListAccountsRequest Request;
     static ListAccountsResponse Result;
 
-    Establish context = () =>
-    {
+    Establish context = () => {
       Request = new ListAccountsRequest();
 
       Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, IReadOnlyList<Models.AccountInList>>(r
@@ -60,8 +56,7 @@ namespace Platform8.Accounts.Tests
 
     Because of = async () => Result = await Sut.Target.Handle(Request, new CancellationTokenSource().Token);
 
-    It should_return_a_successful_result = () =>
-    {
+    It should_return_a_successful_result = () => {
       Result.Should().NotBeNull();
     };
 
@@ -69,8 +64,7 @@ namespace Platform8.Accounts.Tests
     public void It_should_return_a_successful_result() =>
         should_return_a_successful_result();
 
-    It should_return_a_list_of_accounts = () =>
-    {
+    It should_return_a_list_of_accounts = () => {
       Result.Count.Should().Be(2);
     };
 

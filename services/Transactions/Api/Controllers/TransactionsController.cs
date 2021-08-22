@@ -11,17 +11,14 @@ using MediatR;
 
 using Platform8.Transactions.Models;
 
-namespace Platform8.Transactions.Api.Controllers
-{
+namespace Platform8.Transactions.Api.Controllers {
 
   [Authorize]
   [ApiController]
-  public class TransactionsController : ControllerBase
-  {
+  public class TransactionsController : ControllerBase {
     private readonly ILogger<TransactionsController> logger;
     private readonly IMediator mediator;
-    public TransactionsController(IMediator mediator, ILogger<TransactionsController> logger)
-    {
+    public TransactionsController(IMediator mediator, ILogger<TransactionsController> logger) {
       this.mediator = mediator;
       this.logger = logger;
     }

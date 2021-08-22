@@ -20,25 +20,20 @@ using MediatR;
 
 using Platform8.Core;
 
-namespace Platform8.Transactions.Api
-{
-  public class Startup
-  {
-    public Startup(IConfiguration configuration)
-    {
+namespace Platform8.Transactions.Api {
+  public class Startup {
+    public Startup(IConfiguration configuration) {
       Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
+    public void ConfigureServices(IServiceCollection services) {
 
       services
         .AddOptions()
-        .AddLogging(loggingBuilder =>
-        {
+        .AddLogging(loggingBuilder => {
           loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
           loggingBuilder.AddConsole();
           loggingBuilder.AddDebug();
@@ -47,32 +42,27 @@ namespace Platform8.Transactions.Api
         .AddDefaultAWSOptions(Configuration.GetAWSOptions())
 
         // Add DynamoDb client config
-        .AddSingleton<IAmazonDynamoDB>(sp =>
-        {
+        .AddSingleton<IAmazonDynamoDB>(sp => {
           var clientConfig = new AmazonDynamoDBConfig { ServiceURL = Configuration.GetValue<string>("Service:DynamoDB:ServiceURL") };
           return new AmazonDynamoDBClient(clientConfig);
         })
         .AddMediatR(Transactions.Commands.CommandsAssembly.Value);
 
       services
-        .AddAuthentication(options =>
-        {
+        .AddAuthentication(options => {
           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(options =>
-        {
+        .AddJwtBearer(options => {
           // Validate using issuer public keys
           var serviceURL = Configuration.GetValue<string>("Service:Cognito:ServiceURL");
           var poolId = Configuration.GetValue<string>("Service:Cognito:PoolId");
           var clientId = Configuration.GetValue<string>("Service:Cognito:ClientId");
 
-          options.TokenValidationParameters = new TokenValidationParameters
-          {
+          options.TokenValidationParameters = new TokenValidationParameters {
             // https://stackoverflow.com/a/53244447
             ValidateIssuerSigningKey = true,
-            IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) =>
-            {
+            IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) => {
               // get JsonWebKeySet from AWS
               var json = new System.Net.WebClient().DownloadString(parameters.ValidIssuer + "/.well-known/jwks.json");
 
@@ -107,16 +97,14 @@ namespace Platform8.Transactions.Api
               .Build()))
       )
       .AddJsonOptions(options => {
-         options.JsonSerializerOptions.IgnoreNullValues = true;
-         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.IgnoreNullValues = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
       });
 
-      services.AddSwaggerGen(c =>
-      {
+      services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Platform8 Transactions Api", Version = "v1" });
 
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
           Description = @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.
 
                         Example: 'Bearer 12345abcdef'",
@@ -147,10 +135,8 @@ namespace Platform8.Transactions.Api
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+      if (env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Platform8 Transactions Api v1"));
@@ -170,8 +156,7 @@ namespace Platform8.Transactions.Api
 
       app.UseAuthorization();
 
-      app.UseEndpoints(endpoints =>
-      {
+      app.UseEndpoints(endpoints => {
         endpoints.MapControllers();
       });
     }
