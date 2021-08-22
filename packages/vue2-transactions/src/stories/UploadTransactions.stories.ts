@@ -23,7 +23,7 @@ let store = new Vuex.Store({
 });
 
 export default {
-  title: 'Components/UploadTransactions',
+  title: 'Components/Transactions/Upload Transactions',
   component: UploadTransactions,
 };
 

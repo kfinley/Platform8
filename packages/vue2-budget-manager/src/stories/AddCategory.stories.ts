@@ -6,7 +6,7 @@ import { store } from './store';
 import { BudgetStatus } from '@/store';
 
 export default {
-  title: 'Components/AddCategory',
+  title: 'Components/Budget/Add Category',
   component: AddCategory,
 };
 
@@ -24,7 +24,7 @@ const SavingTemplate: Story = (args, { argTypes }) => ({
     modules: {
       Budget: {
         state: {
-          status: BudgetStatus.Saving,          
+          status: BudgetStatus.Saving,
         }
       },
       Notification: {

@@ -18,6 +18,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@platform8/api-client": "^0.0.1",
+    "@platform8/vue2-budget-manager": "^0.0.1",
     "@platform8/commands": "^0.0.1",
     "@platform8/config": "^0.0.1",
     "@platform8/vue2-common": "^0.0.1",

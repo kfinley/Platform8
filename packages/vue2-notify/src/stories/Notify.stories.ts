@@ -42,7 +42,7 @@ store.state.Notification.notifications = [
 ];
 
 export default {
-  title: "Components/Notify",
+  title: "Components/Notify/Notify",
   component: Notify,
 };
 

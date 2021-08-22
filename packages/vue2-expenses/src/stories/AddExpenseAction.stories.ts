@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex, { Store } from 'vuex';
+import Vuex from 'vuex';
 import { Story } from '@storybook/vue/types-6-0';
 import { initializeModules as initializeNotifications } from "@platform8/vue2-notify/src/store";
 import { AddExpenseAction } from "@/components";
@@ -7,14 +7,11 @@ import { Notify } from "@platform8/vue2-notify/src/components";
 import { initializeModules } from '@/store';
 import { ExpensesModule } from '@/store/expensesModule';
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
-
-import { injectable } from 'inversify-props';
 //Kludge....
-import { container } from "../../../vue2-budget-manager/node_modules/inversify-props"
+import { container } from "@platform8/vue2-budget-manager/node_modules/inversify-props"
 import { ApiClient, ApiResponse } from "@platform8/api-client/src";
-import Category from "../../../vue2-budget-manager/src/components/CategoryComponent.vue";
+import Category from "@platform8/vue2-budget-manager/src/components/CategoryComponent.vue";
 
-@injectable()
 class mockApiClient implements ApiClient {
   getAsync<T>(url: string): Promise<ApiResponse<T>> {
     return new Promise<ApiResponse<T>>((resolve, reject) => {
@@ -70,7 +67,7 @@ let store = new Vuex.Store({
 });
 
 export default {
-  title: 'Components/Add Expense Action',
+  title: 'Components/Expenses/Add Expense Action',
   component: AddExpenseAction
 }
 
