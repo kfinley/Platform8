@@ -41,6 +41,13 @@
           "
           v-html="display(transaction.extendedDetails)"
         ></div>
+        <div
+          v-if="
+            actionIsActive &&
+            transactionsState.actionTargetId == transaction.id &&
+            transaction.category
+          "
+        ><i>Suggested Category</i>: {{ transaction.category }}</div>
         <component
           v-if="
             actionIsActive && transactionsState.actionTargetId == transaction.id
