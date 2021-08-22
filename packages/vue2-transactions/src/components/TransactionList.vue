@@ -1,6 +1,6 @@
 <template>
   <card :header-text="headerText()" :show-close="false">
-     <ul id="transaction-list" class="container striped-list p-0">
+    <ul id="transaction-list" class="container striped-list p-0">
       <li class="row list-header">
         <div class="col">Date</div>
         <div class="col">Account</div>
@@ -12,20 +12,38 @@
         :key="index"
       >
         <div class="row p-1">
-          <div class="col font-weight-bold">{{ new Date(transaction.date).toLocaleDateString('en-US') }}</div>
+          <div class="col font-weight-bold">
+            {{ new Date(transaction.date).toLocaleDateString("en-US") }}
+          </div>
           <div class="col font-italic">{{ transaction.account }}</div>
           <div class="col font-weight-bolder text-lg text-end px-2">
             {{ formatMoney(transaction.amount) }}
           </div>
         </div>
         <div class="row">
-            <div class="col-10 px-3 py-2">{{ transaction.description }}</div>
-            <div class="col-2" v-if="transactionsState.actionText !== undefined && transaction.hasChanges !== true">
-              <action :transaction-id="transaction.id" />
-            </div>
+          <div class="col-10 px-3 py-2">{{ transaction.description }}</div>
+          <div
+            class="col-2"
+            v-if="
+              transactionsState.actionText !== undefined &&
+              transaction.hasChanges !== true
+            "
+          >
+            <action :transaction-id="transaction.id" />
+          </div>
         </div>
+        <div
+          v-if="
+            actionIsActive &&
+            transactionsState.actionTargetId == transaction.id &&
+            transaction.description !== transaction.extendedDetails
+          "
+          v-html="display(transaction.extendedDetails)"
+        ></div>
         <component
-          v-if="actionIsActive && transactionsState.actionTargetId == transaction.id"
+          v-if="
+            actionIsActive && transactionsState.actionTargetId == transaction.id
+          "
           @cancel="closeActionComponent"
           :is="transactionsState.actionComponent"
           category-component="category"
@@ -33,7 +51,7 @@
           :amount="transaction.amount"
           :description="transaction.description"
           @saved="actionComponentSaved(transaction.id)"
-           />
+        />
       </li>
     </ul>
     <template v-slot:footer>
@@ -52,14 +70,19 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { Card } from "@platform8/vue2-common/src/components";
 import Action from "./Action.vue";
 import { State } from "vuex-class";
-import { transactionsModule, TransactionsState, TransactionsStatus, ActionStatus } from "../store";
-import { Account } from '@platform8/vue2-accounts/src/models';
+import {
+  transactionsModule,
+  TransactionsState,
+  TransactionsStatus,
+  ActionStatus,
+} from "../store";
+import { Account } from "@platform8/vue2-accounts/src/models";
 
 @Component({
   components: {
     Card,
     Action,
-  }
+  },
 })
 export default class TransactionList extends Vue {
   @State("Transactions") transactionsState!: TransactionsState;
@@ -83,6 +106,12 @@ export default class TransactionList extends Vue {
     }).format(number);
   }
 
+  display(str?: string) {
+    if (str) {
+      return str.replace("\n", "<br/>");
+    }
+  }
+
   get actionIsActive() {
     return this.transactionsState.actionStatus === ActionStatus.Active;
   }
@@ -96,7 +125,7 @@ export default class TransactionList extends Vue {
 
   actionComponentSaved(transactionId: string) {
     transactionsModule.setHasChanges({
-      transactionId
+      transactionId,
     });
 
     this.closeActionComponent();

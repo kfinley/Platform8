@@ -17,61 +17,26 @@ export function convertItemToTransaction(item: Record<string, AttributeValue> | 
   }
 }
 
+function addWithKeyIfPropHasValue(attributes: Record<string, AttributeValue>, property: string, value: string | undefined) {
+  if (value) {
+    attributes[property] = {
+      S: value
+    }
+  }
+}
+
 export function convertTransactionOptionalAttributesToItem(transaction: Transaction) {
   let attributes: Record<string, AttributeValue> = {};
 
-  if (transaction.extendedDetails) {
-    attributes['extendedDetails'] = {
-      S: transaction.extendedDetails
-    }
-  }
-  if (transaction.appearsOnStatementAs) {
-    attributes['appearsOnStatementAs'] = {
-      S: transaction.appearsOnStatementAs
-    }
-  }
-
-  if (transaction.address) {
-    attributes['address'] = {
-      S: transaction.address
-    }
-  }
-
-  if (transaction.city) {
-    attributes['city'] = {
-      S: transaction.city
-    }
-  }
-
-  if (transaction.state) {
-    attributes['state'] = {
-      S: transaction.state
-    }
-  }
-
-  if (transaction.postalCode) {
-    attributes['postalCode'] = {
-      S: transaction.postalCode
-    }
-  }
-
-  if (transaction.country) {
-    attributes['country'] = {
-      S: transaction.country
-    }
-  }
-
-  if (transaction.reference) {
-    attributes['reference'] = {
-      S: transaction.reference
-    }
-  }
-
-  if (transaction.category) {
-    attributes['category'] = {
-      S: transaction.category
-    }
-  }
+  addWithKeyIfPropHasValue(attributes, 'extendedDetails', transaction.extendedDetails);
+  addWithKeyIfPropHasValue(attributes, 'appearsOnStatementAs', transaction.appearsOnStatementAs);
+  addWithKeyIfPropHasValue(attributes, 'address', transaction.address);
+  addWithKeyIfPropHasValue(attributes, 'city', transaction.city);
+  addWithKeyIfPropHasValue(attributes, 'state', transaction.state);
+  addWithKeyIfPropHasValue(attributes, 'postalCode', transaction.postalCode);
+  addWithKeyIfPropHasValue(attributes, 'country', transaction.country);
+  addWithKeyIfPropHasValue(attributes, 'reference', transaction.reference);
+  addWithKeyIfPropHasValue(attributes, 'category', transaction.category);
 
   return attributes;
 }

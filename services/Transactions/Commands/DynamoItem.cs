@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using Amazon.DynamoDBv2.Model;
-using Platform8.Core;
 
 namespace Platform8.Transactions.Commands
 {
@@ -26,7 +25,7 @@ namespace Platform8.Transactions.Commands
 
     public Guid GetGuid(string key) {
       return Guid.Parse(item.GetValueOrDefault(key)?.S);
-    }    
+    }
 
     public int GetInt32(string key)
     {

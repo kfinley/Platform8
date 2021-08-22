@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-
 using Amazon.DynamoDBv2;
 
 using MediatR;
@@ -107,8 +106,10 @@ namespace Platform8.Transactions.Api
               .RequireAuthenticatedUser()
               .Build()))
       )
-      .AddJsonOptions(options =>
-        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
+      .AddJsonOptions(options => {
+         options.JsonSerializerOptions.IgnoreNullValues = true;
+         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+      });
 
       services.AddSwaggerGen(c =>
       {
