@@ -13,14 +13,14 @@
       @reset="reset"
     />
     <div v-else class="category text-center" @click.prevent="edit">
-      {{ category.name }}
+      {{ _category.name }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, VModel } from "vue-property-decorator";
 import { Inject } from "inversify-props";
 import { TypeAhead } from "@platform8/vue2-common/src/components";
 import { ApiClient } from "@platform8/api-client/src";
@@ -35,14 +35,14 @@ import { Category } from "../models";
 export default class CategoryComponent extends Vue {
   name = "Category";
 
-  @Prop() // Category
-  value!: {
-    id: string;
-    name: string;
-  };
-  
-  category!: { id: string, name: string };
-  
+  _category!: { id: string; name: string};
+
+  @VModel({ type: Object })
+  category!: { id: string; name: string };
+
+  @Prop()
+  disabled: boolean = false;
+
   typedCategory = this.category ? this.category.name : "";
   showSelector = true;
 
@@ -50,7 +50,10 @@ export default class CategoryComponent extends Vue {
   private apiClient!: ApiClient;
 
   mounted() {
-    this.category = this.value;
+    if (this.category) {
+      this.showSelector = false;
+      this._category = this.category;
+    }
   }
 
   async fetch(url) {
@@ -68,8 +71,8 @@ export default class CategoryComponent extends Vue {
   onSelect(item, vue) {
     vue.query = item.name;
     this.typedCategory = item.name;
+    this._category = item;
     this.category = item;
-    this.updateValue(this.category);
     this.showSelector = false;
   }
 
@@ -78,23 +81,20 @@ export default class CategoryComponent extends Vue {
   }
 
   get shouldShowSelector() {
-    return this.showSelector;
+
+    return !this.disabled && this.showSelector;
   }
 
   edit() {
     this.showSelector = true;
   }
 
-  reset(vue) {
-    if (this.value !== undefined) {
-      vue.query = this.value.name;
-      this.typedCategory = this.value.name;
+  reset(vue: { query: string; }) {
+    if (this.category !== undefined) {
+      vue.query = this.category.name;
+      this.typedCategory = this.category.name;
       this.showSelector = false;
     }
-  }
-
-  updateValue(value) {
-    this.$emit("input", value);
   }
 }
 </script>

@@ -1,20 +1,33 @@
 <template>
   <div class="row add-expense-panel">
     <div class="col-8 align-self-center">
-      <component :is="categoryComponent" v-model="category" />
+      <component
+        :is="categoryComponent"
+        v-model="Category"
+        :disabled="state.addActionStatus == 'Saving'"
+        @input="input"
+      />
     </div>
     <div class="col-4 align-self-center action-controls" align="center">
-      <i
-        class="bi bi-x-circle align-self-center clickable"
-        @click.prevent="cancel"
-        title="Cancel"
-      >
-      </i>
-      <i
-        class="bi bi-check-circle align-self-center clickable primary"
-        @click.prevent="save"
-        title="Save Expense"
-      ></i>
+      <div v-if="state.addActionStatus == 'Loaded'">
+        <i
+          class="bi bi-x-circle align-self-center clickable"
+          @click.prevent="cancel"
+          title="Cancel"
+        >
+        </i>
+        <i
+          class="bi bi-check-circle align-self-center clickable primary"
+          @click.prevent="save"
+          title="Save Expense"
+        ></i>
+      </div>
+      <span
+        v-else
+        class="spinner-border spinner-border-md"
+        role="status"
+        aria-hidden="true"
+      ></span>
     </div>
   </div>
 </template>
@@ -28,10 +41,8 @@ import { State } from "vuex-class";
 export default class AddExpenseAction extends Vue {
   @State("Expenses") state!: ExpensesState;
 
-  category: { id: string; name: string } = {
-    id: '',
-    name: ''
-  };
+  @Prop()
+  category!: string;
 
   @Prop()
   categoryComponent: string;
@@ -45,10 +56,28 @@ export default class AddExpenseAction extends Vue {
   @Prop()
   description: string;
 
-  @Prop({ default: true})
+  @Prop({ default: true })
   isFullTransaction!: boolean;
 
+  // backing property for category since it's value will change in child component
+  _category!: {
+    id: string;
+    name: string;
+  }
+
+  // getter required to use backing prop as v-model for categoryComponent
+  get Category() {
+    return this._category;
+  }
+
   mounted() {
+    if (this.category) {
+      this._category = {
+        id: "",
+        name: this.category
+      };
+    }
+
     expensesModule.mutate(
       (state: ExpensesState) => (state.addActionStatus = ActionStatus.Loaded)
     );
@@ -58,23 +87,26 @@ export default class AddExpenseAction extends Vue {
     this.$emit("cancel");
   }
 
-  save() {    
+  input(value) {
+    this._category = value;
+  }
+
+  save() {
     expensesModule.addExpense({
       description: this.description,
       amount: this.amount,
       isFullTransaction: this.isFullTransaction,
       transactionId: this.transactionId,
-      categoryId: this.category.id,
+      categoryId: this._category.id,
     });
   }
 
   @Watch("state.addActionStatus")
-  onStatusChanged(value: ActionStatus) {    
+  onStatusChanged(value: ActionStatus) {
     if (value == ActionStatus.Saved) {
       this.$emit("saved");
     }
   }
-
 }
 </script>
 

@@ -58,6 +58,7 @@
           :transaction-id="transaction.id"
           :amount="transaction.amount"
           :description="transaction.description"
+          :category="transaction.category"
           @saved="actionComponentSaved(transaction.id)"
         />
       </li>

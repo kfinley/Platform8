@@ -2,6 +2,7 @@ export interface Transaction {
   id: string;
   date: Date;
   description: string;
+  category?: string;
   amount: number;
   accountId: string;
   linkedItems?: linkedItem[];
@@ -9,7 +10,7 @@ export interface Transaction {
 }
 
 // TODO: consider renaming...
-export enum TransactionStatus { 
+export enum TransactionStatus {
   All = "All",
   Reviewed = "Reviewed",
   Unreviewed = "Unreviewed"
