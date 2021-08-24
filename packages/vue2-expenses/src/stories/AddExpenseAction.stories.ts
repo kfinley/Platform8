@@ -122,7 +122,7 @@ export const Saving = SavingTemplate.bind({});
 Saving.args = {
   categoryComponent: 'category',
   category: {
-    id: 'a22a5654-cab9-4c00-b61e-3e2966872a0e',
+    id: '',
     name: 'Housing'
   }
 };

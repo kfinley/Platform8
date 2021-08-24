@@ -58,7 +58,7 @@
           :transaction-id="transaction.id"
           :amount="transaction.amount"
           :description="transaction.description"
-          :category="transaction.category"
+          :category="transaction.category ? { id: '', name: transaction.category } : undefined"
           @saved="actionComponentSaved(transaction.id)"
         />
       </li>

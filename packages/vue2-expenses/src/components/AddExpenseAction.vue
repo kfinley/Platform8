@@ -5,7 +5,6 @@
         :is="categoryComponent"
         v-model="Category"
         :disabled="state.addActionStatus == 'Saving'"
-        @input="input"
       />
     </div>
     <div class="col-4 align-self-center action-controls" align="center">
@@ -42,7 +41,10 @@ export default class AddExpenseAction extends Vue {
   @State("Expenses") state!: ExpensesState;
 
   @Prop()
-  category!: string;
+  category!: {
+    id: string;
+    name: string;
+  };
 
   @Prop()
   categoryComponent: string;
@@ -63,19 +65,25 @@ export default class AddExpenseAction extends Vue {
   _category!: {
     id: string;
     name: string;
-  }
+  };
 
-  // getter required to use backing prop as v-model for categoryComponent
   get Category() {
     return this._category;
   }
 
+  set Category(value: { id: string, name: string }) {
+    if (value) {
+      this._category = {
+        id: value.id,
+        name: value.name
+      };
+      Vue.nextTick();
+    }
+  }
+
   mounted() {
     if (this.category) {
-      this._category = {
-        id: "",
-        name: this.category
-      };
+      this.Category = this.category;
     }
 
     expensesModule.mutate(
@@ -87,9 +95,20 @@ export default class AddExpenseAction extends Vue {
     this.$emit("cancel");
   }
 
-  input(value) {
-    this._category = value;
-  }
+  // input(value) {
+  //   // Vue.set(this, 'Category', {
+  //   //   id: value.id,
+  //   //   name: value.name
+  //   // });
+  //   //  Vue.nextTick();
+
+  //   this.Category = value;
+  //   const shit = this.Category;
+
+  //   console.log('Category', shit);
+
+  //   console.log('Category', this._category);
+  // }
 
   save() {
     expensesModule.addExpense({

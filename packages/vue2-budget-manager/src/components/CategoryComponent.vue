@@ -1,8 +1,11 @@
 <template>
   <div>
+     <div v-if="Category" class="category text-center" @click.prevent="edit">
+      {{ Category.name }}
+    </div>
     <type-ahead
       v-model="typedCategory"
-      v-if="shouldShowSelector"
+      v-else
       placeholder="Select a category..."
       :src="typeAheadSrc"
       :getResponse="getResponse"
@@ -12,9 +15,6 @@
       :fetch="fetch"
       @reset="reset"
     />
-    <div v-else class="category text-center" @click.prevent="edit">
-      {{ _category.name }}
-    </div>
   </div>
 </template>
 
@@ -35,26 +35,44 @@ import { Category } from "../models";
 export default class CategoryComponent extends Vue {
   name = "Category";
 
-  _category!: { id: string; name: string};
+  // _category!: { id: string; name: string };
+
+  get Category() {
+    return this.category;
+  }
+
+  // set Category(value) {
+  //   this._category = value;
+  // }
 
   @VModel({ type: Object })
   category!: { id: string; name: string };
 
-  @Prop()
-  disabled: boolean = false;
+  @Prop({ default: false })
+  disabled: boolean;
 
   typedCategory = this.category ? this.category.name : "";
-  showSelector = true;
+  _showSelector!: boolean;
 
   @Inject("ApiClient")
   private apiClient!: ApiClient;
 
   mounted() {
-    if (this.category) {
-      this.showSelector = false;
-      this._category = this.category;
-    }
+    this._showSelector = this.category ? false : true;
+    // if (this.category) {
+    //   console.log(this.category);
+    //   // this.Category = this.category;
+    //   this.ShowSelector = false;
+    // }
+    // this.log();
   }
+
+  // log() {
+  //   setTimeout(() => {
+  //     console.log(this.Category);
+  //     this.log();
+  //   }, 1000);
+  // }
 
   async fetch(url) {
     return await this.apiClient.getAsync<Category>(url);
@@ -68,32 +86,57 @@ export default class CategoryComponent extends Vue {
     return item.name.replace(vue.query, `<b>${vue.query}</b>`);
   }
 
-  onSelect(item, vue) {
-    vue.query = item.name;
-    this.typedCategory = item.name;
-    this._category = item;
-    this.category = item;
-    this.showSelector = false;
+   onSelect(value, vue) {
+    vue.query = value.name;
+    this.typedCategory = value.name;
+    //this.category = item; // Set the prop which will emit the value
+    //this.Category = item; // Set the
+    this.$emit('input', value); // sets the category prop by emitting to parent
+    this._showSelector = false;
   }
 
   get typeAheadSrc() {
     return `${budgetResources.category}?name=:name`;
   }
 
-  get shouldShowSelector() {
+  // get shouldShowSelector() {
+  //   console.log(this._category);
+  //   console.log(this.disabled)
+  //   console.log(this.showSelector);
+  //   return !this._category || (!this.disabled && this.showSelector);
+  // }
 
-    return !this.disabled && this.showSelector;
+  get shouldShowSelector() {
+    if (this.category) {
+      return !this.disabled;
+    }
+    console.log('what', this._showSelector);
+    if (!this._showSelector) {
+      return true;
+    }
+    return this._showSelector;
   }
+
+  // get ShowSelector() {
+  //   return this._showSelector;
+  // }
+
+  // set ShowSelector(value) {
+  //   this._showSelector = value;
+  //   console.log(this._showSelector);
+  // }
 
   edit() {
-    this.showSelector = true;
+    if (!this.disabled) {
+      this._showSelector = true;
+    }
   }
 
-  reset(vue: { query: string; }) {
+  reset(vue: { query: string }) {
     if (this.category !== undefined) {
       vue.query = this.category.name;
       this.typedCategory = this.category.name;
-      this.showSelector = false;
+      this._showSelector = false;
     }
   }
 }
