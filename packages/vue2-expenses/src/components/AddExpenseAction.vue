@@ -2,8 +2,8 @@
   <div class="row add-expense-panel">
     <div class="col-8 align-self-center">
       <component
+        v-model="backingCategory"
         :is="categoryComponent"
-        v-model="Category"
         :disabled="state.addActionStatus == 'Saving'"
         @input="input"
       />
@@ -42,7 +42,10 @@ export default class AddExpenseAction extends Vue {
   @State("Expenses") state!: ExpensesState;
 
   @Prop()
-  category!: string;
+  category!: {
+    id: string;
+    name: string;
+  };
 
   @Prop()
   categoryComponent: string;
@@ -60,35 +63,22 @@ export default class AddExpenseAction extends Vue {
   isFullTransaction!: boolean;
 
   // backing property for category since it's value will change in child component
-  _category!: {
+  backingCategory?: {
     id: string;
     name: string;
-  }
-
-  // getter required to use backing prop as v-model for categoryComponent
-  get Category() {
-    return this._category;
-  }
+  } = null;
 
   mounted() {
-    if (this.category) {
-      this._category = {
-        id: "",
-        name: this.category
-      };
+    this.backingCategory = this.category;
+    if (!this.category) {
+      expensesModule.mutate(
+        (state: ExpensesState) => (state.addActionStatus = ActionStatus.Loaded)
+      );
     }
-
-    expensesModule.mutate(
-      (state: ExpensesState) => (state.addActionStatus = ActionStatus.Loaded)
-    );
   }
 
   cancel() {
     this.$emit("cancel");
-  }
-
-  input(value) {
-    this._category = value;
   }
 
   save() {
@@ -97,7 +87,7 @@ export default class AddExpenseAction extends Vue {
       amount: this.amount,
       isFullTransaction: this.isFullTransaction,
       transactionId: this.transactionId,
-      categoryId: this._category.id,
+      categorId: this.backingCategory.id,
     });
   }
 
@@ -106,6 +96,11 @@ export default class AddExpenseAction extends Vue {
     if (value == ActionStatus.Saved) {
       this.$emit("saved");
     }
+  }
+
+  input(value: { id: string, name: string }) {
+    this.backingCategory = value;
+    this.$emit('input', value);
   }
 }
 </script>

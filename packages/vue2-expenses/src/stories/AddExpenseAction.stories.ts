@@ -21,19 +21,19 @@ class mockApiClient implements ApiClient {
           data: {
             "categories": [
               {
-                id: "",
+                id: "3da5de97-690a-4dd5-a40c-7e68f0ee6823",
                 name: "Housing"
               },
               {
-                id: "",
+                id: "1f0e793f-a66b-4833-8749-41b5f27de1d0",
                 name: "Transportation"
               },
               {
-                id: "",
+                id: "5ac4c155-6c29-417f-a131-d036410c2b1d",
                 name: "Entertainment"
               },
               {
-                id: "",
+                id: "5f4e0a9b-8775-4da7-9ddb-c95c64a220bc",
                 name: "Education"
               }
             ]
@@ -122,7 +122,7 @@ export const Saving = SavingTemplate.bind({});
 Saving.args = {
   categoryComponent: 'category',
   category: {
-    id: 'a22a5654-cab9-4c00-b61e-3e2966872a0e',
+    id: '',
     name: 'Housing'
   }
 };

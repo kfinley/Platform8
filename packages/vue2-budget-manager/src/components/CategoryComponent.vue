@@ -2,7 +2,7 @@
   <div>
     <type-ahead
       v-model="typedCategory"
-      v-if="shouldShowSelector"
+      v-if="showSelector"
       placeholder="Select a category..."
       :src="typeAheadSrc"
       :getResponse="getResponse"
@@ -13,7 +13,7 @@
       @reset="reset"
     />
     <div v-else class="category text-center" @click.prevent="edit">
-      {{ _category.name }}
+      {{ categoryLabel }}
     </div>
   </div>
 </template>
@@ -35,25 +35,24 @@ import { Category } from "../models";
 export default class CategoryComponent extends Vue {
   name = "Category";
 
-  _category!: { id: string; name: string};
+  _category!: { id: string; name: string };
+
+  showSelector = true;
 
   @VModel({ type: Object })
   category!: { id: string; name: string };
 
-  @Prop()
-  disabled: boolean = false;
+  @Prop({ default: false })
+  disabled: boolean;
 
   typedCategory = this.category ? this.category.name : "";
-  showSelector = true;
 
   @Inject("ApiClient")
   private apiClient!: ApiClient;
 
   mounted() {
-    if (this.category) {
-      this.showSelector = false;
-      this._category = this.category;
-    }
+    this.showSelector = this.category ? false : this.disabled ? false : true;
+    this._category = this.category;
   }
 
   async fetch(url) {
@@ -68,11 +67,11 @@ export default class CategoryComponent extends Vue {
     return item.name.replace(vue.query, `<b>${vue.query}</b>`);
   }
 
-  onSelect(item, vue) {
-    vue.query = item.name;
-    this.typedCategory = item.name;
-    this._category = item;
-    this.category = item;
+  onSelect(value, vue) {
+    vue.query = value.name;
+    this.typedCategory = value.name;
+    this._category = value; // Set the backing prop
+    this.category = value; // Set the prop which will emit the value
     this.showSelector = false;
   }
 
@@ -80,16 +79,21 @@ export default class CategoryComponent extends Vue {
     return `${budgetResources.category}?name=:name`;
   }
 
-  get shouldShowSelector() {
+  get categoryLabel() {
+    if (this.category) {
+      return this.category.name;
+    }
 
-    return !this.disabled && this.showSelector;
+    return "";
   }
 
   edit() {
-    this.showSelector = true;
+    if (!this.disabled) {
+      this.showSelector = true;
+    }
   }
 
-  reset(vue: { query: string; }) {
+  reset(vue: { query: string }) {
     if (this.category !== undefined) {
       vue.query = this.category.name;
       this.typedCategory = this.category.name;
