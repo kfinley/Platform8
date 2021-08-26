@@ -1,17 +1,20 @@
 <template>
   <div class="input-group" :class="[classes]" v-click-outside="reset">
-    <input
+    <valid-input
       v-bind="$attrs"
       ref="input"
-      type="text"
-      class="form-control type-ahead-select taller"
+      :type="type"
+      css="form-control type-ahead-select taller"
       :placeholder="placeholder"
+      :name="name"
+      :rules="rules"
       autocomplete="off"
+      focus="true"
       v-model="query"
-      @keydown.down="down"
-      @keydown.up="up"
-      @keydown.enter.prevent="select"
-      @keydown.esc="reset"
+      @down="down"
+      @up="up"
+      @select="select"
+      @reset="reset"
       @input="update($event)"
     />
     <div class="typeahead-dropdown-container" v-if="showResult">
@@ -57,6 +60,7 @@
 // Adapted from: https://github.com/mizuka-wu/vue2-typeahead
 import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
 import vClickOutside from "v-click-outside";
+import ValidInput from "./ValidInput.vue";
 
 function escapeRegExp(str) {
   // eslint-disable-next-line no-useless-escape
@@ -64,11 +68,13 @@ function escapeRegExp(str) {
 }
 @Component({
   directives: {
-    clickOutside: vClickOutside.directive
-  }
+    clickOutside: vClickOutside.directive,
+  },
+  components: {
+    ValidInput,
+  },
 })
 export default class TypeAhead extends Vue {
-
   items = [];
   query = "";
   current = -1;
@@ -112,13 +118,14 @@ export default class TypeAhead extends Vue {
   @Prop()
   classes!: string;
 
+  //TODO: @VModel
   @Prop({ default: "" })
   value!: string;
 
-  @Prop({default: TypeAhead.onSelectFunc})
+  @Prop({ default: TypeAhead.onSelectFunc })
   onSelect: Function;
 
-  @Prop({default: TypeAhead.highlightingFunc})
+  @Prop({ default: TypeAhead.highlightingFunc })
   highlighting: Function;
 
   @Prop()
@@ -127,44 +134,51 @@ export default class TypeAhead extends Vue {
   @Prop()
   getResponse!: Function;
 
-  @Prop({default: TypeAhead.fetchFunc})
+  @Prop({ default: TypeAhead.fetchFunc })
   fetch: Function;
 
   @Prop()
   objectArray!: Array<object>;
 
-  mounted () {
-    this.query = this.value    
+  @Prop()
+  rules!: string;
+
+  @Prop({ default: "text" })
+  type!: string;
+
+  @Prop()
+  name: string;
+
+  mounted() {
+    this.query = this.value;
 
     if (this.objectArray) {
-      this.objectArray.sort()
+      this.objectArray.sort();
     }
-
-    (this.input as any).focus();
   }
 
-  @Watch('value')
+  @Watch("value")
   onValueChanged(value) {
     this.query = this.query !== value ? value : this.query;
   }
 
-  @Watch('query')
+  @Watch("query")
   onQueryChanged(value) {
-    this.$emit('input', value)
+    this.$emit("input", value);
   }
 
-  get vue () {
-    return this
-  }
-  
-  get hasItems () {
-    return this.items.length > 0
+  get vue() {
+    return this;
   }
 
-  get isEmpty () {
-    return this.query === ''
+  get hasItems() {
+    return this.items.length > 0;
   }
-  
+
+  get isEmpty() {
+    return this.query === "";
+  }
+
   static fetchFunc(url) {
     console.log(`TypeAhead: Fetch called for ${url}`);
   }
@@ -191,7 +205,7 @@ export default class TypeAhead extends Vue {
 
   select() {
     if (this.current !== -1) {
-      const item = this.items[this.current];    
+      const item = this.items[this.current];
       this.onSelect(item, this);
     }
     this.reset();
@@ -215,7 +229,8 @@ export default class TypeAhead extends Vue {
   }
 
   update(event) {
-    this.lastTime = event.timeStamp;
+    const eventTimeStamp = event.timeStamp ?? Date.now();
+    this.lastTime = eventTimeStamp;
     if (!this.query) {
       return this.reset();
     }
@@ -225,7 +240,7 @@ export default class TypeAhead extends Vue {
     }
 
     setTimeout(() => {
-      if (this.lastTime - event.timeStamp === 0) {
+      if (this.lastTime - eventTimeStamp === 0) {
         if (this.objectArray) {
           return this.objectUpdate();
         }
@@ -234,7 +249,7 @@ export default class TypeAhead extends Vue {
         this.showResult = true;
 
         const re = new RegExp(this.queryParamName, "g");
-    
+
         this.fetch(this.src.replace(re, encodeURIComponent(this.query))).then(
           (response) => {
             if (this.query) {
@@ -291,14 +306,11 @@ export default class TypeAhead extends Vue {
     }
   }
 
-  reset(event?: Event | undefined) {
-    
+  reset() {
     this.items = [];
     this.loading = false;
     this.showResult = false;
-    if (event) {
-      this.$emit('reset', this);
-    }
+    this.$emit("reset", this);
   }
 }
 </script>

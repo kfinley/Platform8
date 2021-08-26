@@ -3,7 +3,9 @@
     <type-ahead
       v-model="typedCategory"
       v-if="showSelector"
+      name="category"
       placeholder="Select a category..."
+      rules="required"
       :src="typeAheadSrc"
       :getResponse="getResponse"
       queryParamName=":name"
@@ -36,6 +38,7 @@ export default class CategoryComponent extends Vue {
   name = "Category";
 
   _category!: { id: string; name: string };
+  previousValue!: { id: string; name: string};
 
   showSelector = true;
 
@@ -89,15 +92,19 @@ export default class CategoryComponent extends Vue {
 
   edit() {
     if (!this.disabled) {
+      this.previousValue = this.category;
+      this.category = undefined;
       this.showSelector = true;
     }
   }
 
   reset(vue: { query: string }) {
-    if (this.category !== undefined) {
-      vue.query = this.category.name;
-      this.typedCategory = this.category.name;
+
+    if (this.previousValue && vue.query !== '') {
+      this.typedCategory = this.previousValue.name;
+      this.category = this._category;
       this.showSelector = false;
+      this.previousValue = undefined;
     }
   }
 }

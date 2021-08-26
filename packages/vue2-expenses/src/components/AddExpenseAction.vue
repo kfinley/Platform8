@@ -1,12 +1,14 @@
 <template>
   <div class="row add-expense-panel">
     <div class="col-8 align-self-center">
-      <component
-        v-model="backingCategory"
-        :is="categoryComponent"
-        :disabled="state.addActionStatus == 'Saving'"
-        @input="input"
-      />
+      <ValidationObserver ref="addExpenseValidationObserver">
+        <component
+          v-model="backingCategory"
+          :is="categoryComponent"
+          :disabled="state.addActionStatus == 'Saving'"
+          @input="input"
+        />
+      </ValidationObserver>
     </div>
     <div class="col-4 align-self-center action-controls" align="center">
       <div v-if="state.addActionStatus == 'Loaded'">
@@ -33,12 +35,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { Component, Vue, Ref, Prop, Watch } from "vue-property-decorator";
 import { expensesModule, ExpensesState, ActionStatus } from "../store";
 import { State } from "vuex-class";
+import { ValidationObserver } from "vee-validate";
 
-@Component
+@Component({
+  components: {
+    ValidationObserver,
+  },
+})
 export default class AddExpenseAction extends Vue {
+  @Ref() readonly addExpenseValidationObserver!: InstanceType<
+    typeof ValidationObserver
+  >;
+
   @State("Expenses") state!: ExpensesState;
 
   @Prop()
@@ -81,14 +92,17 @@ export default class AddExpenseAction extends Vue {
     this.$emit("cancel");
   }
 
-  save() {
-    expensesModule.addExpense({
-      description: this.description,
-      amount: this.amount,
-      isFullTransaction: this.isFullTransaction,
-      transactionId: this.transactionId,
-      categorId: this.backingCategory.id,
-    });
+  async save() {
+    const isValid = await this.addExpenseValidationObserver.validate();
+    if (isValid) {
+      expensesModule.addExpense({
+        description: this.description,
+        amount: this.amount,
+        isFullTransaction: this.isFullTransaction,
+        transactionId: this.transactionId,
+        categorId: this.backingCategory.id,
+      });
+    }
   }
 
   @Watch("state.addActionStatus")
@@ -98,9 +112,9 @@ export default class AddExpenseAction extends Vue {
     }
   }
 
-  input(value: { id: string, name: string }) {
+  input(value: { id: string; name: string }) {
     this.backingCategory = value;
-    this.$emit('input', value);
+    this.$emit("input", value);
   }
 }
 </script>

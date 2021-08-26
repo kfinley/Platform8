@@ -160,16 +160,10 @@ export default class TransactionList extends Vue {
   }
 
   workingCategory(value: { id: string; name: string } | string) {
-    if (value) {
-      if (typeof value === "string") {
-        this.WorkingCategory = { id: "UNKNOWN", name: value };
-      } else {
-        this.WorkingCategory = value;
-      }
-      return this.WorkingCategory;
-    } else {
-      return undefined;
+    if (value && typeof value === "object") {
+      this.WorkingCategory = value;
     }
+    return this.WorkingCategory;
   }
 }
 </script>
