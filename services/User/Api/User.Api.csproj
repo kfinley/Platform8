@@ -17,7 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />    
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -27,6 +27,7 @@
     <ProjectReference Include="..\Data\User.Data.csproj" />
     <ProjectReference Include="..\Commands\User.Commands.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\WebApi\WebApi.csproj" />
   </ItemGroup>
 
 </Project>

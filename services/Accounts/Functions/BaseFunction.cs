@@ -38,7 +38,7 @@ namespace Platform8.Accounts.Functions
         .AddAWSService<IAmazonSimpleNotificationService>(configuration.GetAWSOptions("Service:SNS"))
         .AddDbContext<AccountsDataContext>(options =>
           options.UseMySql(configuration.GetConnectionString("DefaultConnection")))
-        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
+        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
         .AddMediatR(Aws.Commands.CommandsAssembly.Value)
         .AddMediatR(Accounts.Commands.CommandsAssembly.Value);;
     }

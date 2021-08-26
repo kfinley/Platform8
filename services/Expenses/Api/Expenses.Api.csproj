@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\WebApi\WebApi.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Aws.Commands\Aws.Commands.csproj" />
     <ProjectReference Include="..\Commands\Expenses.Commands.csproj" />
   </ItemGroup>

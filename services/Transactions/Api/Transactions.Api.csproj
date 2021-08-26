@@ -17,5 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Commands\Transactions.Commands.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\WebApi\WebApi.csproj" />
   </ItemGroup>
 </Project>
