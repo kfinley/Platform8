@@ -47,7 +47,9 @@
             transactionsState.actionTargetId == transaction.id &&
             transaction.category
           "
-        ><i>Suggested Category</i>: {{ transaction.category }}</div>
+        >
+          <i>Suggested Category</i>: {{ transaction.category }}
+        </div>
         <component
           v-if="
             actionIsActive && transactionsState.actionTargetId == transaction.id
@@ -58,7 +60,9 @@
           :transaction-id="transaction.id"
           :amount="transaction.amount"
           :description="transaction.description"
+          :category="workingCategory(transaction.category)"
           @saved="actionComponentSaved(transaction.id)"
+          @input="workingCategory"
         />
       </li>
     </ul>
@@ -111,7 +115,7 @@ export default class TransactionList extends Vue {
   }
 
   display(str: string) {
-    return str.replace('\n', '<br/>');
+    return str.replace("\n", "<br/>");
   }
 
   get actionIsActive() {
@@ -123,6 +127,7 @@ export default class TransactionList extends Vue {
       state.actionStatus = ActionStatus.None;
       state.actionTargetId = undefined;
     });
+    this.WorkingCategory = undefined;
   }
 
   actionComponentSaved(transactionId: string) {
@@ -137,8 +142,28 @@ export default class TransactionList extends Vue {
     if (this.type) {
       return `${this.type} Transactions`;
     } else {
-      return 'Transactions';
+      return "Transactions";
     }
+  }
+
+  _workingCategory!: {
+    id: string;
+    name: string;
+  };
+
+  get WorkingCategory() {
+    return this._workingCategory;
+  }
+
+  set WorkingCategory(value) {
+    this._workingCategory = value;
+  }
+
+  workingCategory(value: { id: string; name: string } | string) {
+    if (value && typeof value === "object") {
+      this.WorkingCategory = value;
+    }
+    return this.WorkingCategory;
   }
 }
 </script>

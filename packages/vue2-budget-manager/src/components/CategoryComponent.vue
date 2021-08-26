@@ -2,8 +2,10 @@
   <div>
     <type-ahead
       v-model="typedCategory"
-      v-if="shouldShowSelector"
+      v-if="showSelector"
+      name="category"
       placeholder="Select a category..."
+      rules="required"
       :src="typeAheadSrc"
       :getResponse="getResponse"
       queryParamName=":name"
@@ -13,14 +15,14 @@
       @reset="reset"
     />
     <div v-else class="category text-center" @click.prevent="edit">
-      {{ category.name }}
+      {{ categoryLabel }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, VModel } from "vue-property-decorator";
 import { Inject } from "inversify-props";
 import { TypeAhead } from "@platform8/vue2-common/src/components";
 import { ApiClient } from "@platform8/api-client/src";
@@ -35,22 +37,25 @@ import { Category } from "../models";
 export default class CategoryComponent extends Vue {
   name = "Category";
 
-  @Prop() // Category
-  value!: {
-    id: string;
-    name: string;
-  };
-  
-  category!: { id: string, name: string };
-  
-  typedCategory = this.category ? this.category.name : "";
+  _category!: { id: string; name: string };
+  previousValue!: { id: string; name: string};
+
   showSelector = true;
+
+  @VModel({ type: Object })
+  category!: { id: string; name: string };
+
+  @Prop({ default: false })
+  disabled: boolean;
+
+  typedCategory = this.category ? this.category.name : "";
 
   @Inject("ApiClient")
   private apiClient!: ApiClient;
 
   mounted() {
-    this.category = this.value;
+    this.showSelector = this.category ? false : this.disabled ? false : true;
+    this._category = this.category;
   }
 
   async fetch(url) {
@@ -65,11 +70,11 @@ export default class CategoryComponent extends Vue {
     return item.name.replace(vue.query, `<b>${vue.query}</b>`);
   }
 
-  onSelect(item, vue) {
-    vue.query = item.name;
-    this.typedCategory = item.name;
-    this.category = item;
-    this.updateValue(this.category);
+  onSelect(value, vue) {
+    vue.query = value.name;
+    this.typedCategory = value.name;
+    this._category = value; // Set the backing prop
+    this.category = value; // Set the prop which will emit the value
     this.showSelector = false;
   }
 
@@ -77,24 +82,30 @@ export default class CategoryComponent extends Vue {
     return `${budgetResources.category}?name=:name`;
   }
 
-  get shouldShowSelector() {
-    return this.showSelector;
+  get categoryLabel() {
+    if (this.category) {
+      return this.category.name;
+    }
+
+    return "";
   }
 
   edit() {
-    this.showSelector = true;
-  }
-
-  reset(vue) {
-    if (this.value !== undefined) {
-      vue.query = this.value.name;
-      this.typedCategory = this.value.name;
-      this.showSelector = false;
+    if (!this.disabled) {
+      this.previousValue = this.category;
+      this.category = undefined;
+      this.showSelector = true;
     }
   }
 
-  updateValue(value) {
-    this.$emit("input", value);
+  reset(vue: { query: string }) {
+
+    if (this.previousValue && vue.query !== '') {
+      this.typedCategory = this.previousValue.name;
+      this.category = this._category;
+      this.showSelector = false;
+      this.previousValue = undefined;
+    }
   }
 }
 </script>

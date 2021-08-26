@@ -3,7 +3,7 @@ import { ActionStatus, ExpensesState, ExpensesStatus } from './state';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { container } from 'inversify-props';
 import { AlertType } from '@platform8/vue2-notify/src/types';
-import { AddExpenseRequest, AddExpenseResponse } from '@/models';
+import { AddExpenseRequest } from '@/models';
 import { AddExpenseCommand } from '@/commands/AddExpense';
 import { messages } from "../resources/messages";
 
