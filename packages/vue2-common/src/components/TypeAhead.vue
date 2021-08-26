@@ -208,7 +208,7 @@ export default class TypeAhead extends Vue {
       const item = this.items[this.current];
       this.onSelect(item, this);
     }
-    this.reset();
+    this.reset(false);
   }
 
   objectUpdate() {
@@ -306,11 +306,13 @@ export default class TypeAhead extends Vue {
     }
   }
 
-  reset() {
+  reset(emit: boolean = true) {
     this.items = [];
     this.loading = false;
     this.showResult = false;
-    this.$emit("reset", this);
+    if (emit) {
+      this.$emit("reset", this);
+    }
   }
 }
 </script>

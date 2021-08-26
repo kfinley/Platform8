@@ -38,7 +38,7 @@ export default class CategoryComponent extends Vue {
   name = "Category";
 
   _category!: { id: string; name: string };
-  previousValue!: { id: string; name: string};
+  previousValue!: { id: string; name: string };
 
   showSelector = true;
 
@@ -99,8 +99,7 @@ export default class CategoryComponent extends Vue {
   }
 
   reset(vue: { query: string }) {
-
-    if (this.previousValue && vue.query !== '') {
+    if (this.previousValue && vue.query !== "") {
       this.typedCategory = this.previousValue.name;
       this.category = this._category;
       this.showSelector = false;
