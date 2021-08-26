@@ -4,24 +4,18 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using MediatR;
 
 using Platform8.Budgets.Models;
+using Platform8.WebApi;
 
 namespace Platform8.Budgets.Api.Controllers {
   [Authorize]
   [ApiController]
-  public class BudgetController : ControllerBase {
+  public class BudgetController : ApiControllerBase {
 
-    private readonly ILogger<BudgetController> logger;
-    private readonly IMediator mediator;
-
-    public BudgetController(IMediator mediator, ILogger<BudgetController> logger) {
-      this.mediator = mediator;
-      this.logger = logger;
-    }
+    public BudgetController(IMediator mediator) : base(mediator) { }
 
     [HttpGet]
     [Route("/budgets/v1")]
@@ -29,7 +23,7 @@ namespace Platform8.Budgets.Api.Controllers {
       var request = new GetBudgetRequest {
         OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value)
       };
-      return Ok(await mediator.Send(request));
+      return Ok(await base.Send(request));
     }
   }
 }

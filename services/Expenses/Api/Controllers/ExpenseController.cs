@@ -4,31 +4,24 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using MediatR;
 
 using Platform8.Expenses.Models;
+using Platform8.WebApi;
 
 namespace Platform8.Expenses.Api.Controllers {
   [Authorize]
   [ApiController]
-  public class ExpenseController : ControllerBase {
+  public class ExpenseController : ApiControllerBase {
 
-
-    private readonly ILogger<ExpenseController> logger;
-    private readonly IMediator mediator;
-
-    public ExpenseController(IMediator mediator, ILogger<ExpenseController> logger) {
-      this.mediator = mediator;
-      this.logger = logger;
-    }
+    public ExpenseController(IMediator mediator) : base(mediator) { }
 
     [HttpPost]
     [Route("/expenses/v1")]
     public async Task<IActionResult> Expense(AddExpenseRequest request) {
       request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
-      return Ok(await mediator.Send(request));
+      return Ok(await base.Send(request));
     }
 
   }
