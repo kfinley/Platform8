@@ -26,7 +26,7 @@ This is a monorepo that contains both front end and back end components. The mai
 ```
 
 ##### .devcontainer
-This directory containers VS Code development container files as well as resources used for running the full platfoorm stack locally using Serverless Offline.
+This directory contains VS Code development container files as well as resources used for running the full platfoorm stack locally using Serverless Offline.
 
 ##### dotnet
 This directory contains shared .NET Core projects.
@@ -40,13 +40,12 @@ This directory contains scripts used for running services locally using Serverle
 TODO: These scripts should move to .devcontainer/scripts
 
 ##### services
-This directory contains any back end services. These are logically grouped services that can be C# based running as a .net core api, TypeScript running as AWS Lambda Functions, or both.
-
+This directory contains any back end services. These are logically grouped services that written in C# running as a .net core api in a container or serverless functions written in C# or TypeScript.
 
 ### Front End - VueJs / Vuex / TypeScript
 The front end is built as a component based system using VueJs 2, Vuex, Bootstrap 5, and TypeScript.
 
-Components are grouped by domain and built as seperate Vue plugins. These plugins are loaded by Vue client in order to expose features as a product.
+Components are grouped by domain and built as seperate Vue plugins. These plugins are loaded by a Vue client in order to expose features as a product.
 
 Storybooks are used for design, development, testing, and review of all individual UX components.
 
@@ -69,7 +68,7 @@ At a high level the back end looks like this...
 
 In order to have a close match between Production and Development code execution paths all cloud based process flows and systems are run locally using various open source projects and AWS provided components.
 
-The back end systems are run in containers as either dotnet core 5.0 AspNetCore.Mvc based APIs, AWS service stand-ins, or using Serverless Offline to memic AWS.
+The back end systems are run in containers as either dotnet core 5.0 AspNetCore.Mvc based APIs, AWS service stand-ins, or using Serverless Offline to memic AWS Lambda, API Gateway, and other required services.
 
 ##### Serverless Offline
 A [customized version of Serverless Offline](https://github.com/kfinley/serverless-offline) that has dotnet core Lambda Function execution support is being used and is referenced as a git submodule.
@@ -134,7 +133,6 @@ Contains cloud resource definitions such as DynamoDB Tables, SNS Topics/Subscrip
 ##### stateMachines.yml
 Contains AWS StepFunction definitions
 
-
 ### Storybooks
 Each Vue plugin package has it's own [Storybook](https://github.com/storybookjs/storybook) configured.
 
@@ -156,4 +154,3 @@ Ports:
 * 8001 - DynamoDb Admin
 * 8080 - Vue Web Client
 * 9229 - Cognito
-
