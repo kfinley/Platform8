@@ -18,7 +18,7 @@ typescript \
 
 # aws-cli v2
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
+RUN unzip -q awscliv2.zip
 RUN sudo ./aws/install
 RUN rm awscliv2.zip
 
@@ -39,6 +39,9 @@ RUN touch /var/run/docker-host.sock \
     && ln -s /var/run/docker-host.sock /var/run/docker.sock \
     && apt-get update \
     && apt-get -y install socat
+
+RUN ENVIRONMENT_VARS=$(set) \
+    && echo $ENVIRONMENT_VARS >> /vars.txt
 
 # Create docker-init.sh to spin up socat
 RUN echo "#!/bin/sh\n\

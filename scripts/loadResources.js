@@ -4,7 +4,7 @@ const config = require('../sls.config');
 
 module.exports = () => {
 
-  const services = config.services; // ["Transactions", "Accounts"];
+  const services = config.services;
 
   let resources = {};
   services.forEach((service) => {
