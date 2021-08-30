@@ -1,6 +1,6 @@
 const fs = require("fs");
 const yaml = require("yaml");
-const config = require('../sls.config');
+const config = require('../../../sls.config');
 
 module.exports = () => {
   const services = config.services;

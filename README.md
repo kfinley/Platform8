@@ -21,7 +21,6 @@ This is a monorepo that contains both front end and back end components. The mai
 ├── .devcontainer
 ├── dotnet
 ├── packages
-├── scripts
 └── services
 ```
 
@@ -33,11 +32,6 @@ This directory contains shared .NET Core projects.
 
 ##### packages
 This directory contains any shared TypeScript projects as well as front end client packages.
-
-##### scripts
-This directory contains scripts used for running services locally using Serverless Offline.
-
-TODO: These scripts should move to .devcontainer/scripts
 
 ##### services
 This directory contains any back end services. These are logically grouped services that written in C# running as a .net core api in a container or serverless functions written in C# or TypeScript.

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const yaml = require("yaml");
-const config = require('../sls.config');
+const config = require('../../../sls.config');
 
 const renameFunctions = (serviceName, basePath, funcs) => {
   const keys = Object.keys(funcs);
