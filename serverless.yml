@@ -36,7 +36,7 @@ custom:
 
   serverless-offline:
     host: platform8.sls
-    dotnetRunnerScript: ./scripts/invoke.ps1
+    dotnetRunnerScript: .devcontainer/scripts/serverless-offline/invoke.ps1
 
   s3:
     serviceEndpoint: platform8.sls
@@ -71,7 +71,7 @@ provider:
   region: ${opt:region, 'us-west-1'}
   apiGateway:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
-  environment: ${file(./scripts/loadEnvironment.js)}
+  environment: ${file(.devcontainer/scripts/serverless-offline/loadEnvironment.js)}
   lambdaHashingVersion: 20201221
   tracing:
     lambda: true
@@ -84,9 +84,9 @@ provider:
       Resource: "*"
 
 resources:
-  Resources: ${file(./scripts/loadResources.js)}
+  Resources: ${file(.devcontainer/scripts/serverless-offline/loadResources.js)}
 
-functions: ${file(./scripts/loadFunctions.js)}
+functions: ${file(.devcontainer/scripts/serverless-offline/loadFunctions.js)}
 
 stepFunctions:
-  stateMachines: ${file(./scripts/loadStateMachines.js)}
+  stateMachines: ${file(.devcontainer/scripts/serverless-offline/loadStateMachines.js)}

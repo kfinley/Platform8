@@ -1,10 +1,10 @@
 const fs = require("fs");
 const yaml = require("yaml");
-const config = require('../sls.config');
+const config = require('../../../sls.config');
 
 module.exports = () => {
 
-  const services = config.services; // ["Transactions", "Accounts"];
+  const services = config.services;
 
   let environment = {};
   for (i = 0; i < services.length; i++) {
