@@ -31,7 +31,8 @@
     "formulahendry.dotnet-test-explorer",
     "threadheap.serverless-ide-vscode",
     "ms-azuretools.vscode-docker",
-    "joshbolduc.story-explorer"
+    "joshbolduc.story-explorer",
+    "ms-vscode-remote.remote-ssh"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

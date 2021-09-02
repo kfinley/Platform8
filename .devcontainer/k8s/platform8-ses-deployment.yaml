@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-ses
+  name: platform8-ses
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-ses
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-ses
+    spec:
+      containers:
+      - image: platform8-ses
+        imagePullPolicy: ""
+        name: platform8-ses
+        ports:
+        - containerPort: 9001
+        resources: {}
+        volumeMounts:
+        - mountPath: /aws-ses-local/output
+          name: platform8-ses-claim0
+        - mountPath: /aws-ses-local/email-templates
+          name: platform8-ses-claim1
+        - mountPath: /aws-ses-local/src
+          name: platform8-ses-claim2
+        - mountPath: /aws-ses-local/build/templates
+          name: platform8-ses-claim3
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-ses-claim0
+        persistentVolumeClaim:
+          claimName: platform8-ses-claim0
+      - name: platform8-ses-claim1
+        persistentVolumeClaim:
+          claimName: platform8-ses-claim1
+      - name: platform8-ses-claim2
+        persistentVolumeClaim:
+          claimName: platform8-ses-claim2
+      - name: platform8-ses-claim3
+        persistentVolumeClaim:
+          claimName: platform8-ses-claim3
+status: {}

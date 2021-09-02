@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-web
+  name: platform8-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-web
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - npm run dev:client:docker
+        image: node:14
+        imagePullPolicy: ""
+        name: platform8-web
+        ports:
+        - containerPort: 8080
+        resources: {}
+        volumeMounts:
+        - mountPath: /vite-client
+          name: platform8-web-claim0
+        workingDir: /vite-client
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-web-claim0
+        persistentVolumeClaim:
+          claimName: platform8-web-claim0
+status: {}

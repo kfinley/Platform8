@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-dynamodb
+  name: platform8-dynamodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-dynamodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-dynamodb
+    spec:
+      containers:
+      - args:
+        - -jar
+        - DynamoDBLocal.jar
+        - -sharedDb
+        - -dbPath
+        - /home/dynamodblocal/db
+        image: amazon/dynamodb-local
+        imagePullPolicy: ""
+        name: platform8-dynamodb
+        ports:
+        - containerPort: 8000
+        resources: {}
+        volumeMounts:
+        - mountPath: /home/dynamodblocal/db
+          name: platform8-dynamodb-claim0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-dynamodb-claim0
+        persistentVolumeClaim:
+          claimName: platform8-dynamodb-claim0
+status: {}

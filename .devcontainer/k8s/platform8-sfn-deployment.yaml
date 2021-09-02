@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-sfn
+  name: platform8-sfn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-sfn
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-sfn
+    spec:
+      containers:
+      - env:
+        - name: AWS_ACCESS_KEY_ID
+          value: S3RVER
+        - name: AWS_ACCOUNT_ID
+          value: "101010101010"
+        - name: AWS_DEFAULT_REGION
+          value: us-west-1
+        - name: AWS_SECRET_ACCESS_KEY
+          value: S3RVER
+        - name: DYNAMODB_ENDPOINT
+          value: http://platform8.dynamodb:8000
+        - name: LAMBDA_ENDPOINT
+          value: http://platform8.sls:3002
+        - name: SNS_ENDPOINT
+          value: http://platform8.sls:4002
+        image: amazon/aws-stepfunctions-local
+        imagePullPolicy: ""
+        name: platform8-sfn
+        ports:
+        - containerPort: 8083
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

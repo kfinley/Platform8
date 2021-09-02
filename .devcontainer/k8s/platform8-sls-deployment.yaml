@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-sls
+  name: platform8-sls
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-sls
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-sls
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - npm run dev:sls
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: S3RVER
+        - name: AWS_ACCOUNT_ID
+          value: "101010101010"
+        - name: AWS_REGION
+          value: us-west-1
+        - name: AWS_SECRET_ACCESS_KEY
+          value: S3RVER
+        image: platform8-sls
+        imagePullPolicy: ""
+        name: platform8-sls
+        ports:
+        - containerPort: 3001
+        - containerPort: 3002
+        - containerPort: 4002
+        - containerPort: 4569
+        resources: {}
+        stdin: true
+        tty: true
+        volumeMounts:
+        - mountPath: /sls-offline
+          name: platform8-sls-claim0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-sls-claim0
+        persistentVolumeClaim:
+          claimName: platform8-sls-claim0
+status: {}

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-mysql
+  name: platform8-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: P@ssw0rd!
+        image: mysql:5.7
+        imagePullPolicy: ""
+        name: platform8-mysql
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/my.cnf
+          name: platform8-mysql-claim0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-mysql-claim0
+        persistentVolumeClaim:
+          claimName: platform8-mysql-claim0
+status: {}

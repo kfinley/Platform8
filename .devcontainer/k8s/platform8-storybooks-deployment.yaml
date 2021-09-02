@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-storybooks
+  name: platform8-storybooks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-storybooks
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-storybooks
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - npm run deploy-storybook:local && npx http-server -p 6006 storybooks
+        image: node:14
+        imagePullPolicy: ""
+        name: platform8-storybooks
+        ports:
+        - containerPort: 6006
+        resources: {}
+        volumeMounts:
+        - mountPath: /workspace
+          name: platform8-storybooks-claim0
+        workingDir: /workspace
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-storybooks-claim0
+        persistentVolumeClaim:
+          claimName: platform8-storybooks-claim0
+status: {}

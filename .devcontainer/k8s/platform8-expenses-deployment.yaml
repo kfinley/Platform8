@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: platform8-expenses
+  name: platform8-expenses
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: platform8-expenses
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f ../../dev-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: platform8-expenses
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - dockerize -wait tcp://platform8.mysql:3306 -timeout 300s -wait-retry-interval
+          3s dotnet Expenses.Api.dll
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://+:5004
+        - name: AWS_ACCESS_KEY_ID
+          value: S3RVER
+        - name: AWS_SECRET_ACCESS_KEY
+          value: S3RVER
+        image: platform8-expenses
+        imagePullPolicy: ""
+        name: platform8-expenses
+        ports:
+        - containerPort: 5004
+        resources: {}
+        volumeMounts:
+        - mountPath: /Api
+          name: platform8-expenses-claim0
+        - mountPath: /vsdbg
+          name: platform8-expenses-claim1
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: platform8-expenses-claim0
+        persistentVolumeClaim:
+          claimName: platform8-expenses-claim0
+      - name: platform8-expenses-claim1
+        persistentVolumeClaim:
+          claimName: platform8-expenses-claim1
+status: {}

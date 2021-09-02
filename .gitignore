@@ -50,3 +50,5 @@ mono_crash.*
 
 packages/*/storybooks
 storybooks/*
+
+kompose
