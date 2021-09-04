@@ -22,6 +22,7 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.17" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.6" />
+    <PackageReference Include="ServiceProviderFunctions" Version="0.0.2" />
   </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Models\Accounts.Models.EF3.csproj" />
