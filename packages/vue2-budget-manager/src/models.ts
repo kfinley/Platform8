@@ -7,17 +7,12 @@ export interface Category {
   id: string;
   name: string;
   allocation: NumberRange;
-  classifications: Classification[];
+  classifications: Record<string, string>[];
 }
 
 export interface NumberRange {
   start: number;
   end: number;
-}
-
-export interface Classification {
-  id: string;
-  name: string;
 }
 
 export interface AddCategoryRequest {

@@ -55,7 +55,6 @@ const BudgetManagementPlugin = {
       options.store.watch(
         options.loadOnChangedGetter,
         (newValue) => {
-
           if (newValue === options.loadOnChangedValue) {
             budgetModule.loadBudget();
           }

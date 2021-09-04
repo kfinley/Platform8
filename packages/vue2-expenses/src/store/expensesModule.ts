@@ -3,9 +3,10 @@ import { ActionStatus, ExpensesState, ExpensesStatus } from './state';
 import { notificationModule } from '@platform8/vue2-notify/src/store';
 import { container } from 'inversify-props';
 import { AlertType } from '@platform8/vue2-notify/src/types';
-import { AddExpenseRequest } from '@/models';
-import { AddExpenseCommand } from '@/commands/AddExpense';
+import { AddExpenseRequest, ExpensesModuleSettings } from '../models';
+import { AddExpenseCommand, LoadExpensesCommand } from '../commands';
 import { messages } from "../resources/messages";
+import VueRouter from 'vue-router';
 
 @Module({ namespaced: true, name: 'Expenses' })
 export class ExpensesModule extends VuexModule implements ExpensesState {
@@ -13,6 +14,8 @@ export class ExpensesModule extends VuexModule implements ExpensesState {
   expenses = [];
   status = ExpensesStatus.None;
   addActionStatus = ActionStatus.None;
+
+  settings!: ExpensesModuleSettings;
 
   @Action
   addActionActivated(transactionId: string) {
@@ -57,33 +60,41 @@ export class ExpensesModule extends VuexModule implements ExpensesState {
     }
   }
 
-  // @Action
-  // async loadExpenses(params: { }) {
-  //   this.context.commit('mutate',
-  //     (state: ExpensesState) => state.status = ExpensesStatus.Loading);
+  @Action
+  async loadExpenses() {
+    this.context.commit('mutate',
+      (state: ExpensesState) => state.status = ExpensesStatus.Loading);
 
-  //   try {s
-  //     const runParams = {};
+    try {
+      const cmd = container.get<LoadExpensesCommand>("LoadExpensesCommand");
+      const response = await cmd.runAsync({});
 
-  //     const cmd = container.get<LoadExpensesCommand>("LoadExpensesCommand");
-  //     const response = await cmd.runAsync(runParams);
+      if (!response.expenses) {
+        throw new Error(response.error);
+      }
+      this.context.commit('mutate',
+        (state: ExpensesState) => {
+          state.expenses = response.expenses;
+          state.status = ExpensesStatus.Loaded;
+        }
+      );
 
-  //     if (!response.expenses) {
-  //       throw new Error(response.error);
-  //     }
-  //     this.context.commit('mutate',
-  //       (state: ExpensesState) => {
-  //         state.status = ExpensesStatus.Loaded;
-  //       }
-  //     );
+    } catch (error) {
+      this.context.commit('mutate',
+        (state: ExpensesState) => state.status = ExpensesStatus.Failed);
 
-  //   } catch (error) {
-  //     this.context.commit('mutate',
-  //       (state: ExpensesState) => state.status = ExpensesStatus.Failed);
+      notificationModule.handleError({ error, rethrow: false });
+    }
+  }
 
-  //     notificationModule.handleError({ error, rethrow: false });
-  //   }
-  // }
+  @Action
+  close(router: VueRouter) {
+    this.context.commit('mutate',
+        (state: ExpensesState) => {
+          state.status = ExpensesStatus.Loaded;
+        });
+    router.push({ name: this.settings.onCloseRedirectRouteName });
+  }
 
   @Mutation
   mutate(mutation: (state: ExpensesState) => void) {
