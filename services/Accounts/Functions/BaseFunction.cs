@@ -11,20 +11,15 @@ using EFQuerySpecs;
 
 using Platform8.Accounts.Data;
 
-namespace Platform8.Accounts.Functions
-{
-  public abstract class BaseFunction : ServiceProviderFunction
-  {
-    protected IMediator Mediator
-    {
-      get
-      {
+namespace Platform8.Accounts.Functions {
+  public abstract class BaseFunction : ServiceProviderFunction {
+    protected IMediator Mediator {
+      get {
         return Scope.ServiceProvider.GetService<IMediator>();
       }
     }
 
-    protected override void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration)
-    {
+    protected override void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration) {
       serviceCollection
         .AddOptions()
         .AddDefaultAWSOptions(configuration.GetAWSOptions())
@@ -33,7 +28,7 @@ namespace Platform8.Accounts.Functions
           options.UseMySql(configuration.GetConnectionString("DefaultConnection")))
         .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
         .AddMediatR(Aws.Commands.CommandsAssembly.Value)
-        .AddMediatR(Accounts.Commands.CommandsAssembly.Value);;
+        .AddMediatR(Accounts.Commands.CommandsAssembly.Value);
     }
   }
 }

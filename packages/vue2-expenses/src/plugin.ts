@@ -1,6 +1,6 @@
 import Vue, { PluginFunction, PluginObject } from "vue";
 import { Store } from "vuex";
-import { initializeModules } from "./store";
+import { expensesModule, initializeModules } from "./store";
 import NotificationModule from "@platform8/vue2-notify/src/store/notificationModule";
 import { NotificationPlugin } from "@platform8/vue2-notify/src/";
 import { routes } from "./router";
@@ -20,8 +20,9 @@ export interface ExpensesPluginOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store: Store<any>;
   router: router;
-  // loadOnChangedValue: any;
-  // loadOnChangeGetter: () => any;
+  loadOnChangedValue: any;
+  loadOnChangedGetter: () => any;
+  onCloseRedirectRouteName: string;
 }
 
 export const setupModules = (store: Store<any>): void => {
@@ -36,7 +37,7 @@ const ExpensesPlugin = {
       bootstrapper();
 
       setupModules(options.store);
-      
+
       if (getModule(NotificationModule, options.store) === undefined) {
         vue.use(NotificationPlugin, {
           router: options.router,
@@ -50,19 +51,18 @@ const ExpensesPlugin = {
         Vue.component(name, (<any>components)[name]);
       });
 
-      // expensesModule.settings = {
-      //   onCloseRedirectRouteName: options.onCloseRedirectRouteName
-      // };
+      expensesModule.settings = {
+        onCloseRedirectRouteName: options.onCloseRedirectRouteName
+      };
 
-      // options.store.watch(
-      //   options.loadOnChangedGetter,
-      //   (newValue) => {
-
-      //     if (newValue === options.loadOnChangedValue) {
-      //       expensesModule.loadExpenses();
-      //     }
-      //   },
-      // );
+      options.store.watch(
+        options.loadOnChangedGetter,
+        (newValue) => {
+          if (newValue === options.loadOnChangedValue) {
+            expensesModule.loadExpenses();
+          }
+        },
+      );
     }
   },
 };

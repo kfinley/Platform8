@@ -76,6 +76,9 @@ const plugin = {
       vue.use(ExpensesPlugin, {
         router: options.router,
         store: options.store,
+        loadOnChangedValue: AuthStatus.LoggedIn,
+        onCloseRedirectRouteName: RouteNames.Dashboard,
+        loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
       });
 
       vue.use(TransactionsPlugin, {
@@ -90,9 +93,9 @@ const plugin = {
       vue.use(BudgetPlugin, {
         router: options.router,
         store: options.store,
-        loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus,
         loadOnChangedValue: AuthStatus.LoggedIn,
-        onCloseRedirectRouteName: RouteNames.Dashboard
+        onCloseRedirectRouteName: RouteNames.Dashboard,
+        loadOnChangedGetter: () => (<UserState>options.store.state.User).authStatus
       })
 
       //HACK: Calls to Vuex.registerModule inside plugins will wipe out the store getters.

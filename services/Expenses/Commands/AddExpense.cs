@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
-using AutoMapper;
 using MediatR;
 using EFQuerySpecs;
 
@@ -17,17 +16,15 @@ namespace Platform8.Expenses.Commands {
   public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, AddExpenseResponse> {
     private readonly IMediator mediator;
     private readonly ILogger<AddExpenseHandler> logger;
-    private readonly IMapper mapper;
+
     private readonly IAsyncRepository<DataContext, IEntity> repository;
 
     public AddExpenseHandler(
       IMediator mediator,
-      IMapper mapper,
       ILogger<AddExpenseHandler> logger,
       IAsyncRepository<DataContext, IEntity> repository
     ) {
       this.mediator = mediator;
-      this.mapper = mapper;
       this.logger = logger;
       this.repository = repository;
     }

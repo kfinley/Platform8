@@ -23,6 +23,12 @@ namespace Platform8.Expenses.Api.Controllers {
       request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
       return Ok(await base.Send(request));
     }
-
+    
+    [HttpGet]
+    [Route("/expenses/v1")]
+    public async Task<IActionResult> Expenses([FromQuery] ListExpensesRequest request) {
+      request.OwnerId = new Guid(this.User.Claims.FirstOrDefault(c => c.Type == "username")?.Value);
+      return Ok(await base.Send(request));
+    }
   }
 }
