@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using AutoMapper;
 using MediatR;
+using EFQuerySpecs;
 
 using Platform8.Aws.Commands;
 using Platform8.Core.Data;
@@ -17,13 +18,13 @@ namespace Platform8.Expenses.Commands {
     private readonly IMediator mediator;
     private readonly ILogger<AddExpenseHandler> logger;
     private readonly IMapper mapper;
-    private readonly IAsyncRepository<DataContext> repository;
+    private readonly IAsyncRepository<DataContext, IEntity> repository;
 
     public AddExpenseHandler(
       IMediator mediator,
       IMapper mapper,
       ILogger<AddExpenseHandler> logger,
-      IAsyncRepository<DataContext> repository
+      IAsyncRepository<DataContext, IEntity> repository
     ) {
       this.mediator = mediator;
       this.mapper = mapper;

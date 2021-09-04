@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
+using EFQuerySpecs;
 
 using Platform8.Core.Data;
 using Platform8.Accounts.Data;
@@ -10,9 +11,9 @@ using Platform8.Accounts.Models;
 
 namespace Platform8.Accounts.Commands {
   public class ListAccountsHandler : IRequestHandler<ListAccountsRequest, ListAccountsResponse> {
-    private readonly IAsyncRepository<AccountsDataContext> repository;
+    private readonly IAsyncRepository<AccountsDataContext, IEntity> repository;
 
-    public ListAccountsHandler(IAsyncRepository<AccountsDataContext> repository) {
+    public ListAccountsHandler(IAsyncRepository<AccountsDataContext, IEntity> repository) {
       this.repository = repository;
     }
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 using MediatR;
+using EFQuerySpecs;
 
 using Platform8.Core.Data;
 using Platform8.Budgets.Data;
@@ -11,10 +12,10 @@ using Platform8.Budgets.Models;
 
 namespace Platform8.Budgets.Commands {
   public class GetBudgetHandler : IRequestHandler<GetBudgetRequest, GetBudgetResponse> {
-    private readonly IAsyncRepository<BudgetsDataContext> repository;
+    private readonly IAsyncRepository<BudgetsDataContext, IEntity> repository;
     private readonly IMapper mapper;
 
-    public GetBudgetHandler(IAsyncRepository<BudgetsDataContext> repository, IMapper mapper) {
+    public GetBudgetHandler(IAsyncRepository<BudgetsDataContext, IEntity> repository, IMapper mapper) {
       this.repository = repository;
       this.mapper = mapper;
     }

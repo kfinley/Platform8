@@ -16,7 +16,7 @@ namespace Platform8.Budgets.Api.Controllers {
   public class CategoryController : ApiControllerBase {
 
 
-    public CategoryController(IMediator mediator) : base (mediator){ }
+    public CategoryController(IMediator mediator) : base(mediator) { }
 
     [HttpPost]
     [Route("/budgets/v1/category")]

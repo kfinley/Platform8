@@ -28,6 +28,7 @@
       <ProjectReference Include="..\Models\Accounts.Models.EF3.csproj" />
       <ProjectReference Include="..\Commands\Accounts.Commands.EF3.csproj" />
       <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
+      <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EF3QuerySpec.csproj" />
     </ItemGroup>
   <ItemGroup>
       <Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />

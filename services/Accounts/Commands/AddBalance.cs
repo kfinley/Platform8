@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 using MediatR;
+using EFQuerySpecs;
 
 using Platform8.Aws.Commands;
 using Platform8.Core;
@@ -16,9 +17,9 @@ namespace Platform8.Accounts.Commands {
   public class AddBalanceHandler : IRequestHandler<AddBalanceRequest, AddBalanceResponse> {
     private readonly ILogger<AddBalanceHandler> logger;
     private readonly IMediator mediator;
-    private readonly IAsyncRepository<AccountsDataContext> repository;
+    private readonly IAsyncRepository<AccountsDataContext, IEntity> repository;
 
-    public AddBalanceHandler(IAsyncRepository<AccountsDataContext> repository,
+    public AddBalanceHandler(IAsyncRepository<AccountsDataContext, IEntity> repository,
                               IMediator mediator,
                               ILogger<AddBalanceHandler> logger) {
       this.logger = logger;

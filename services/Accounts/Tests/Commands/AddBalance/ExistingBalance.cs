@@ -10,6 +10,7 @@ using Xunit;
 using Moq;
 using It = Machine.Specifications.It;
 using Argument = Moq.It;
+using EFQuerySpecs;
 
 using Platform8.Tests.Common.Specs;
 using Platform8.Tests.Common;
@@ -50,7 +51,7 @@ namespace Platform8.Accounts.Tests {
         Date = DateTime.Parse("2021-02-15")
       };
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, Models.Balance>(r =>
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, IEntity>, Models.Balance>(r =>
           r.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(testBalance);
     };
@@ -68,13 +69,13 @@ namespace Platform8.Accounts.Tests {
     [Fact]
     public void It_should_not_save_the_Balance_to_the_Data_Repository() => should_not_save_the_Balance_to_the_Data_Repository();
     It should_not_save_the_Balance_to_the_Data_Repository = () => {
-      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Never());
+      Sut.Verify<IAsyncRepository<AccountsDataContext, IEntity>>(p => p.SaveAsync(Argument.IsAny<Models.Balance>(), Argument.IsAny<CancellationToken>()), Times.Never());
     };
 
     [Fact]
     public void It_should_get_an_existing_Balance_from_the_Data_Repository() => should_get_an_existing_Balance_from_the_Data_Repository();
     It should_get_an_existing_Balance_from_the_Data_Repository = () => {
-      Sut.Verify<IAsyncRepository<AccountsDataContext>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<AccountsDataContext, IEntity>>(p => p.FirstOrDefaultAsync(Argument.IsAny<Expression<Func<Models.Balance, bool>>>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
 
     [Fact]

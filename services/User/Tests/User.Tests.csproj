@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\..\dotnet\Tests.Common\Tests.Common.csproj" />
     <ProjectReference Include="..\Models\User.Models.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EFQuerySpecs.csproj" />
     <ProjectReference Include="..\Data\User.Data.csproj" />
   </ItemGroup>
 

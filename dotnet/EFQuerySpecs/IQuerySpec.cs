@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Platform8.Core.Data {
+namespace EFQuerySpecs {
 
   public interface IQuerySpec<T, TResult> : IQuerySpec<T> {
     Func<T, TResult> Selector { get; }

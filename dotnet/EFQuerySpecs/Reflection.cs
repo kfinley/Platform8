@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Platform8.Core.Data {
+namespace EFQuerySpecs {
   public static class Reflection {
     private static ConcurrentDictionary<Type, PropertyInfo[]> s_KnownProperties = new ConcurrentDictionary<Type, PropertyInfo[]>();
 
@@ -58,34 +58,5 @@ namespace Platform8.Core.Data {
       }
     }
 
-    public static T GetPropertyValue<T>(this object source, string property) {
-      try {
-
-        return (T)source.GetPropertyValue(property);
-
-      } catch (Exception ex) {
-        throw new Exception("Error in Reflection.GetPropertyValue<T>", ex);
-      }
-    }
-
-    public static PropertyInfo GetProperty<T, TProperty>(Expression<Func<T, TProperty>> expression) {
-      MemberExpression memberExpression = null;
-
-      if (expression.Body.NodeType == ExpressionType.Convert) {
-        memberExpression = ((UnaryExpression)expression.Body).Operand as MemberExpression;
-      } else if (expression.Body.NodeType == ExpressionType.MemberAccess) {
-        memberExpression = expression.Body as MemberExpression;
-      }
-
-      if (memberExpression == null) {
-        throw new ArgumentException("Not a member access", "expression");
-      }
-
-      return memberExpression.Member as PropertyInfo;
-    }
-
-    public static TResult GetPropertyValue<T, TResult>(this object source, Expression<Func<T, TResult>> expression) {
-      return (TResult)GetProperty(expression).GetValue(source);
-    }
   }
 }

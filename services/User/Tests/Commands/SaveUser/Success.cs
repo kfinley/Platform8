@@ -9,6 +9,7 @@ using Xunit;
 using Moq;
 using It = Machine.Specifications.It;
 using Argument = Moq.It;
+using EFQuerySpecs;
 
 using Platform8.Tests.Common.Specs;
 using Platform8.Tests.Common;
@@ -37,7 +38,7 @@ namespace Platform8.User.Tests {
         Email = "Bob@Jones.com"
       };
 
-      Sut.SetupAsync<IAsyncRepository<UserDataContext>, Models.User>(r => r.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()))
+      Sut.SetupAsync<IAsyncRepository<UserDataContext, IEntity>, Models.User>(r => r.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()))
         .ReturnsAsync(new Models.User {
           Id = Request.Id,
           FirstName = Request.FirstName,
@@ -61,7 +62,7 @@ namespace Platform8.User.Tests {
     [Fact]
     public void It_should_save_a_new_User_to_the_Data_Repository() => should_save_a_new_User_to_the_Data_Repository();
     It should_save_a_new_User_to_the_Data_Repository = () => {
-      Sut.Verify<IAsyncRepository<UserDataContext>>(p => p.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()), Times.Once());
+      Sut.Verify<IAsyncRepository<UserDataContext, IEntity>>(p => p.SaveAsync(Argument.IsAny<Models.User>(), Argument.IsAny<CancellationToken>()), Times.Once());
     };
   }
 

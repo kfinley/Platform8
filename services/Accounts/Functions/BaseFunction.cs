@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 
 using ServiceProviderFunctions;
-using Platform8.Core.Data;
+using EFQuerySpecs;
+
 using Platform8.Accounts.Data;
 
 namespace Platform8.Accounts.Functions
@@ -30,7 +31,7 @@ namespace Platform8.Accounts.Functions
         .AddAWSService<IAmazonSimpleNotificationService>(configuration.GetAWSOptions("Service:SNS"))
         .AddDbContext<AccountsDataContext>(options =>
           options.UseMySql(configuration.GetConnectionString("DefaultConnection")))
-        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
+        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
         .AddMediatR(Aws.Commands.CommandsAssembly.Value)
         .AddMediatR(Accounts.Commands.CommandsAssembly.Value);;
     }
