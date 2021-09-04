@@ -23,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="EFQuerySpecs" Version="5.0.7"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +31,6 @@
     <ProjectReference Include="..\..\..\dotnet\Tests.Common\Tests.Common.csproj" />
     <ProjectReference Include="..\Models\User.Models.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
-    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EFQuerySpecs.csproj" />
     <ProjectReference Include="..\Data\User.Data.csproj" />
   </ItemGroup>
 

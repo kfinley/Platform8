@@ -9,11 +9,11 @@
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+     <PackageReference Include="EFQuerySpecs" Version="5.0.7"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
-    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EFQuerySpecs.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\Data\Budgets.Data.csproj" />
     <ProjectReference Include="..\Models\Budgets.Models.csproj" />
