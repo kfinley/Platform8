@@ -10,12 +10,13 @@ using Xunit;
 using Moq;
 using It = Machine.Specifications.It;
 using Argument = Moq.It;
+using EFQuerySpecs;
 
 using Platform8.Tests.Common.Specs;
 using Platform8.Tests.Common;
+using Platform8.Core.Data;
 using Platform8.Accounts.Commands;
 using Platform8.Accounts.Models;
-using Platform8.Core.Data;
 using Platform8.Accounts.Data;
 
 namespace Platform8.Accounts.Tests {
@@ -34,7 +35,7 @@ namespace Platform8.Accounts.Tests {
     Establish context = () => {
       Request = new ListAccountsRequest();
 
-      Sut.SetupAsync<IAsyncRepository<AccountsDataContext>, IReadOnlyList<Models.AccountInList>>(r
+      Sut.SetupAsync<IAsyncRepository<AccountsDataContext, IEntity>, IReadOnlyList<Models.AccountInList>>(r
         => r.ListAsync<Models.Account, AccountInList>(
             Argument.IsAny<IQuerySpec<Models.Account, Models.AccountInList>>(),
             Argument.IsAny<CancellationToken>())

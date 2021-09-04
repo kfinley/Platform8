@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
+using EFQuerySpecs;
 
 using Platform8.Core;
 using Platform8.Core.Data;
@@ -11,9 +12,9 @@ using Platform8.User.Data;
 namespace Platform8.User.Commands {
   public class SaveUserHandler : IRequestHandler<SaveUserRequest, SaveUserResponse> {
 
-    private readonly IAsyncRepository<UserDataContext> repository;
+    private readonly IAsyncRepository<UserDataContext, IEntity> repository;
 
-    public SaveUserHandler(IAsyncRepository<UserDataContext> repository) {
+    public SaveUserHandler(IAsyncRepository<UserDataContext, IEntity> repository) {
       this.repository = repository;
     }
 

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Models\Accounts.Models.EF3.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.EF3.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EF3QuerySpecs.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\Data\Accounts.Data.EF3.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Aws.Commands\Aws.Commands.3.1.csproj" />

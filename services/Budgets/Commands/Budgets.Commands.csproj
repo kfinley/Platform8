@@ -13,7 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
-    <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EFQuerySpecs.csproj" />
+    <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\Data\Budgets.Data.csproj" />
     <ProjectReference Include="..\Models\Budgets.Models.csproj" />
   </ItemGroup>

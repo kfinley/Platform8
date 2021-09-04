@@ -6,7 +6,7 @@ using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Platform8.Core.Data {
+namespace EFQuerySpecs {
   public static class EFExtensions {
 
     public static IQueryable<T> Include<T>(this IQueryable<T> query, Tuple<Expression, Expression> include) {
@@ -24,7 +24,7 @@ namespace Platform8.Core.Data {
                 );
       query = query.Provider.CreateQuery<T>(queryExpression);
 
-      if (include.Item2.HasValue()) {
+      if (include.Item2 != null) {
         CreateItemTypeAndProperty(include.Item2, out Type thenIncludeItemType, out PropertyInfo thenIncludeItemProperty);
         var item1Lambda = Reflection.CreateLambdaExpression<T>(Reflection.GetPropertyName(include.Item1));
 
@@ -50,7 +50,6 @@ namespace Platform8.Core.Data {
       }
       return query;
     }
-
 
     private static void CreateItemTypeAndProperty(object item, out Type itemType, out PropertyInfo itemProperty) {
       itemType = item.GetType().GenericTypeArguments[0].GenericTypeArguments[0];

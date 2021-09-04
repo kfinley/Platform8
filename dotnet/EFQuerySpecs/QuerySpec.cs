@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Platform8.Core.Data {
+namespace EFQuerySpecs {
   public class QuerySpec<TEntity, TResult> : QuerySpec<TEntity>, IQuerySpec<TEntity, TResult>
     where TEntity : class {
     public Func<TEntity, TResult> Selector { get; set; }
@@ -37,8 +37,8 @@ namespace Platform8.Core.Data {
         query = query.Include(include);
       }
 
-      query = this.Where.HasValue() ? query.Where(Where) : query;
-      query = this.OrderBy.HasValue() ? query.OrderBy(OrderBy) : query;
+      query = this.Where != null ? query.Where(Where) : query;
+      query = this.OrderBy != null ? query.OrderBy(OrderBy) : query;
       query = this.Skip.HasValue ? query.Skip(this.Skip.Value * this.Take.Value) : query;
       query = this.Take.HasValue ? query.Take(this.Take.Value) : query;
 

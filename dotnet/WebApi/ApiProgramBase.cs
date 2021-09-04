@@ -11,7 +11,7 @@ namespace Platform8.WebApi {
 
   public abstract class ApiProgramBase {
     protected static void Run<TStartup>(string[] args)
-      where TStartup : class  => CreateHostBuilder<TStartup>(args).Build().Run();
+      where TStartup : class => CreateHostBuilder<TStartup>(args).Build().Run();
 
     protected static IHostBuilder CreateHostBuilder<TStartup>(string[] args)
       where TStartup : class =>

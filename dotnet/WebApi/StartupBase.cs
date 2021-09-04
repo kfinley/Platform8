@@ -19,7 +19,7 @@ using Microsoft.OpenApi.Models;
 using ContinuousMigrations;
 using MediatR;
 
-using Platform8.Core.Data;
+using EFQuerySpecs;
 using Platform8.Core;
 
 namespace Platform8.WebApi {
@@ -64,7 +64,7 @@ namespace Platform8.WebApi {
       services
         .AddDefaultAWSOptions(Configuration.GetAWSOptions())
 
-        .AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
+        .AddScoped(typeof(IAsyncRepository<,>), typeof(AsyncRepository<,>))
 
         .AddMediatR(this.MediatorAssembly);
 

@@ -4,17 +4,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Platform8.Core.Data {
-  public class AsyncRepository<TContext> : IAsyncRepository<TContext>
+namespace EFQuerySpecs {
+  public class AsyncRepository<TContext, TEntityBase> : IAsyncRepository<TContext, TEntityBase>
     where TContext : DbContext {
 
     private ILogger logger;
 
-    public AsyncRepository(TContext context, ILogger<AsyncRepository<TContext>> logger) {
-
+    public AsyncRepository(TContext context, ILogger<AsyncRepository<TContext, TEntityBase>> logger) {
       this.logger = logger;
       this.Context = context;
     }
@@ -22,13 +22,13 @@ namespace Platform8.Core.Data {
     public DbContext Context { get; set; }
 
     public async Task<TEntity> GetAsync<TEntity>(Guid id, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return await this.Context.Set<TEntity>().FindAsync(id);
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return await FirstOrDefaultAsync(new QuerySpec<TEntity> {
         Where = where
@@ -36,7 +36,7 @@ namespace Platform8.Core.Data {
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity, TProperty>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TProperty>> include, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       var querySpec = new QuerySpec<TEntity> {
         Where = where
@@ -47,31 +47,31 @@ namespace Platform8.Core.Data {
     }
 
     public async Task<TEntity> FirstOrDefaultAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return await spec.Apply(this.Context).FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAllAsync<TEntity>(CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return await this.Context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
     public Task<IReadOnlyList<TResult>> ListAsync<TEntity, TResult>(IQuerySpec<TEntity, TResult> spec, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return Task.FromResult<IReadOnlyList<TResult>>(spec.Apply(this.Context).Select(spec.Selector).ToList());
     }
 
     public async Task<IReadOnlyList<TEntity>> ListAsync<TEntity>(IQuerySpec<TEntity> spec, CancellationToken cancellationToken = default)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       return await spec.Apply(this.Context).ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
-      where TEntity : class, IEntity {
+      where TEntity : class, TEntityBase {
 
       var savedEntity = this.Context.Add(entity);
       var result = await this.Context.SaveChangesAsync();
