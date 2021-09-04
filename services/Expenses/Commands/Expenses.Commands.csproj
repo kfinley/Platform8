@@ -9,13 +9,13 @@
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+     <PackageReference Include="EFQuerySpecs" Version="5.0.7"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dotnet\Aws.Commands\Aws.Commands.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core\Core.csproj" />
     <ProjectReference Include="..\..\..\dotnet\Core.Data\Core.Data.csproj" />
-    <ProjectReference Include="..\..\..\dotnet\EFQuerySpecs\EFQuerySpecs.csproj" />
     <ProjectReference Include="..\Data\Expenses.Data.csproj" />
     <ProjectReference Include="..\Models\Expenses.Models.csproj" />
   </ItemGroup>
