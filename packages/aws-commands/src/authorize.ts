@@ -30,19 +30,21 @@ export class AuthorizeCommand implements Command<AuthorizeRequest, AuthorizeResp
       token = accessToken;
     }
 
-    const user = await this.provider.getUser({
-      AccessToken: token
-    });
+    if (token) {
+      const user = await this.provider.getUser({
+        AccessToken: token
+      });
 
-    if (user.$metadata.httpStatusCode === 200) {
-      console.log(`Authorizer authorized: ${user.Username}`)
-      return {
-        username: user.Username,
-        attributes: this.attributesToRecord(user.UserAttributes),
-        authorized: true
+      if (user.$metadata.httpStatusCode === 200) {
+        console.log(`Authorizer authorized: ${user.Username}`)
+        return {
+          username: user.Username,
+          attributes: this.attributesToRecord(user.UserAttributes),
+          authorized: true
+        }
       }
     }
-
+    
     return {
       authorized: false
     }

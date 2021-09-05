@@ -1,7 +1,14 @@
 import { Inject } from 'inversify-props';
 import { PublishCommand, SNSClient,  } from "@aws-sdk/client-sns";
 import { Command } from '@platform8/commands/src';
-import { PublishMessageRequest, PublishMessageResponse } from "./models";
+
+export interface PublishMessageRequest {
+  subject?: string,
+  message?: string,
+  topic: string
+}
+
+export interface PublishMessageResponse { }
 
 export class PublishMessageCommand implements Command<PublishMessageRequest, PublishMessageResponse> {
 

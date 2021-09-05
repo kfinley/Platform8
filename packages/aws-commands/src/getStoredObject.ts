@@ -1,7 +1,15 @@
 import { Inject } from 'inversify-props';
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Command } from '@platform8/commands/src';
-import { GetStoredObjectRequest, GetStoredObjectResponse } from "./models";
+
+export interface GetStoredObjectRequest {
+  bucket: string;
+  key: string;
+}
+
+export interface GetStoredObjectResponse {
+  body: string;
+}
 
 export class GetStoredObjectCommand implements Command<GetStoredObjectRequest, GetStoredObjectResponse> {
 

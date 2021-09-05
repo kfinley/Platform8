@@ -1,7 +1,17 @@
 import { Inject } from 'inversify-props';
 import { SFNClient, StartExecutionCommand, StartExecutionCommandInput, ListStateMachinesCommand,  } from "@aws-sdk/client-sfn";
 import { Command } from '@platform8/commands/src';
-import { StartStepFunctionRequest, StartStepFunctionResponse } from "./models";
+
+export interface StartStepFunctionRequest {
+  stateMachineArn?: string,
+  stateMachineName?: string,
+  input: string
+}
+
+export interface StartStepFunctionResponse {
+  statusCode?: number;
+  executionArn?: string;
+}
 
 export class StartStepFunctionCommand implements Command<StartStepFunctionRequest, StartStepFunctionResponse> {
 
