@@ -1,0 +1,30 @@
+name: Build & tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Latest npm
+      run: npm install -g npm@latest
+    - name: NPM install
+      run: npm install
+    - name: Lerna bootstrap
+      run: npm run bootstrap
+    - name: Run tests
+      run: npm run test
