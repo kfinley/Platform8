@@ -8,6 +8,7 @@
     "email": "kyle@kylefinley.net"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
     "dev:init": "./.devcontainer/scripts/dev-init.sh",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
