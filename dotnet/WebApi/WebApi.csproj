@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
-    <PackageReference Include="EFContinuousMigrations" Version="1.0.0" />
+    <PackageReference Include="EFContinuousMigrations" Version="5.0.7" />
     <PackageReference Include="EFQuerySpecs" Version="5.0.7" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
