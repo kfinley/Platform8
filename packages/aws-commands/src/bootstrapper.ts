@@ -56,10 +56,10 @@ export default function bootstrapper(container: Container) {
       }));
   }
 
+  addTransientIfNeeded<AuthorizeCommand>(AuthorizeCommand, "AuthorizeCommand", container);
+  addTransientIfNeeded<GetStoredObjectCommand>(GetStoredObjectCommand, "GetStoredObjectCommand", container);
   addTransientIfNeeded<PublishMessageCommand>(PublishMessageCommand, "PublishMessageCommand", container);
   addTransientIfNeeded<StartStepFunctionCommand>(StartStepFunctionCommand, "StartStepFunctionCommand", container);
-  addTransientIfNeeded<GetStoredObjectCommand>(GetStoredObjectCommand, "GetStoredObjectCommand", container);
-  addTransientIfNeeded<AuthorizeCommand>(AuthorizeCommand, "AuthorizeCommand", container);
 }
 
 function addTransientIfNeeded<T>(constructor: any, id: string, container: Container) {
