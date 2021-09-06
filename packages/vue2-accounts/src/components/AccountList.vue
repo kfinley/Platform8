@@ -33,7 +33,6 @@ import { Card } from "@platform8/vue2-common/src/components";
 import { State } from "vuex-class";
 import { accountsModule, AccountsState, AccountsStatus } from "../store";
 
-
 @Component({
   components: {
     Card,
