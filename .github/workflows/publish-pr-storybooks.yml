@@ -3,6 +3,9 @@ name: Publish PR Storybooks
 on:
   pull_request:
     branches: [main]
+    paths:
+      - packages/vue2-*/src/stories/**
+      - packages/vue2-*/src/components/**
 
 jobs:
   storybooks:
@@ -10,26 +13,46 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: branch
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
       - name: npm install and lerna bootstrap
         run: |
+          cd $GITHUB_WORKSPACE/branch
           npm install -g npm@latest
           npm install silent
           npm run bootstrap
       - name: Build Storybooks
-        run: npm run deploy-storybook:local
+        run: |
+          cd $GITHUB_WORKSPACE/branch
+          npm run deploy-storybook:local
       - name: Copy static Storybooks to Pages
         run: |
+          cd $GITHUB_WORKSPACE/branch
           mkdir -p Pages/${{ github.head_ref }}
           cp -r storybooks/* Pages/${{ github.head_ref }}
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+      - name: Checkout gh-pages
+        uses: actions/checkout@v2
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: Pages # The folder the action should deploy.
+          ref: gh-pages
+          path: gh-pages
+      - name: Commit Storybooks to gh-pages branch #gh-pages branch must exist
+        run: |
+          cd $GITHUB_WORKSPACE/gh-pages
+          cp -R $GITHUB_WORKSPACE/branch/Pages/* .
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add .
+
+          if git diff-index --quiet HEAD --; then
+              echo 'No changes to commit';
+          else
+            git commit -m "Deploying to GitHub Pages 🚀";
+            git push;
+          fi
       - name: Add comment to PR with link to Storybooks
         uses: actions/github-script@v4
         with:
