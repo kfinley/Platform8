@@ -6,7 +6,7 @@ This is a work in progress system and currently contains features for managing a
 
 This repository intended to be run locally using [VSCode Dev Containers](https://code.visualstudio.com/docs/remote/create-dev-container) or [GitHub Codespaces](https://github.com/features/codespaces) and can be deployed to AWS.
 
-View project Storybooks under [Deployments](https://github.com/kfinley/Platform8/deployments/activity_log?environment=github-pages).
+View project Storybooks at [kfinley.github.io/Platform8](https://kfinley.github.io/Platform8/).
 
 ### Steps to run
 
@@ -133,7 +133,7 @@ Each Vue plugin package has it's own [Storybook](https://github.com/storybookjs/
 
 Storybooks are deployed to GitHub pages for the main branch and any Pull Request that is created. This is handled by GitHub Actions.
 
-The Storybooks can be viewed under [Deployments](https://github.com/kfinley/Platform8/deployments/activity_log?environment=github-pages).
+The main Storybooks can be viewed at [kfinley.github.io/Platform8](https://kfinley.github.io/Platform8/).
 
 During local development a specific storybook can be run in order to be viewed in the browser or preview in VSCode using [VSCode Story Explorer](https://github.com/joshbolduc/vscode-story-explorer)
 
