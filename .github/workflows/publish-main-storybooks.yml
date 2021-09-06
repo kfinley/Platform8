@@ -29,15 +29,15 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/main
           npm run deploy-storybook:local
-      - name: Checkout gh-pages
+      - name: Checkout storybooks
         uses: actions/checkout@v2
         with:
-          ref: gh-pages
-          path: gh-pages
-      - name: Commit Storybooks to gh-pages branch #gh-pages branch must exist
+          ref: storybooks
+          path: storybooks
+      - name: Commit Storybooks to storybooks branch #storybooks branch must exist
         run: |
-          cd $GITHUB_WORKSPACE/gh-pages
-          cp -r $GITHUB_WORKSPACE/main/storybooks/* $GITHUB_WORKSPACE/gh-pages
+          cd $GITHUB_WORKSPACE/storybooks
+          cp -r $GITHUB_WORKSPACE/main/storybooks/* $GITHUB_WORKSPACE/storybooks
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git add .

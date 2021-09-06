@@ -34,14 +34,14 @@ jobs:
           cd $GITHUB_WORKSPACE/branch
           mkdir -p Pages/${{ github.head_ref }}
           cp -r storybooks/* Pages/${{ github.head_ref }}
-      - name: Checkout gh-pages
+      - name: Checkout storybooks
         uses: actions/checkout@v2
         with:
-          ref: gh-pages
-          path: gh-pages
-      - name: Commit Storybooks to gh-pages branch #gh-pages branch must exist
+          ref: storybooks
+          path: storybooks
+      - name: Commit Storybooks to storybooks branch #storybooks branch must exist
         run: |
-          cd $GITHUB_WORKSPACE/gh-pages
+          cd $GITHUB_WORKSPACE/storybooks
           cp -R $GITHUB_WORKSPACE/branch/Pages/* .
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
