@@ -10,11 +10,11 @@
     "test:unit": "jest"
   },
   "dependencies": {
-    "@aws-sdk/client-apigatewaymanagementapi": "^3.27.0",
-    "@aws-sdk/client-cognito-identity": "^3.27.0",
-    "@aws-sdk/client-cognito-identity-provider": "^3.27.0",
-    "@aws-sdk/client-dynamodb": "^3.27.0",
-    "@aws-sdk/util-dynamodb": "^3.27.0",
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.34.0",
+    "@aws-sdk/client-cognito-identity": "^3.34.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.34.0",
+    "@aws-sdk/client-dynamodb": "^3.34.0",
+    "@aws-sdk/util-dynamodb": "^3.34.0",
     "@platform8/aws-commands": "^0.0.1",
     "@platform8/commands": "^0.0.1",
     "inversify-props": "^2.2.6",

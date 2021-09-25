@@ -8,8 +8,8 @@
     "test:unit": "jest"
   },
   "dependencies": {
-    "@aws-sdk/util-dynamodb": "^3.27.0",
-    "@aws-sdk/client-dynamodb": "^3.27.0",
+    "@aws-sdk/util-dynamodb": "^3.34.0",
+    "@aws-sdk/client-dynamodb": "^3.34.0",
     "@platform8/commands": "^0.0.1",
     "@platform8/aws-commands": "^0.0.1",
     "@types/uuid": "^8.3.1",
