@@ -36,7 +36,8 @@
     "containers:stop": "./.devcontainer/scripts/local-containers.sh stop",
     "dotnet:package:accounts": "PATH=$PATH:/home/vscode/.dotnet/tools && cd ./services/Accounts && ./package.sh",
     "ddb:migrate": "serverless dynamodb migrate",
-    "init-auth": "./.devcontainer/scripts/init-auth.sh"
+    "init-auth": "./.devcontainer/scripts/init-auth.sh",
+    "outdated-packages": "./.devcontainer/scripts/outdated-packages.sh"
   },
   "engines": {
     "node": ">=14.15.0"
