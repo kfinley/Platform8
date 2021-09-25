@@ -13,6 +13,12 @@
       <strong>We're sorry but this site doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <script>
+      /* Hack for global not defined in buffer.js error. */
+      if (global === undefined) {
+        var global = window;
+      }
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
