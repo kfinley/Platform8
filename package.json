@@ -10,6 +10,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
+    "super-clean": "npm run clean && lerna exec -- rm package-lock.json",
     "dev:init": "./.devcontainer/scripts/dev-init.sh",
     "dev:client": "lerna run dev --stream --scope=@platform8/vue2-client",
     "dev:client:docker": "lerna run dev:docker --stream --scope=@platform8/vue2-client",
@@ -53,7 +54,7 @@
     "@aws-sdk/util-dynamodb": "^3.34.0",
     "@serverless/typescript": "^2.23.0",
     "@storybook/storybook-deployer": "^2.8.10",
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^27.0.2",
     "@types/node": "^14.14.31",
     "http-server": "^13.0.0",
     "inversify-props": "^2.2.6",
