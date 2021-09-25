@@ -54,7 +54,7 @@
     "@serverless/typescript": "^2.23.0",
     "@storybook/storybook-deployer": "^2.8.10",
     "@types/jest": "^27.0.1",
-    "@types/node": "^14.14.25",
+    "@types/node": "^14.14.31",
     "http-server": "^13.0.0",
     "inversify-props": "^2.2.6",
     "lerna": "^4.0.0",
