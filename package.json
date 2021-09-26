@@ -8,7 +8,8 @@
     "email": "kyle@kylefinley.net"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --concurrency=1",
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:1": "lerna bootstrap --concurrency=1",
     "clean": "lerna clean --yes",
     "super-clean": "rm -rf node_modules rm -rf package-lock.json && npm run clean && lerna exec -- rm package-lock.json || true",
     "dev:init": "./.devcontainer/scripts/dev-init.sh",
