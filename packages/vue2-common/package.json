@@ -15,10 +15,10 @@
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@platform8/web-ui": "^0.0.1",
-    "@storybook/addon-actions": "^6.3.4",
-    "@storybook/addon-essentials": "^6.3.4",
-    "@storybook/addon-links": "^6.3.4",
-    "@storybook/vue": "^6.3.4",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/vue": "^6.3.8",
     "babel-loader": "^8.2.2",
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5",
@@ -38,6 +38,9 @@
     "vue-loader": "^15.9.7",
     "vue-property-decorator": "9.1.2",
     "vue-template-compiler": "^2.6.11",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "@storybook/addon-docs": "^6.3.8",
+    "webpack": "^4.45.0",
+    "css-loader": "~3.6.0"
   }
 }

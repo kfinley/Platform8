@@ -31,6 +31,6 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
   } catch (error) {
     console.log(error);
-    return createResponse(event, 500, error);
+    return createResponse(event, 500, error as string);
   }
 };

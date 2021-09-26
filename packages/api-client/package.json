@@ -13,9 +13,8 @@
   "devDependencies": {
     "@platform8/config": "^0.0.1",
     "@platform8/core": "^0.0.1",
-    "@types/node": "^13.13.38",
-    "axios": "^0.21.1",
-    "config": "^1.0.0",
+    "@types/node": "^14.14.31",
+    "axios": "^0.21.4",
     "inversify-props": "^2.2.6"
   }
 }

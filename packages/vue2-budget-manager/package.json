@@ -24,10 +24,10 @@
     "@platform8/vue2-notify": "^0.0.1",
     "@platform8/vue2-test-utils": "^0.0.1",
     "@platform8/web-ui": "^0.0.1",
-    "@storybook/addon-actions": "^6.3.4",
-    "@storybook/addon-essentials": "^6.3.4",
-    "@storybook/addon-links": "^6.3.4",
-    "@storybook/vue": "^6.3.4",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/vue": "^6.3.8",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -64,6 +64,9 @@
     "vue-template-compiler": "^2.6.11",
     "vuex": "^3.4.0",
     "vuex-class": "^0.3.2",
-    "vuex-module-decorators": "^1.0.1"
+    "vuex-module-decorators": "^1.0.1",
+    "@storybook/addon-docs": "^6.3.8",
+    "webpack": "^4.45.0",
+    "css-loader": "~3.6.0"
   }
 }
