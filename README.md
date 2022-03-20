@@ -2,7 +2,7 @@
 
 This is sample code showing a cloud based platform using a hybrid of Server and Serverless back end built using C# [.NET Core](https://github.com/dotnet/core) and TypeScript with a [VueJs](https://github.com/vuejs/vue) front end.
 
-This is a work in progress system and currently contains features for managing a personal financial budget and expense tracking.
+This is a very early POC system at near MVP for managing a personal financial budget and expense tracking.
 
 This repository intended to be run locally using [VSCode Dev Containers](https://code.visualstudio.com/docs/remote/create-dev-container) or [GitHub Codespaces](https://github.com/features/codespaces) and can be deployed to AWS.
 
